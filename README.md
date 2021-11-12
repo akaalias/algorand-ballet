@@ -1,5 +1,7 @@
 # vue-electron-app
 
+https://itnext.io/electron-application-with-vue-js-and-vuetify-f2a1f9c749b8
+
 ## Project setup
 ```
 npm install
