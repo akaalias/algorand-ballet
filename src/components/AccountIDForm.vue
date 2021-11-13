@@ -8,8 +8,10 @@
           md="12"
         >
           <v-select
-            v-model="network"
-          :items="networks"
+            v-model="selectedNetwork"
+            item-text="name"
+            item-value="domain"
+            :items="networks"
           label="Select Network"
         ></v-select>
         </v-col>
@@ -68,8 +70,20 @@
           cols="12"
           md="12"
         >
-          <vue-json-pretty :path="'res'" :data="jsonData">
-          </vue-json-pretty>
+          <div v-if="jsonData">
+            <h1 class="text-h6">Result JSON</h1>
+            GET {{requestURL}}
+            <vue-json-pretty :path="'res'" :data="jsonData">
+            </vue-json-pretty>
+          </div>
+
+          <cytoscape ref="cy" :config="cyConfig">
+            <cy-element
+              v-for="def in cytoElements"
+              :key="`${def.data.id}`"
+              :definition="def"
+            />
+          </cytoscape>
 
         </v-col>
       </v-row>
@@ -90,22 +104,55 @@ export default {
       v => !!v || 'AccountID is required',
       v => v.length >= 58 || 'AccountID must be exactly than 58 characters',
     ],
-    networks: ['MainNet', 'TestNet', 'BetaNet'],
-    network: 'TestNet',
+    networks: [{name: 'MainNet', domain: 'mainnet-algorand.api.purestake.io'}, {name: 'TestNet', domain: 'testnet-algorand.api.purestake.io'}],
+    selectedNetwork: {name: 'TestNet', domain: 'testnet-algorand.api.purestake.io'},
     searchDepth: 1,
     searchDepths: [0, 1, 2, 3, 4],
     searching: false,
     buttonText: "Build Graph for Account",
-    jsonData: ""
+    jsonData: "",
+    apiKey: "pksIgccdqX9ADKvMLfVhf3hZqClM949951K9966v",
+    requestURL: "",
+    cyConfig: {
+      style: [
+        {
+          selector: 'node',
+          style: {
+            'background-color': '#666',
+            'label': 'data(id)'
+          }
+        }, {
+          selector: 'edge',
+          style: {
+            'width': 3,
+            'line-color': '#ccc',
+            'target-arrow-color': '#ccc',
+            'target-arrow-shape': 'triangle'
+          }
+        }
+      ],
+      layout: {
+        name: 'grid',
+        rows: 1
+      }
+    },
+    cytoElements: [
+      { // node a
+        data: { id: 'a' }
+      }, { // node b
+        data: { id: 'b' }
+      }, { // edge ab
+        data: { id: 'ab', source: 'a', target: 'b' }
+      }
+    ]
   }),
   methods: {
     search: async function() {
       this.searching = true
       this.buttonText = "Searching"
-      // await new Promise(f => setTimeout(f, 2000));
-      const accountTransactionsURL = `https://testnet-algorand.api.purestake.io/idx2/v2/accounts/${this.accountID}/transactions`
 
-      const response = await fetch(accountTransactionsURL, {method: 'GET', headers: {'accept': 'application/json', 'x-api-key': 'pksIgccdqX9ADKvMLfVhf3hZqClM949951K9966v'}});
+      this.requestURL = `https://${this.selectedNetwork.domain}/idx2/v2/accounts/${this.accountID}/transactions`
+      const response = await fetch(this.requestURL, {method: 'GET', headers: {'accept': 'application/json', 'x-api-key': this.apiKey}});
       const data = await response.json();
       this.jsonData = data
 
