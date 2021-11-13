@@ -62,11 +62,25 @@
           </v-btn>
         </v-col>
       </v-row>
+
+      <v-row>
+        <v-col
+          cols="12"
+          md="12"
+        >
+          <vue-json-pretty :path="'res'" :data="jsonData">
+          </vue-json-pretty>
+
+        </v-col>
+      </v-row>
     </v-container>
   </v-form>
 </template>
 
 <script>
+import VueJsonPretty from 'vue-json-pretty';
+import 'vue-json-pretty/lib/styles.css';
+
 export default {
   name: "AccountIDForm",
   data: () => ({
@@ -81,17 +95,27 @@ export default {
     searchDepth: 1,
     searchDepths: [0, 1, 2, 3, 4],
     searching: false,
-    buttonText: "Build Graph for Account"
+    buttonText: "Build Graph for Account",
+    jsonData: ""
   }),
   methods: {
     search: async function() {
       this.searching = true
       this.buttonText = "Searching"
-      await new Promise(f => setTimeout(f, 2000));
+      // await new Promise(f => setTimeout(f, 2000));
+      const accountTransactionsURL = `https://testnet-algorand.api.purestake.io/idx2/v2/accounts/${this.accountID}/transactions`
+
+      const response = await fetch(accountTransactionsURL, {method: 'GET', headers: {'accept': 'application/json', 'x-api-key': 'pksIgccdqX9ADKvMLfVhf3hZqClM949951K9966v'}});
+      const data = await response.json();
+      this.jsonData = data
+
       this.buttonText = "Build Graph for Account"
       this.searching = false
     }
-  }
+  },
+  components: {
+    VueJsonPretty,
+  },
 };
 </script>
 
