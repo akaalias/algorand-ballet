@@ -53,12 +53,11 @@
             />
           </div>
 
-            <div v-if="jsonData">
+          <div v-if="jsonData">
             <h1 class="text-h6">Result JSON</h1>
-            GET {{ requestURL }}
+            <div class="text-truncate">{{ requestURL }}</div>
             <vue-json-pretty :path="'res'" :data="jsonData"> </vue-json-pretty>
           </div>
-
         </v-col>
       </v-row>
     </v-container>
@@ -779,16 +778,16 @@ export default {
   methods: {
     async search() {
       this.searching = true;
-      this.buttonText = "Searching";
-
+      this.buttonText = "Searching"
+      this.jsonData = ""
       this.requestURL = `https://${this.selectedNetwork.domain}/idx2/v2/accounts/${this.accountID}/transactions`;
+
       const response = await fetch(this.requestURL, {
         method: "GET",
         headers: { accept: "application/json", "x-api-key": this.apiKey },
       });
       const data = await response.json();
       this.jsonData = data;
-
       this.buttonText = "Build Graph for Account";
       this.searching = false;
     },
