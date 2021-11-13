@@ -1,17 +1,16 @@
 <template>
-  <my-component>
-  </my-component>
+  <account-i-d-form></account-i-d-form>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import MyComponent from "../components/MyComponent.vue"
+import AccountIDForm from "@/components/AccountIDForm.vue";
 
 export default Vue.extend({
   name: "Home",
 
   components: {
-    MyComponent,
+    AccountIDForm,
   },
 });
 </script>
