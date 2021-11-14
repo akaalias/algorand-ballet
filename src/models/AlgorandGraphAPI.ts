@@ -8,7 +8,6 @@
     }
 
     async accountIDGraphForRootAccountID(rootAccountID: string, depth: number) {
-      let jsonData = "";
       const requestURL = `https://${this.networkDomain}/idx2/v2/accounts/${rootAccountID}/transactions`;
 
       const response = await fetch(requestURL, {
@@ -16,33 +15,37 @@
         headers: { accept: "application/json", "x-api-key": this.apiKey },
       });
 
-      jsonData = await response.json()
+      const jsonData = await response.json()
+      const transactions = jsonData.transactions
 
-      // Return
-      return [
-        { // node a
-          data: { id: 'a' },
-        }, { // node b
-          data: { id: 'b' }
-        },
-        { // node c
-          data: { id: 'c' }
-        },
-        { // node c
-          data: { id: 'd' }
-        },
-        { // edge ab
-          data: { id: 'ab', source: 'a', target: 'b' }
-        },
-        { // edge ab
-          data: { id: 'ac', source: 'a', target: 'c' }
-        },
-        { // edge ab
-          data: { id: 'bc', source: 'b', target: 'c' }
-        },
-        { // edge ab
-          data: { id: 'cd', source: 'c', target: 'd' }
+      const graph = [
+        { data: {id: rootAccountID}, classes: 'account root' }
+      ]
+
+      if(transactions != null) {
+        for(const tx of transactions) {
+          console.log(tx)
+
+          if(tx['payment-transaction'] != null) {
+            const ptx = tx['payment-transaction']
+
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            graph.push({ data: {id: tx.id}, classes: 'transaction'})
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            graph.push({ data: {id: tx.sender}, classes: 'account'})
+
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              graph.push({ data: {id: tx.id + tx.sender, target: tx.id, source: tx.sender}})
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+              graph.push({ data: {id: tx.id + ptx.receiver, target: tx.id, source: ptx.receiver}})
+          }
         }
-        ]
+      }
+
+      return graph
     }
   }

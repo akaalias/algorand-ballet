@@ -84,11 +84,7 @@ export default {
     buttonText: "Build Graph for Account",
     apiKey: "pksIgccdqX9ADKvMLfVhf3hZqClM949951K9966v",
     requestURL: "",
-    elements: [
-      { // node a
-        data: { id: 'a' },
-      }
-    ],
+    elements: [],
     cyConfig: {
       style: [
         {
@@ -102,15 +98,34 @@ export default {
           style: {
             'width': 3,
             'line-color': '#ccc',
-            'target-arrow-color': '#ccc',
-            'target-arrow-shape': 'triangle'
+            'mid-target-arrow-color': '#ccc',
+            'mid-target-arrow-shape': 'triangle'
+          }
+        }, {
+        selector: 'node.root',
+          style: {
+            width: '50',
+            height: '50',
+            "background-color": 'red'
+          }
+        },
+        {
+          selector: 'node.transaction',
+          style: {
+            'shape': 'rectangle'
+          }
+        },
+        {
+          selector: 'node.account',
+          style: {
+            width: '50',
+            height: '50',
+            'shape': 'ellipse'
           }
         }
-      ],
-      layout: {
-        name: 'grid',
-        rows: 1
-      }},
+
+      ]
+    },
   }),
   methods: {
     async search() {
