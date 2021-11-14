@@ -21,12 +21,28 @@
       // Return
       return [
         { // node a
-          data: { id: 'a' }
+          data: { id: 'a' },
         }, { // node b
           data: { id: 'b' }
-        }, { // edge ab
+        },
+        { // node c
+          data: { id: 'c' }
+        },
+        { // node c
+          data: { id: 'd' }
+        },
+        { // edge ab
           data: { id: 'ab', source: 'a', target: 'b' }
+        },
+        { // edge ab
+          data: { id: 'ac', source: 'a', target: 'c' }
+        },
+        { // edge ab
+          data: { id: 'bc', source: 'b', target: 'c' }
+        },
+        { // edge ab
+          data: { id: 'cd', source: 'c', target: 'd' }
         }
-      ]
+        ]
     }
   }

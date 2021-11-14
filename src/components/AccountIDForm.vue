@@ -47,13 +47,7 @@
         <v-col cols="8">
           <div class="cyHolder">
             <cytoscape :config="cyConfig"
-                       :preConfig="preConfig"
                        :afterCreated="afterCreated">
-                <cy-element
-                  v-for="def in this.elements"
-                  :key="`${def.data.id}`"
-                  :definition="def"
-                />
             </cytoscape>
           </div>
         </v-col>
@@ -65,7 +59,6 @@
 <script>
 import VueJsonPretty from "vue-json-pretty";
 import "vue-json-pretty/lib/styles.css";
-import cola from "cytoscape-cola";
 import { AlgorandGraphAPI } from "@/models/AlgorandGraphAPI";
 
 export default {
@@ -91,28 +84,33 @@ export default {
     buttonText: "Build Graph for Account",
     apiKey: "pksIgccdqX9ADKvMLfVhf3hZqClM949951K9966v",
     requestURL: "",
-    elements: [],
+    elements: [
+      { // node a
+        data: { id: 'a' },
+      }
+    ],
     cyConfig: {
-      autounselectify: true,
-      boxSelectionEnabled: false,
-      layout: {
-        name: "cola"
-      },
       style: [
         {
-          selector: "node",
-          css: {
-            "background-color": "#f92411"
+          selector: 'node',
+          style: {
+            'background-color': '#666',
+            'label': 'data(id)'
           }
-        },
-        {
-          selector: "edge",
-          css: {
-            "line-color": "#f92411"
+        }, {
+          selector: 'edge',
+          style: {
+            'width': 3,
+            'line-color': '#ccc',
+            'target-arrow-color': '#ccc',
+            'target-arrow-shape': 'triangle'
           }
         }
-      ]
-    },
+      ],
+      layout: {
+        name: 'grid',
+        rows: 1
+      }},
   }),
   methods: {
     async search() {
@@ -120,18 +118,22 @@ export default {
       this.searching = true;
       this.buttonText = "Searching"
       this.elements = await api.accountIDGraphForRootAccountID(this.accountID)
+      this.cy.add(this.elements);
+      this.cy.layout({ name: "grid" }).run();
       this.buttonText = "Build Graph for Account"
       this.searching = false;
     },
     preConfig(cytoscape) {
       console.log("calling pre-config");
-      // cytoscape: this is the cytoscape constructor
-      cytoscape.use(cola);
     },
     afterCreated(cy) {
-      // cy: this is the cytoscape instance
-      console.log("after created");
+      this.cy = cy
+      this.addInitialNodes();
     },
+    addInitialNodes() {
+      this.cy.add(this.elements);
+      this.cy.layout({ name: "grid" }).run();
+    }
   },
   components: {
     VueJsonPretty,
