@@ -110,6 +110,7 @@ export default {
             width: '50',
             height: '50',
             "background-color": 'yellow',
+            'label': 'data(label)',
           }
         },
         {
@@ -125,7 +126,7 @@ export default {
             width: '50',
             height: '50',
             'shape': 'ellipse',
-            'label': 'A',
+            'label': 'data(label)',
           }
         },
         {

@@ -19,6 +19,7 @@
     "node-fetch": "^3.1.0",
     "register-service-worker": "^1.7.1",
     "roboto-fontface": "*",
+    "unique-names-generator": "^4.6.0",
     "vue": "^2.6.11",
     "vue-cytoscape": "^1.0.8",
     "vue-json-pretty": "^1.8.2",
