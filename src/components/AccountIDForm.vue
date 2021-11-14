@@ -91,15 +91,21 @@ export default {
           selector: 'node',
           style: {
             'background-color': '#666',
-            'label': 'data(id)'
+            'label': 'data(label)',
+            "text-valign": "center",
+            "text-halign": "center",
+            "text-outline-color": "#555",
+            "text-outline-width": "2px",
+            "color": "#fff"
           }
         }, {
           selector: 'edge',
           style: {
-            'width': 3,
+            'width': 5,
             'line-color': '#ccc',
             'mid-target-arrow-color': '#ccc',
-            'mid-target-arrow-shape': 'triangle'
+            'mid-target-arrow-shape': 'triangle',
+            'curve-style': 'haystack'
           }
         }, {
         selector: 'node.root',
@@ -123,7 +129,6 @@ export default {
             'shape': 'ellipse'
           }
         }
-
       ]
     },
   }),

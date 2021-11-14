@@ -19,7 +19,7 @@
       const transactions = jsonData.transactions
 
       const graph = [
-        { data: {id: rootAccountID}, classes: 'account root' }
+        { data: {id: rootAccountID, label: "Target Account"}, classes: 'account root' }
       ]
 
       if(transactions != null) {
@@ -31,17 +31,18 @@
 
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            graph.push({ data: {id: tx.id}, classes: 'transaction'})
+            graph.push({ data: {id: tx.id, label: ptx.amount}, classes: 'transaction'})
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            graph.push({ data: {id: tx.sender}, classes: 'account'})
+            graph.push({ data: {id: tx.sender, label: tx.sender}, classes: 'account'})
 
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              graph.push({ data: {id: tx.id + tx.sender, target: tx.id, source: tx.sender}})
+            // Edges
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-              graph.push({ data: {id: tx.id + ptx.receiver, target: tx.id, source: ptx.receiver}})
+            graph.push({ data: {id: tx.id + tx.sender, target: tx.id, source: tx.sender}})
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            graph.push({ data: {id: tx.id + ptx.receiver, source: tx.id, target: ptx.receiver}})
           }
         }
       }
