@@ -2,8 +2,7 @@
   <v-form v-model="valid">
     <v-container fluid>
       <v-row>
-        <v-col cols="4">
-          <v-form>
+        <v-col cols="1">
             <v-select
               v-model="selectedNetwork"
               item-text="name"
@@ -11,15 +10,17 @@
               :items="networks"
               label="Select Network"
             ></v-select>
-
+        </v-col>
+        <v-col cols="6">
             <v-text-field
               v-model="accountID"
               :rules="accountIDRules"
               :counter="58"
-              label="Algorand Account ID"
+              label="Algorand Target Account ID"
               required
             ></v-text-field>
-
+        </v-col>
+        <v-col cols="2">
             <v-select
               v-model="searchDepth"
               :items="searchDepths"
@@ -27,24 +28,21 @@
               hint="How many layers to search"
               persistent-hint
             ></v-select>
+        </v-col>
 
-            <div>
-              <br />
+        <v-col cols="2">
               <v-btn
                 color="primary"
                 elevation="2"
                 large
-                x-large
                 v-on:click="search"
                 :disabled="searching"
               >
                 {{ buttonText }}
               </v-btn>
-            </div>
-          </v-form>
         </v-col>
 
-        <v-col cols="8">
+        <v-col cols="12">
           <div class="cyHolder">
             <cytoscape :config="cyConfig"
                        :afterCreated="afterCreated">
@@ -101,24 +99,24 @@ export default {
         }, {
           selector: 'edge',
           style: {
-            'width': 5,
+            'width': 3,
             'line-color': '#ccc',
             'mid-target-arrow-color': '#ccc',
             'mid-target-arrow-shape': 'triangle',
-            'curve-style': 'haystack'
           }
         }, {
         selector: 'node.root',
           style: {
             width: '50',
             height: '50',
-            "background-color": 'red'
+            "background-color": 'yellow',
           }
         },
         {
           selector: 'node.transaction',
           style: {
-            'shape': 'rectangle'
+            'shape': 'rectangle',
+            "background-color": "green"
           }
         },
         {
@@ -126,7 +124,22 @@ export default {
           style: {
             width: '50',
             height: '50',
-            'shape': 'ellipse'
+            'shape': 'ellipse',
+            'label': 'A',
+          }
+        },
+        {
+          selector: 'edge.outgoing',
+          style: {
+            "line-color": "red",
+            'mid-target-arrow-color': 'red',
+          }
+        },
+        {
+          selector: 'edge.incoming',
+          style: {
+            "line-color": "green",
+            'mid-target-arrow-color': 'green',
           }
         }
       ]
@@ -138,8 +151,8 @@ export default {
       this.searching = true;
       this.buttonText = "Searching"
       this.elements = await api.accountIDGraphForRootAccountID(this.accountID)
-      this.cy.add(this.elements);
-      this.cy.layout({ name: "grid" }).run();
+      this.cy.add(this.elements)
+      this.cy.layout({ name: "cose" }).run()
       this.buttonText = "Build Graph for Account"
       this.searching = false;
     },
@@ -152,7 +165,7 @@ export default {
     },
     addInitialNodes() {
       this.cy.add(this.elements);
-      this.cy.layout({ name: "grid" }).run();
+      this.cy.layout({ name: "circle" }).run();
     }
   },
   components: {

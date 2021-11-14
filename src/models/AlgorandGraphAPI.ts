@@ -19,7 +19,7 @@
       const transactions = jsonData.transactions
 
       const graph = [
-        { data: {id: rootAccountID, label: "Target Account"}, classes: 'account root' }
+        { data: {id: rootAccountID, label: "Target Account"}, classes: 'root' }
       ]
 
       if(transactions != null) {
@@ -35,14 +35,17 @@
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             graph.push({ data: {id: tx.sender, label: tx.sender}, classes: 'account'})
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            graph.push({ data: {id: ptx.receiver, label: ptx.receiver}, classes: 'account'})
 
             // Edges
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            graph.push({ data: {id: tx.id + tx.sender, target: tx.id, source: tx.sender}})
+            graph.push({ data: {id: tx.id + tx.sender, target: tx.id, source: tx.sender}, classes: "outgoing"})
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            graph.push({ data: {id: tx.id + ptx.receiver, source: tx.id, target: ptx.receiver}})
+            graph.push({ data: {id: tx.id + ptx.receiver, source: tx.id, target: ptx.receiver}, classes: "incoming"})
           }
         }
       }
