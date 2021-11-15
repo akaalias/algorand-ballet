@@ -7,6 +7,7 @@ export class AlgorandGraphAPI {
   constructor(networkDomain: string) {
     this.apiKey = "pksIgccdqX9ADKvMLfVhf3hZqClM949951K9966v";
     this.networkDomain = networkDomain;
+    console.log("using... " + this.networkDomain)
   }
 
   async accountIDGraphForRootAccountID(rootAccountID: string, depth: number) {
@@ -30,20 +31,23 @@ export class AlgorandGraphAPI {
     nameToAccountIDMap.set(rootAccountID, uniqueNamesGenerator(customConfig));
 
     const graph = [
-      { data: { id: rootAccountID, label: nameToAccountIDMap.get(rootAccountID), distanceFromCenter: 500 }, classes: "root account" }
+      { data: { id: rootAccountID, label: nameToAccountIDMap.get(rootAccountID), distanceFromCenter: 100 }, classes: "root account" }
     ];
 
     if (transactions != null) {
       for (const tx of transactions) {
-        let txDetails: any;
-        let txClass: string;
+        let txDetails: any
+        let txClass: string
+        let txAmount: string
 
         if (tx["payment-transaction"] != null) {
           txDetails = tx["payment-transaction"]
           txClass = "payment-transaction"
+          txAmount = (txDetails.amount / 1000.0) + "Ⱥ"
         } else if (tx["asset-transfer-transaction"] != null) {
           txDetails = tx["asset-transfer-transaction"]
           txClass = "asset-transfer-transaction"
+          txAmount = txDetails.amount
         } else {
           continue
         }
@@ -56,17 +60,18 @@ export class AlgorandGraphAPI {
           nameToAccountIDMap.set(txDetails.receiver, uniqueNamesGenerator(customConfig));
         }
 
+        // Group
         const groupID = tx.group
         if(groupID != null) {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
-          graph.push({data: {id: tx.group, label: tx.group.substring(0, 8), distanceFromCenter: 100}, classes: "group"})
+          graph.push({data: {id: tx.group, label: tx.group.substring(0, 8), distanceFromCenter: 50}, classes: "group"})
         }
 
         // Nodes
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        graph.push({ data: { id: tx.id, label: txDetails.amount, parent: groupID, distanceFromCenter: 100}, classes: txClass });
+        graph.push({ data: { id: tx.id, label: txAmount, parent: groupID, distanceFromCenter: 50}, classes: txClass });
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         graph.push({ data: { id: tx.sender, label: nameToAccountIDMap.get(tx.sender), distanceFromCenter: 0}, classes: "account" });

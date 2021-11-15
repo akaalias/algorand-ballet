@@ -8,7 +8,8 @@
               item-text="name"
               item-value="domain"
               :items="networks"
-              label="Select Network"
+              label="Network"
+              return-object
             ></v-select>
         </v-col>
         <v-col cols="6">
@@ -93,13 +94,13 @@ export default {
             "text-valign": "center",
             "text-halign": "center",
             "text-outline-color": "#555",
-            "text-outline-width": "2px",
-            "color": "#fff"
+            "text-outline-width": "3px",
+            "color": "#fff",
           }
         }, {
           selector: 'edge',
           style: {
-            'width': 3,
+            'width': 2,
             'line-color': '#ccc',
             'mid-target-arrow-color': '#ccc',
             'mid-target-arrow-shape': 'triangle',
@@ -111,6 +112,9 @@ export default {
             height: '50',
             "background-color": 'yellow',
             'label': 'data(label)',
+            'border-width': 3,
+            'border-color': "#555",
+            'font-size': 18
           }
         },
         {
@@ -180,17 +184,14 @@ export default {
       this.cy.layout({ name: "concentric",
         spacingFactor: 2,
         concentric: function( node ){ // returns numeric value for each node, placing higher nodes in levels towards the centre
-          console.log(node.data().distanceFromCenter)
           return node.data().distanceFromCenter
         }}).run()
-
-      console.log(this.cy.$("node"))
 
       this.buttonText = "Build Graph for Account"
       this.searching = false
     },
     preConfig(cytoscape) {
-      console.log("calling pre-config");
+      console.log("")
     },
     afterCreated(cy) {
       this.cy = cy
