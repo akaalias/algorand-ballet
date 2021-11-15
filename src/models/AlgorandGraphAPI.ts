@@ -19,9 +19,6 @@ export class AlgorandGraphAPI {
 
     const jsonData = await response.json();
     const transactions = jsonData.transactions;
-
-    console.log(jsonData);
-
     const customConfig: Config = {
       dictionaries: [adjectives, colors, names, animals, starWars],
       separator: " ",
@@ -33,7 +30,7 @@ export class AlgorandGraphAPI {
     nameToAccountIDMap.set(rootAccountID, uniqueNamesGenerator(customConfig));
 
     const graph = [
-      { data: { id: rootAccountID, label: nameToAccountIDMap.get(rootAccountID) }, classes: "root account" }
+      { data: { id: rootAccountID, label: nameToAccountIDMap.get(rootAccountID), distanceFromCenter: 500 }, classes: "root account" }
     ];
 
     if (transactions != null) {
@@ -63,18 +60,19 @@ export class AlgorandGraphAPI {
         if(groupID != null) {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
-          graph.push({data: {id: tx.group, label: tx.group.substring(0, 8)}, classes: "group"})
+          graph.push({data: {id: tx.group, label: tx.group.substring(0, 8), distanceFromCenter: 100}, classes: "group"})
         }
 
+        // Nodes
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        graph.push({ data: { id: tx.id, label: txDetails.amount, parent: groupID}, classes: txClass });
+        graph.push({ data: { id: tx.id, label: txDetails.amount, parent: groupID, distanceFromCenter: 100}, classes: txClass });
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        graph.push({ data: { id: tx.sender, label: nameToAccountIDMap.get(tx.sender)}, classes: "account" });
+        graph.push({ data: { id: tx.sender, label: nameToAccountIDMap.get(tx.sender), distanceFromCenter: 0}, classes: "account" });
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        graph.push({ data: { id: txDetails.receiver, label: nameToAccountIDMap.get(txDetails.receiver) }, classes: "account" });
+        graph.push({ data: { id: txDetails.receiver, label: nameToAccountIDMap.get(txDetails.receiver), distanceFromCenter: 0 }, classes: "account" });
 
         // Edges
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment

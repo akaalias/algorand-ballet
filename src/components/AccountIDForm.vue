@@ -157,7 +157,7 @@ export default {
             "background-color": "lightgray",
             "shape": "round-rectangle",
             "text-valign": "top",
-            "text-halign": "bottom",
+            "text-halign": "center",
             "text-outline-width": "0px",
             "color": "gray",
             "font-size": "8px",
@@ -172,18 +172,33 @@ export default {
       let api = new AlgorandGraphAPI(this.selectedNetwork.domain)
       this.searching = true;
       this.buttonText = "Searching"
+
       this.elements = await api.accountIDGraphForRootAccountID(this.accountID)
+      this.cy.removeData()
       this.cy.add(this.elements)
-      this.cy.layout({ name: "cose" }).run()
+
+      this.cy.layout({ name: "concentric",
+        spacingFactor: 2,
+        concentric: function( node ){ // returns numeric value for each node, placing higher nodes in levels towards the centre
+          console.log(node.data().distanceFromCenter)
+          return node.data().distanceFromCenter
+        }}).run()
+
+      console.log(this.cy.$("node"))
+
       this.buttonText = "Build Graph for Account"
-      this.searching = false;
+      this.searching = false
     },
     preConfig(cytoscape) {
       console.log("calling pre-config");
     },
     afterCreated(cy) {
       this.cy = cy
-      this.addInitialNodes();
+      this.addInitialNodes()
+      this.cy.on('tap', 'node', function(evt){
+        var node = evt.target;
+        console.log( 'tapped ' + node.id() );
+      })
     },
     addInitialNodes() {
       this.cy.add(this.elements);
