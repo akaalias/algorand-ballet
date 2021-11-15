@@ -114,12 +114,20 @@ export default {
           }
         },
         {
-          selector: 'node.transaction',
+          selector: 'node.payment-transaction',
           style: {
             'shape': 'rectangle',
             "background-color": "green"
           }
         },
+        {
+          selector: 'node.asset-transfer-transaction',
+          style: {
+            'shape': 'triangle',
+            "background-color": "orange"
+          }
+        }
+        ,
         {
           selector: 'node.account',
           style: {
@@ -142,6 +150,19 @@ export default {
             "line-color": "green",
             'mid-target-arrow-color': 'green',
           }
+        },
+        {
+          selector: 'node.group',
+          style: {
+            "background-color": "lightgray",
+            "shape": "round-rectangle",
+            "text-valign": "top",
+            "text-halign": "bottom",
+            "text-outline-width": "0px",
+            "color": "gray",
+            "font-size": "8px",
+            'label': 'data(label)',
+          }
         }
       ]
     },
@@ -153,7 +174,7 @@ export default {
       this.buttonText = "Searching"
       this.elements = await api.accountIDGraphForRootAccountID(this.accountID)
       this.cy.add(this.elements)
-      this.cy.layout({ name: "grid" }).run()
+      this.cy.layout({ name: "cose" }).run()
       this.buttonText = "Build Graph for Account"
       this.searching = false;
     },
@@ -178,5 +199,6 @@ export default {
 <style scoped>
 .cyHolder {
   width: 100%;
+  height: 850px;
 }
 </style>

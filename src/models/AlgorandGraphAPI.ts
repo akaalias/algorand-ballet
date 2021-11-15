@@ -19,15 +19,18 @@ export class AlgorandGraphAPI {
 
     const jsonData = await response.json();
     const transactions = jsonData.transactions;
+
+    console.log(jsonData);
+
     const customConfig: Config = {
       dictionaries: [adjectives, colors, names, animals, starWars],
-      separator: ' ',
+      separator: " ",
       length: 2,
-      style: 'capital'
-    }
+      style: "capital"
+    };
 
-    const nameToAccountIDMap = new Map()
-    nameToAccountIDMap.set(rootAccountID, uniqueNamesGenerator(customConfig))
+    const nameToAccountIDMap = new Map();
+    nameToAccountIDMap.set(rootAccountID, uniqueNamesGenerator(customConfig));
 
     const graph = [
       { data: { id: rootAccountID, label: nameToAccountIDMap.get(rootAccountID) }, classes: "root account" }
@@ -35,36 +38,51 @@ export class AlgorandGraphAPI {
 
     if (transactions != null) {
       for (const tx of transactions) {
+        let txDetails: any;
+        let txClass: string;
 
         if (tx["payment-transaction"] != null) {
-          const ptx = tx["payment-transaction"]
-
-          if(!nameToAccountIDMap.has(tx.sender)) {
-            nameToAccountIDMap.set(tx.sender, uniqueNamesGenerator(customConfig))
-          }
-
-          if(!nameToAccountIDMap.has(ptx.receiver)) {
-            nameToAccountIDMap.set(ptx.receiver, uniqueNamesGenerator(customConfig))
-          }
-
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          graph.push({ data: { id: tx.id, label: ptx.amount }, classes: "transaction" });
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          graph.push({ data: { id: tx.sender, label: nameToAccountIDMap.get(tx.sender) }, classes: "account" });
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          graph.push({ data: { id: ptx.receiver, label: nameToAccountIDMap.get(ptx.receiver) }, classes: "account" });
-
-          // Edges
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          graph.push({ data: { id: tx.id + tx.sender, target: tx.id, source: tx.sender }, classes: "outgoing" });
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          graph.push({ data: { id: tx.id + ptx.receiver, source: tx.id, target: ptx.receiver }, classes: "incoming" });
+          txDetails = tx["payment-transaction"]
+          txClass = "payment-transaction"
+        } else if (tx["asset-transfer-transaction"] != null) {
+          txDetails = tx["asset-transfer-transaction"]
+          txClass = "asset-transfer-transaction"
+        } else {
+          continue
         }
+
+        if (!nameToAccountIDMap.has(tx.sender)) {
+          nameToAccountIDMap.set(tx.sender, uniqueNamesGenerator(customConfig));
+        }
+
+        if (!nameToAccountIDMap.has(txDetails.receiver)) {
+          nameToAccountIDMap.set(txDetails.receiver, uniqueNamesGenerator(customConfig));
+        }
+
+        const groupID = tx.group
+        if(groupID != null) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          graph.push({data: {id: tx.group, label: tx.group.substring(0, 8)}, classes: "group"})
+        }
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        graph.push({ data: { id: tx.id, label: txDetails.amount, parent: groupID}, classes: txClass });
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        graph.push({ data: { id: tx.sender, label: nameToAccountIDMap.get(tx.sender)}, classes: "account" });
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        graph.push({ data: { id: txDetails.receiver, label: nameToAccountIDMap.get(txDetails.receiver) }, classes: "account" });
+
+        // Edges
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        graph.push({ data: { id: tx.id + tx.sender, target: tx.id, source: tx.sender }, classes: "outgoing" });
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        graph.push({ data: { id: tx.id + txDetails.receiver, source: tx.id, target: txDetails.receiver }, classes: "incoming" });
       }
     }
 
