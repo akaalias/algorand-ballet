@@ -153,7 +153,7 @@ export default {
       this.buttonText = "Searching"
       this.elements = await api.accountIDGraphForRootAccountID(this.accountID)
       this.cy.add(this.elements)
-      this.cy.layout({ name: "cose" }).run()
+      this.cy.layout({ name: "grid" }).run()
       this.buttonText = "Build Graph for Account"
       this.searching = false;
     },

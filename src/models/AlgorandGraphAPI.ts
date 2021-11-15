@@ -1,4 +1,4 @@
-import { uniqueNamesGenerator, Config, adjectives, colors, animals } from "unique-names-generator";
+import { uniqueNamesGenerator, Config, adjectives, colors, animals, names, starWars } from "unique-names-generator";
 
 export class AlgorandGraphAPI {
   apiKey: string;
@@ -20,7 +20,7 @@ export class AlgorandGraphAPI {
     const jsonData = await response.json();
     const transactions = jsonData.transactions;
     const customConfig: Config = {
-      dictionaries: [adjectives, colors],
+      dictionaries: [adjectives, colors, names, animals, starWars],
       separator: ' ',
       length: 2,
       style: 'capital'
