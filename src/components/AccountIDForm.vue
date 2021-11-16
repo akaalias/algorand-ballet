@@ -43,8 +43,9 @@
         </v-col>
        </v-row>
 
-      <v-row>
-        <v-col cols="1">
+      <v-row v-if="elements.length != 0">
+        <v-col cols="2">
+          <h1 class="text-sm-h6">Transactions</h1>
           <v-switch
             v-model="paymentTransactionsVisible"
             label="Payments"
@@ -63,13 +64,25 @@
             v-on:click="toggleApplicationTransactions"
           />
 
+          <v-switch
+            v-model="groupsVisible"
+            label="Groups"
+            v-on:click="toggleGroups"
+          />
+
         </v-col>
-        <v-col cols="11">
+        <v-col cols="10">
           <div class="cyHolder">
             <cytoscape :config="cyConfig"
-                       :afterCreated="afterCreated">
-            </cytoscape>
+                       :afterCreated="afterCreated"/>
           </div>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="12">
+          <vue-json-pretty :data="jsonData">
+          </vue-json-pretty>
         </v-col>
       </v-row>
     </v-container>
@@ -127,8 +140,8 @@ export default {
         }, {
         selector: 'node.root',
           style: {
-            width: '80',
-            height: '80',
+            width: '100',
+            height: '100',
             "background-color": 'yellow',
             'label': 'data(label)',
             'border-width': 3,
@@ -140,14 +153,18 @@ export default {
           selector: 'node.payment-transaction',
           style: {
             'shape': 'rectangle',
-            "background-color": "green"
+            "background-color": "green",
+            width: '50',
+            height: '50',
           }
         },
         {
           selector: 'node.asset-transfer-transaction',
           style: {
             'shape': 'triangle',
-            "background-color": "orange"
+            "background-color": "orange",
+            width: '50',
+            height: '50',
           }
         },
         {
@@ -162,9 +179,19 @@ export default {
         {
           selector: 'node.account',
           style: {
-            width: '50',
-            height: '50',
+            width: '100',
+            height: '100',
             'shape': 'ellipse',
+            'label': 'data(label)',
+          }
+        },
+        {
+          selector: 'node.application',
+          style: {
+            width: '100',
+            height: '100',
+            'shape': 'diamond',
+            "background-color": "blue",
             'label': 'data(label)',
           }
         },
@@ -208,6 +235,8 @@ export default {
     paymentTransactionsVisible: true,
     assetTransferTransactionsVisible: true,
     applicationTransactionsVisible: true,
+    groupsVisible: true,
+    jsonData: ""
   }),
   methods: {
     async search() {
@@ -216,15 +245,16 @@ export default {
       this.buttonText = "Searching"
 
       this.elements = await api.accountIDGraphForRootAccountID(this.accountID)
-      this.cy.removeData()
-      this.cy.add(this.elements)
 
-      this.cy.layout({ name: "concentric",
-        spacingFactor: 2,
-        concentric: function( node ){ // returns numeric value for each node, placing higher nodes in levels towards the centre
-          return node.data().distanceFromCenter
-        }}).run()
-
+      if(!(this.cy == undefined)) {
+        this.cy.removeData()
+        this.cy.add(this.elements)
+        this.cy.layout({ name: "concentric",
+          spacingFactor: 2,
+          concentric: function( node ){ // returns numeric value for each node, placing higher nodes in levels towards the centre
+            return node.data().distanceFromCenter
+          }}).run()
+      }
       this.buttonText = "Build Graph"
       this.searching = false
     },
@@ -236,8 +266,12 @@ export default {
       this.addInitialNodes()
       this.cy.on('tap', 'node', function(evt){
         var node = evt.target;
-        console.log( 'tapped ' + node.id() );
-      })
+        if(node.data().json != null) {
+          this.jsonData = node.data().json
+        } else {
+          this.jsonData = node.data()
+        }
+      }.bind(this))
     },
     addInitialNodes() {
       this.cy.add(this.elements);
@@ -264,6 +298,13 @@ export default {
         this.cy.$('.application-transaction').style("display","element");
       }
     },
+    toggleGroups() {
+      if(!this.groupsVisible) {
+        this.cy.$('.group').style("display","none");
+      } else {
+        this.cy.$('.group').style("display","element");
+      }
+    },
   },
   components: {
     VueJsonPretty,
@@ -274,6 +315,8 @@ export default {
 <style scoped>
 .cyHolder {
   width: 100%;
-  height: 850px;
+  height: 100%;
+  display: block;
+  border: 1px solid #ccc;
 }
 </style>

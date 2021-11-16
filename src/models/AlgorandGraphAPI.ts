@@ -21,6 +21,14 @@ export class AlgorandGraphAPI {
     style: "capital",
   };
 
+  applicationNamingConfig: Config = {
+    dictionaries: [adjectives, colors, names, animals, starWars],
+    separator: "",
+    length: 2,
+    style: "capital",
+  };
+
+
   constructor(networkDomain: string) {
     this.apiKey = "pksIgccdqX9ADKvMLfVhf3hZqClM949951K9966v";
     this.networkDomain = networkDomain;
@@ -37,7 +45,6 @@ export class AlgorandGraphAPI {
     });
 
     const jsonData = await response.json();
-    console.log(jsonData);
     const transactions = jsonData.transactions;
 
     this.nameToAccountIDMap.set(
@@ -45,11 +52,12 @@ export class AlgorandGraphAPI {
       uniqueNamesGenerator(this.customNamingConfig)
     );
 
+    // Root Node
     this.elements.push({
       data: {
         id: rootAccountID,
         label: this.nameToAccountIDMap.get(rootAccountID),
-        distanceFromCenter: 100,
+        distanceFromCenter: 0,
       },
       classes: "root account",
     });
@@ -70,7 +78,6 @@ export class AlgorandGraphAPI {
     }
   }
   private setElementsForPaymentTransaction(tx: any) {
-    console.log("Processing Payment Transaction")
     const txDetails = tx["payment-transaction"];
     const txClass = "payment-transaction";
     const txAmount = txDetails.amount / 1000.0 + "Ⱥ";
@@ -98,13 +105,12 @@ export class AlgorandGraphAPI {
         data: {
           id: tx.group,
           label: tx.group.substring(0, 8),
-          distanceFromCenter: 50,
         },
         classes: "group",
       });
     }
 
-    // Nodes
+    // TX Node
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     this.elements.push({
@@ -113,26 +119,31 @@ export class AlgorandGraphAPI {
         label: txAmount,
         parent: groupID,
         distanceFromCenter: 50,
+        json: tx
       },
       classes: txClass + " payment-transaction",
     });
+
+    // Sender Node
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     this.elements.push({
       data: {
         id: tx.sender,
         label: this.nameToAccountIDMap.get(tx.sender),
-        distanceFromCenter: 0,
+        distanceFromCenter: 100,
       },
       classes: "account",
     });
+
+    // Receiver Node
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     this.elements.push({
       data: {
         id: txDetails.receiver,
         label: this.nameToAccountIDMap.get(txDetails.receiver),
-        distanceFromCenter: 0,
+        distanceFromCenter: 100,
       },
       classes: "account",
     });
@@ -141,7 +152,7 @@ export class AlgorandGraphAPI {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     this.elements.push({
-      data: { id: tx.id + tx.sender, target: tx.id, source: tx.sender },
+      data: { id: tx.id + tx.sender, target: tx.id, source: tx.sender, json: tx},
       classes: "outgoing payment-transaction",
     });
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -150,15 +161,12 @@ export class AlgorandGraphAPI {
       data: {
         id: tx.id + txDetails.receiver,
         source: tx.id,
-        target: txDetails.receiver,
+        target: txDetails.receiver
       },
       classes: "incoming payment-transaction",
     });
   }
-
   private setElementsForAssetTransferTransaction(tx: any) {
-    console.log("Processing Asset Transfer Transaction")
-
     const txDetails = tx["asset-transfer-transaction"];
     const txClass = "asset-transfer-transaction";
     const txAmount = txDetails.amount;
@@ -186,13 +194,12 @@ export class AlgorandGraphAPI {
         data: {
           id: tx.group,
           label: tx.group.substring(0, 8),
-          distanceFromCenter: 50,
         },
         classes: "group",
       });
     }
 
-    // Nodes
+    // TX Node
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     this.elements.push({
@@ -201,26 +208,31 @@ export class AlgorandGraphAPI {
         label: txAmount,
         parent: groupID,
         distanceFromCenter: 50,
+        json: tx
       },
       classes: txClass + " asset-transfer-transaction",
     });
+
+    // Sender Node
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     this.elements.push({
       data: {
         id: tx.sender,
         label: this.nameToAccountIDMap.get(tx.sender),
-        distanceFromCenter: 0,
+        distanceFromCenter: 100,
       },
       classes: "account",
     });
+
+    // Receiver Node
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     this.elements.push({
       data: {
         id: txDetails.receiver,
         label: this.nameToAccountIDMap.get(txDetails.receiver),
-        distanceFromCenter: 0,
+        distanceFromCenter: 100,
       },
       classes: "account",
     });
@@ -229,7 +241,7 @@ export class AlgorandGraphAPI {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     this.elements.push({
-      data: { id: tx.id + tx.sender, target: tx.id, source: tx.sender },
+      data: { id: tx.id + tx.sender, target: tx.id, source: tx.sender, json: tx },
       classes: "outgoing asset-transfer-transaction",
     });
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -238,15 +250,12 @@ export class AlgorandGraphAPI {
       data: {
         id: tx.id + txDetails.receiver,
         source: tx.id,
-        target: txDetails.receiver,
+        target: txDetails.receiver
       },
       classes: "incoming asset-transfer-transaction",
     });
   }
-
   private setElementsForApplicationTransaction(tx: any) {
-    console.log("Processing Application Transaction")
-
     const txDetails = tx["application-transaction"];
     const txClass = "application-transaction";
 
@@ -260,7 +269,7 @@ export class AlgorandGraphAPI {
     if (!this.nameToAccountIDMap.has(txDetails["application-id"])) {
       this.nameToAccountIDMap.set(
         txDetails["application-id"],
-        uniqueNamesGenerator(this.customNamingConfig)
+        uniqueNamesGenerator(this.applicationNamingConfig)
       );
     }
 
@@ -271,9 +280,20 @@ export class AlgorandGraphAPI {
       data: {
         id: tx.sender,
         label: this.nameToAccountIDMap.get(tx.sender),
-        distanceFromCenter: 0,
+        distanceFromCenter: 100,
       },
       classes: "account",
+    });
+
+    // Application Node
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    this.elements.push({
+      data: {
+        id: txDetails["application-id"],
+        label: this.nameToAccountIDMap.get(txDetails["application-id"]),
+      },
+      classes: "application",
     });
 
     // Group
@@ -285,7 +305,6 @@ export class AlgorandGraphAPI {
         data: {
           id: tx.group,
           label: tx.group.substring(0, 8),
-          distanceFromCenter: 50,
         },
         classes: "group",
       });
@@ -297,9 +316,10 @@ export class AlgorandGraphAPI {
     this.elements.push({
       data: {
         id: tx.id,
-        label: this.nameToAccountIDMap.get(txDetails["application-id"]),
+        label: this.nameToAccountIDMap.get(txDetails["application-id"]) + "().eval()",
         parent: groupID,
         distanceFromCenter: 50,
+        json: tx
       },
       classes: txClass,
     });
@@ -309,6 +329,14 @@ export class AlgorandGraphAPI {
     // @ts-ignore
     this.elements.push({
       data: { id: tx.id + tx.sender, target: tx.id, source: tx.sender },
+      classes: "application-call" + " " + txClass,
+    });
+
+    // Edge Application TX -> Application
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    this.elements.push({
+      data: { id: txDetails["application-id"] + tx.id, target: tx.id, source: txDetails["application-id"] },
       classes: "application-call" + " " + txClass,
     });
 
@@ -328,7 +356,7 @@ export class AlgorandGraphAPI {
         data: {
           id: acID,
           label: this.nameToAccountIDMap.get(acID),
-          distanceFromCenter: 0,
+          distanceFromCenter: 100,
         },
         classes: "account",
       });
