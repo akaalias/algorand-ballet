@@ -41,8 +41,30 @@
                 {{ buttonText }}
               </v-btn>
         </v-col>
+       </v-row>
 
-        <v-col cols="12">
+      <v-row>
+        <v-col cols="1">
+          <v-switch
+            v-model="paymentTransactionsVisible"
+            label="Payments"
+            v-on:click="togglePaymentTransactions"
+          />
+
+          <v-switch
+            v-model="assetTransferTransactionsVisible"
+            label="Transfers"
+            v-on:click="toggleAssetTransferTransactions"
+          />
+
+          <v-switch
+            v-model="applicationTransactionsVisible"
+            label="Applications"
+            v-on:click="toggleApplicationTransactions"
+          />
+
+        </v-col>
+        <v-col cols="11">
           <div class="cyHolder">
             <cytoscape :config="cyConfig"
                        :afterCreated="afterCreated">
@@ -105,8 +127,8 @@ export default {
         }, {
         selector: 'node.root',
           style: {
-            width: '50',
-            height: '50',
+            width: '80',
+            height: '80',
             "background-color": 'yellow',
             'label': 'data(label)',
             'border-width': 3,
@@ -132,7 +154,9 @@ export default {
           selector: 'node.application-transaction',
           style: {
             'shape': 'diamond',
-            "background-color": "blue"
+            "background-color": "blue",
+            width: '50',
+            height: '50',
           }
         },
         {
@@ -181,6 +205,9 @@ export default {
         }
       ]
     },
+    paymentTransactionsVisible: true,
+    assetTransferTransactionsVisible: true,
+    applicationTransactionsVisible: true,
   }),
   methods: {
     async search() {
@@ -215,7 +242,28 @@ export default {
     addInitialNodes() {
       this.cy.add(this.elements);
       this.cy.layout({ name: "circle" }).run();
-    }
+    },
+    togglePaymentTransactions() {
+      if(!this.paymentTransactionsVisible) {
+        this.cy.$('.payment-transaction').style("display","none");
+      } else {
+        this.cy.$('.payment-transaction').style("display","element");
+      }
+    },
+    toggleAssetTransferTransactions() {
+      if(!this.assetTransferTransactionsVisible) {
+        this.cy.$('.asset-transfer-transaction').style("display","none");
+      } else {
+        this.cy.$('.asset-transfer-transaction').style("display","element");
+      }
+    },
+    toggleApplicationTransactions() {
+      if(!this.applicationTransactionsVisible) {
+        this.cy.$('.application-transaction').style("display","none");
+      } else {
+        this.cy.$('.application-transaction').style("display","element");
+      }
+    },
   },
   components: {
     VueJsonPretty,

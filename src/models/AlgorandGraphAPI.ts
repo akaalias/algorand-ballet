@@ -114,7 +114,7 @@ export class AlgorandGraphAPI {
         parent: groupID,
         distanceFromCenter: 50,
       },
-      classes: txClass,
+      classes: txClass + " payment-transaction",
     });
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -142,7 +142,7 @@ export class AlgorandGraphAPI {
     // @ts-ignore
     this.elements.push({
       data: { id: tx.id + tx.sender, target: tx.id, source: tx.sender },
-      classes: "outgoing",
+      classes: "outgoing payment-transaction",
     });
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -152,7 +152,7 @@ export class AlgorandGraphAPI {
         source: tx.id,
         target: txDetails.receiver,
       },
-      classes: "incoming",
+      classes: "incoming payment-transaction",
     });
   }
 
@@ -202,7 +202,7 @@ export class AlgorandGraphAPI {
         parent: groupID,
         distanceFromCenter: 50,
       },
-      classes: txClass,
+      classes: txClass + " asset-transfer-transaction",
     });
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -230,7 +230,7 @@ export class AlgorandGraphAPI {
     // @ts-ignore
     this.elements.push({
       data: { id: tx.id + tx.sender, target: tx.id, source: tx.sender },
-      classes: "outgoing",
+      classes: "outgoing asset-transfer-transaction",
     });
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -240,7 +240,7 @@ export class AlgorandGraphAPI {
         source: tx.id,
         target: txDetails.receiver,
       },
-      classes: "incoming",
+      classes: "incoming asset-transfer-transaction",
     });
   }
 
@@ -291,7 +291,7 @@ export class AlgorandGraphAPI {
       });
     }
 
-    // App Transaction Node
+    // Transaction Node
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     this.elements.push({
@@ -309,7 +309,7 @@ export class AlgorandGraphAPI {
     // @ts-ignore
     this.elements.push({
       data: { id: tx.id + tx.sender, target: tx.id, source: tx.sender },
-      classes: "application-call",
+      classes: "application-call" + " " + txClass,
     });
 
     // there may be more than one related account
@@ -342,7 +342,7 @@ export class AlgorandGraphAPI {
           source: tx.id,
           target: acID,
         },
-        classes: "application-call",
+        classes: "application-call"  + " " + txClass,
       });
     }
   }
