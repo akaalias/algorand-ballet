@@ -2,7 +2,7 @@
   <v-form v-model="valid">
     <v-container fluid>
       <v-row>
-        <v-col cols="1">
+        <v-col cols="2">
             <v-select
               v-model="selectedNetwork"
               item-text="name"
@@ -21,12 +21,11 @@
               required
             ></v-text-field>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="1">
             <v-select
               v-model="searchDepth"
               :items="searchDepths"
-              label="Select Network Depth"
-              hint="How many layers to search"
+              label="Search Depth"
               persistent-hint
             ></v-select>
         </v-col>
@@ -80,7 +79,7 @@ export default {
     searchDepth: 1,
     searchDepths: [0, 1, 2, 3, 4],
     searching: false,
-    buttonText: "Build Graph for Account",
+    buttonText: "Build Graph",
     apiKey: "pksIgccdqX9ADKvMLfVhf3hZqClM949951K9966v",
     requestURL: "",
     elements: [],
@@ -100,10 +99,8 @@ export default {
         }, {
           selector: 'edge',
           style: {
-            'width': 2,
+            'width': 3,
             'line-color': '#ccc',
-            'mid-target-arrow-color': '#ccc',
-            'mid-target-arrow-shape': 'triangle',
           }
         }, {
         selector: 'node.root',
@@ -130,8 +127,14 @@ export default {
             'shape': 'triangle',
             "background-color": "orange"
           }
-        }
-        ,
+        },
+        {
+          selector: 'node.application-transaction',
+          style: {
+            'shape': 'diamond',
+            "background-color": "blue"
+          }
+        },
         {
           selector: 'node.account',
           style: {
@@ -145,13 +148,21 @@ export default {
           selector: 'edge.outgoing',
           style: {
             "line-color": "red",
+            'mid-target-arrow-shape': 'triangle',
             'mid-target-arrow-color': 'red',
+          }
+        },
+        {
+          selector: 'edge.application-call',
+          style: {
+            "line-color": "lightblue",
           }
         },
         {
           selector: 'edge.incoming',
           style: {
             "line-color": "green",
+            'mid-target-arrow-shape': 'triangle',
             'mid-target-arrow-color': 'green',
           }
         },
@@ -187,7 +198,7 @@ export default {
           return node.data().distanceFromCenter
         }}).run()
 
-      this.buttonText = "Build Graph for Account"
+      this.buttonText = "Build Graph"
       this.searching = false
     },
     preConfig(cytoscape) {
