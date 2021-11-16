@@ -88,9 +88,45 @@
             label="Groups"
             v-on:click="toggleGroupNodes"
           />
+
+          <v-dialog
+            v-model="dialog"
+            fullscreen
+            hide-overlay
+            transition="dialog-bottom-transition"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                color="primary"
+                dark
+                v-bind="attrs"
+                v-on="on"
+              >
+                Open Dialog
+              </v-btn>
+            </template>
+
+            <v-card>
+              <v-toolbar
+                dark
+                color="primary"
+              >
+                <v-btn
+                  @click="dialog = false"
+                >
+                  Close
+                </v-btn>
+              </v-toolbar>
+              <div class="cyHolder">
+                <cytoscape :config="cyConfig"
+                           :afterCreated="afterCreated"/>
+              </div>
+            </v-card>
+
+          </v-dialog>
         </v-col>
         <v-col cols="10">
-          <div class="cyHolder">
+          <div class="cyHolder" id="">
             <cytoscape :config="cyConfig"
                        :afterCreated="afterCreated"/>
           </div>
@@ -259,7 +295,8 @@ export default {
     accountNodesVisible: true,
     applicationNodesVisible: true,
     rootNodeVisible: true,
-    jsonData: ""
+    jsonData: "",
+    dialog: false,
   }),
   methods: {
     async search() {
@@ -276,8 +313,15 @@ export default {
           spacingFactor: 2,
           concentric: function( node ){ // returns numeric value for each node, placing higher nodes in levels towards the centre
             return node.data().distanceFromCenter
-          }}).run()
+          },
+        height: "100%"}).run()
+
+        this.cy.resize();
+        this.cy.fit();
       }
+
+      document.getElementById('cytoscape').style.height = 'calc(400px + 100px)'
+
       this.buttonText = "Build Graph"
       this.searching = false
     },
