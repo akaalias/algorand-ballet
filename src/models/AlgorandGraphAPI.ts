@@ -13,6 +13,7 @@ export class AlgorandGraphAPI {
   networkDomain: string;
   nameToAccountIDMap: Map<any, any>;
   elements: Array<any>;
+  capturedIDs: Map<string, string>;
 
   customNamingConfig: Config = {
     dictionaries: [adjectives, colors, names, animals, starWars],
@@ -28,12 +29,12 @@ export class AlgorandGraphAPI {
     style: "capital",
   };
 
-
   constructor(networkDomain: string) {
     this.apiKey = "pksIgccdqX9ADKvMLfVhf3hZqClM949951K9966v";
     this.networkDomain = networkDomain;
     this.nameToAccountIDMap = new Map();
     this.elements = []
+    this.capturedIDs = new Map()
   }
 
   async accountIDGraphForRootAccountID(rootAccountID: string, depth: number) {
@@ -61,6 +62,8 @@ export class AlgorandGraphAPI {
       },
       classes: "root",
     });
+    this.capturedIDs.set(rootAccountID, rootAccountID)
+
 
     if (transactions != null) {
       for (const tx of transactions) {
@@ -99,54 +102,68 @@ export class AlgorandGraphAPI {
     // Group
     const groupID = tx.group;
     if (groupID != null) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      this.elements.push({
-        data: {
-          id: tx.group,
-          label: tx.group.substring(0, 8),
-        },
-        classes: "group",
-      });
+      if(!this.capturedIDs.has(tx.group)) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        this.elements.push({
+          data: {
+            id: tx.group,
+            label: tx.group.substring(0, 8),
+          },
+          classes: "group",
+        });
+      }
+      this.capturedIDs.set(tx.group, tx.group);
     }
+
 
     // TX Node
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    this.elements.push({
-      data: {
-        id: tx.id,
-        label: txAmount,
-        parent: groupID,
-        distanceFromCenter: 50,
-        json: tx
-      },
-      classes: txClass + " payment-transaction",
-    });
+    if(!this.capturedIDs.has(tx.id)) {
+      this.elements.push({
+        data: {
+          id: tx.id,
+          label: txAmount,
+          parent: groupID,
+          distanceFromCenter: 50,
+          json: tx
+        },
+        classes: txClass + " payment-transaction",
+      });
+      this.capturedIDs.set(tx.id, tx.id);
+    }
+
 
     // Sender Node
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    this.elements.push({
-      data: {
-        id: tx.sender,
-        label: this.nameToAccountIDMap.get(tx.sender),
-        distanceFromCenter: 100,
-      },
-      classes: "account",
-    });
+    if(!this.capturedIDs.has(tx.sender)) {
+      this.elements.push({
+        data: {
+          id: tx.sender,
+          label: this.nameToAccountIDMap.get(tx.sender),
+          distanceFromCenter: 100,
+        },
+        classes: "account",
+      });
+      this.capturedIDs.set(tx.sender, tx.sender);
+    }
 
     // Receiver Node
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    this.elements.push({
-      data: {
-        id: txDetails.receiver,
-        label: this.nameToAccountIDMap.get(txDetails.receiver),
-        distanceFromCenter: 100,
-      },
-      classes: "account",
-    });
+    if(!this.capturedIDs.has(txDetails.receiver)) {
+      this.elements.push({
+        data: {
+          id: txDetails.receiver,
+          label: this.nameToAccountIDMap.get(txDetails.receiver),
+          distanceFromCenter: 100,
+        },
+        classes: "account",
+      });
+      this.capturedIDs.set(txDetails.receiver, txDetails.receiver);
+    }
 
     // Edges
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -188,54 +205,69 @@ export class AlgorandGraphAPI {
     // Group
     const groupID = tx.group;
     if (groupID != null) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      this.elements.push({
-        data: {
-          id: tx.group,
-          label: tx.group.substring(0, 8),
-        },
-        classes: "group",
-      });
+      if(!this.capturedIDs.has(tx.group)) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        this.elements.push({
+          data: {
+            id: tx.group,
+            label: tx.group.substring(0, 8),
+          },
+          classes: "group",
+        });
+      }
+      this.capturedIDs.set(tx.group, tx.group)
     }
 
     // TX Node
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    this.elements.push({
-      data: {
-        id: tx.id,
-        label: txAmount,
-        parent: groupID,
-        distanceFromCenter: 50,
-        json: tx
-      },
-      classes: txClass + " asset-transfer-transaction",
-    });
+    if(!this.capturedIDs.has(tx.id)) {
+      this.elements.push({
+        data: {
+          id: tx.id,
+          label: txAmount,
+          parent: groupID,
+          distanceFromCenter: 50,
+          json: tx
+        },
+        classes: txClass + " asset-transfer-transaction",
+      });
+      this.capturedIDs.set(tx.id, tx.id);
+    }
+
 
     // Sender Node
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    this.elements.push({
-      data: {
-        id: tx.sender,
-        label: this.nameToAccountIDMap.get(tx.sender),
-        distanceFromCenter: 100,
-      },
-      classes: "account",
-    });
+    if(!this.capturedIDs.has(tx.sender)) {
+      this.elements.push({
+        data: {
+          id: tx.sender,
+          label: this.nameToAccountIDMap.get(tx.sender),
+          distanceFromCenter: 100,
+        },
+        classes: "account",
+      });
+
+      this.capturedIDs.set(tx.sender, tx.sender);
+    }
 
     // Receiver Node
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    this.elements.push({
-      data: {
-        id: txDetails.receiver,
-        label: this.nameToAccountIDMap.get(txDetails.receiver),
-        distanceFromCenter: 100,
-      },
-      classes: "account",
-    });
+    if(!this.capturedIDs.has(txDetails.receiver)) {
+      this.elements.push({
+        data: {
+          id: txDetails.receiver,
+          label: this.nameToAccountIDMap.get(txDetails.receiver),
+          distanceFromCenter: 100,
+        },
+        classes: "account",
+      });
+      this.capturedIDs.set(txDetails.receiver, txDetails.receiver);
+    }
+
 
     // Edges
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -276,53 +308,67 @@ export class AlgorandGraphAPI {
     // Sender node
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    this.elements.push({
-      data: {
-        id: tx.sender,
-        label: this.nameToAccountIDMap.get(tx.sender),
-        distanceFromCenter: 100,
-      },
-      classes: "account",
-    });
+    if(!this.capturedIDs.has(tx.sender)) {
+      this.elements.push({
+        data: {
+          id: tx.sender,
+          label: this.nameToAccountIDMap.get(tx.sender),
+          distanceFromCenter: 100,
+        },
+        classes: "account",
+      });
+      this.capturedIDs.set(tx.sender, tx.sender);
+    }
 
     // Application Node
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    this.elements.push({
-      data: {
-        id: txDetails["application-id"],
-        label: this.nameToAccountIDMap.get(txDetails["application-id"]),
-      },
-      classes: "application",
-    });
+    if(!this.capturedIDs.has(txDetails["application-id"])) {
+      this.elements.push({
+        data: {
+          id: txDetails["application-id"],
+          label: this.nameToAccountIDMap.get(txDetails["application-id"]),
+        },
+        classes: "application",
+      });
+      this.capturedIDs.set(txDetails["application-id"], txDetails["application-id"]);
+    }
 
     // Group
     const groupID = tx.group;
     if (groupID != null) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      this.elements.push({
-        data: {
-          id: tx.group,
-          label: tx.group.substring(0, 8),
-        },
-        classes: "group",
-      });
+        if(!this.capturedIDs.has(tx.group)) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        this.elements.push({
+          data: {
+            id: tx.group,
+            label: tx.group.substring(0, 8),
+          },
+          classes: "group",
+        });
+      }
+      this.capturedIDs.set(tx.group, tx.group)
     }
+
 
     // Transaction Node
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    this.elements.push({
-      data: {
-        id: tx.id,
-        label: this.nameToAccountIDMap.get(txDetails["application-id"]) + "()",
-        parent: groupID,
-        distanceFromCenter: 50,
-        json: tx
-      },
-      classes: txClass,
-    });
+    if(!this.capturedIDs.has(tx.id)) {
+      this.elements.push({
+        data: {
+          id: tx.id,
+          label: this.nameToAccountIDMap.get(txDetails["application-id"]) + "()",
+          parent: groupID,
+          distanceFromCenter: 50,
+          json: tx
+        },
+        classes: txClass,
+      });
+      this.capturedIDs.set(tx.id, tx.id);
+    }
+
 
     // Edge sender -> Application TX
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -352,14 +398,19 @@ export class AlgorandGraphAPI {
       // Node account
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      this.elements.push({
-        data: {
-          id: acID,
-          label: this.nameToAccountIDMap.get(acID),
-          distanceFromCenter: 100,
-        },
-        classes: "account",
-      });
+      if(!this.capturedIDs.has(acID)) {
+        this.elements.push({
+          data: {
+            id: acID,
+            label: this.nameToAccountIDMap.get(acID),
+            distanceFromCenter: 100,
+          },
+          classes: "account",
+        });
+
+        this.capturedIDs.set(acID, acID);
+      }
+
 
       // Edge acID -> AppTx
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment

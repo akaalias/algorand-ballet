@@ -88,7 +88,6 @@
             label="Groups"
             v-on:click="toggleGroupNodes"
           />
-
         </v-col>
         <v-col cols="10">
           <div class="cyHolder" id="">
@@ -280,12 +279,9 @@ export default {
             return node.data().distanceFromCenter
           },
         height: "100%"}).run()
-
         this.cy.resize();
         this.cy.fit();
       }
-
-      document.getElementById('cytoscape').style.height = 'calc(400px + 100px)'
 
       this.buttonText = "Build Graph"
       this.searching = false
