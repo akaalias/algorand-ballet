@@ -59,7 +59,7 @@ export class AlgorandGraphAPI {
         label: this.nameToAccountIDMap.get(rootAccountID),
         distanceFromCenter: 0,
       },
-      classes: "root account",
+      classes: "root",
     });
 
     if (transactions != null) {
@@ -316,7 +316,7 @@ export class AlgorandGraphAPI {
     this.elements.push({
       data: {
         id: tx.id,
-        label: this.nameToAccountIDMap.get(txDetails["application-id"]) + "().eval()",
+        label: this.nameToAccountIDMap.get(txDetails["application-id"]) + "()",
         parent: groupID,
         distanceFromCenter: 50,
         json: tx

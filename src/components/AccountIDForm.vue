@@ -64,12 +64,30 @@
             v-on:click="toggleApplicationTransactions"
           />
 
+          <h1 class="text-sm-h6">Nodes</h1>
           <v-switch
-            v-model="groupsVisible"
-            label="Groups"
-            v-on:click="toggleGroups"
+            v-model="rootNodeVisible"
+            label="Target"
+            v-on:click="toggleRootNode"
           />
 
+          <v-switch
+            v-model="accountNodesVisible"
+            label="Accounts"
+            v-on:click="toggleAccountNodes"
+          />
+
+          <v-switch
+            v-model="applicationNodesVisible"
+            label="Applications"
+            v-on:click="toggleApplicationNodes"
+          />
+
+          <v-switch
+            v-model="groupNodesVisible"
+            label="Groups"
+            v-on:click="toggleGroupNodes"
+          />
         </v-col>
         <v-col cols="10">
           <div class="cyHolder">
@@ -220,14 +238,16 @@ export default {
         {
           selector: 'node.group',
           style: {
-            "background-color": "lightgray",
+            'border-width': 1,
+            'border-color': "#555",
+            "background-color": "white",
             "shape": "round-rectangle",
             "text-valign": "top",
             "text-halign": "center",
             "text-outline-width": "0px",
             "color": "gray",
             "font-size": "8px",
-            'label': 'data(label)',
+            'label': '',
           }
         }
       ]
@@ -235,7 +255,10 @@ export default {
     paymentTransactionsVisible: true,
     assetTransferTransactionsVisible: true,
     applicationTransactionsVisible: true,
-    groupsVisible: true,
+    groupNodesVisible: true,
+    accountNodesVisible: true,
+    applicationNodesVisible: true,
+    rootNodeVisible: true,
     jsonData: ""
   }),
   methods: {
@@ -298,13 +321,34 @@ export default {
         this.cy.$('.application-transaction').style("display","element");
       }
     },
-    toggleGroups() {
-      if(!this.groupsVisible) {
+    toggleAccountNodes() {
+      if(!this.accountNodesVisible) {
+        this.cy.$('.account').style("display","none");
+      } else {
+        this.cy.$('.account').style("display","element");
+      }
+    },
+    toggleApplicationNodes() {
+      if(!this.applicationNodesVisible) {
+        this.cy.$('.account').style("display","none");
+      } else {
+        this.cy.$('.account').style("display","element");
+      }
+    },
+    toggleGroupNodes() {
+      if(!this.groupNodesVisible) {
         this.cy.$('.group').style("display","none");
       } else {
         this.cy.$('.group').style("display","element");
       }
     },
+    toggleRootNode() {
+      if(!this.groupNodesVisible) {
+        this.cy.$('.root').style("display","none");
+      } else {
+        this.cy.$('.root').style("display","element");
+      }
+    }
   },
   components: {
     VueJsonPretty,
