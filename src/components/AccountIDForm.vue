@@ -2,7 +2,7 @@
   <v-form v-model="valid">
     <v-container fluid>
       <v-row>
-        <v-col cols="2">
+        <v-col cols="1">
             <v-select
               v-model="selectedNetwork"
               item-text="name"
@@ -45,25 +45,6 @@
 
       <v-row v-if="elements.length != 0">
         <v-col cols="2">
-          <h1 class="text-sm-h6">Transactions</h1>
-          <v-switch
-            v-model="paymentTransactionsVisible"
-            label="Payments"
-            v-on:click="togglePaymentTransactions"
-          />
-
-          <v-switch
-            v-model="assetTransferTransactionsVisible"
-            label="Transfers"
-            v-on:click="toggleAssetTransferTransactions"
-          />
-
-          <v-switch
-            v-model="applicationTransactionsVisible"
-            label="Applications"
-            v-on:click="toggleApplicationTransactions"
-          />
-
           <h1 class="text-sm-h6">Nodes</h1>
           <v-switch
             v-model="rootNodeVisible"
@@ -79,8 +60,28 @@
 
           <v-switch
             v-model="applicationNodesVisible"
-            label="Applications"
+            label="Apps"
             v-on:click="toggleApplicationNodes"
+          />
+
+          <h1 class="text-sm-h6">Transactions</h1>
+          <v-switch
+            v-model="paymentTransactionsVisible"
+            label="Payments"
+            class="text-sm-body-1"
+            v-on:click="togglePaymentTransactions"
+          />
+
+          <v-switch
+            v-model="assetTransferTransactionsVisible"
+            label="Assets"
+            v-on:click="toggleAssetTransferTransactions"
+          />
+
+          <v-switch
+            v-model="applicationTransactionsVisible"
+            label="Apps"
+            v-on:click="toggleApplicationTransactions"
           />
 
           <v-switch
@@ -88,6 +89,7 @@
             label="Groups"
             v-on:click="toggleGroupNodes"
           />
+
         </v-col>
         <v-col cols="10">
           <div class="cyHolder" id="">
@@ -252,6 +254,35 @@ export default {
         }
       ]
     },
+    concentricOptions: {
+      name: 'concentric',
+      fit: true, // whether to fit the viewport to the graph
+      padding: 30, // the padding on fit
+      startAngle: 3 / 2 * Math.PI, // where nodes start in radians
+      sweep: undefined, // how many radians should be between the first and last node (defaults to full circle)
+      clockwise: true, // whether the layout should go clockwise (true) or counterclockwise/anticlockwise (false)
+      equidistant: false, // whether levels have an equal radial distance betwen them, may cause bounding box overflow
+      minNodeSpacing: 50, // min spacing between outside of nodes (used for radius adjustment)
+      boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
+      avoidOverlap: true, // prevents node overlap, may overflow boundingBox if not enough space
+      nodeDimensionsIncludeLabels: false, // Excludes the label when calculating node bounding boxes for the layout algorithm
+      height: "100%", // height of layout area (overrides container height)
+      width: "100%", // width of layout area (overrides container width)
+      spacingFactor: 1, // Applies a multiplicative factor (>0) to expand or compress the overall area that the nodes take up
+      concentric: function( node ){ // returns numeric value for each node, placing higher nodes in levels towards the centre
+        return node.degree()
+      },
+      levelWidth: function( nodes ){ // the variation of concentric values in each level
+        return nodes.maxDegree() / 4;
+      },
+      animate: false, // whether to transition the node positions
+      animationDuration: 500, // duration of animation in ms if enabled
+      animationEasing: undefined, // easing of animation if enabled
+      animateFilter: function ( node, i ){ return true; }, // a function that determines whether the node should be animated.  All nodes animated by default on animate enabled.  Non-animated nodes are positioned immediately when the layout starts
+      ready: undefined, // callback on layoutready
+      stop: undefined, // callback on layoutstop
+      transform: function (node, position ){ return position; } // transform a given node position. Useful for changing flow direction in discrete layouts
+    },
     paymentTransactionsVisible: true,
     assetTransferTransactionsVisible: true,
     applicationTransactionsVisible: true,
@@ -266,25 +297,19 @@ export default {
     async search() {
       let api = new AlgorandGraphAPI(this.selectedNetwork.domain)
       this.searching = true;
+      this.elements = []
       this.buttonText = "Searching"
 
       this.elements = await api.accountIDGraphForRootAccountID(this.accountID)
+      this.buttonText = "Build Graph"
+      this.searching = false
 
       if(!(this.cy == undefined)) {
-        this.cy.removeData()
-        this.cy.add(this.elements)
-        this.cy.layout({ name: "concentric",
-          spacingFactor: 2,
-          concentric: function( node ){ // returns numeric value for each node, placing higher nodes in levels towards the centre
-            return node.data().distanceFromCenter
-          },
-        height: "100%"}).run()
+        this.cy.add(this.elements);
+        this.cy.layout(this.concentricOptions).run();
         this.cy.resize();
         this.cy.fit();
       }
-
-      this.buttonText = "Build Graph"
-      this.searching = false
     },
     preConfig(cytoscape) {
       console.log("")
@@ -303,7 +328,7 @@ export default {
     },
     addInitialNodes() {
       this.cy.add(this.elements);
-      this.cy.layout({ name: "circle" }).run();
+      this.cy.layout(this.concentricOptions).run();
     },
     togglePaymentTransactions() {
       if(!this.paymentTransactionsVisible) {
@@ -335,9 +360,9 @@ export default {
     },
     toggleApplicationNodes() {
       if(!this.applicationNodesVisible) {
-        this.cy.$('.account').style("display","none");
+        this.cy.$('.application').style("display","none");
       } else {
-        this.cy.$('.account').style("display","element");
+        this.cy.$('.application').style("display","element");
       }
     },
     toggleGroupNodes() {
@@ -348,7 +373,7 @@ export default {
       }
     },
     toggleRootNode() {
-      if(!this.groupNodesVisible) {
+      if(!this.rootNodeVisible) {
         this.cy.$('.root').style("display","none");
       } else {
         this.cy.$('.root').style("display","element");

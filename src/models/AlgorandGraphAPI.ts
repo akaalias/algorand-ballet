@@ -58,9 +58,9 @@ export class AlgorandGraphAPI {
       data: {
         id: rootAccountID,
         label: this.nameToAccountIDMap.get(rootAccountID),
-        distanceFromCenter: 0,
+        distanceFromCenter: 300,
       },
-      classes: "root",
+      classes: "root rootAccount",
     });
     this.capturedIDs.set(rootAccountID, rootAccountID)
 
@@ -109,6 +109,7 @@ export class AlgorandGraphAPI {
           data: {
             id: tx.group,
             label: tx.group.substring(0, 8),
+            distanceFromCenter: 100
           },
           classes: "group",
         });
@@ -126,7 +127,7 @@ export class AlgorandGraphAPI {
           id: tx.id,
           label: txAmount,
           parent: groupID,
-          distanceFromCenter: 50,
+          distanceFromCenter: 100,
           json: tx
         },
         classes: txClass + " payment-transaction",
@@ -143,7 +144,7 @@ export class AlgorandGraphAPI {
         data: {
           id: tx.sender,
           label: this.nameToAccountIDMap.get(tx.sender),
-          distanceFromCenter: 100,
+          distanceFromCenter: 0,
         },
         classes: "account",
       });
@@ -158,7 +159,7 @@ export class AlgorandGraphAPI {
         data: {
           id: txDetails.receiver,
           label: this.nameToAccountIDMap.get(txDetails.receiver),
-          distanceFromCenter: 100,
+          distanceFromCenter: 0,
         },
         classes: "account",
       });
@@ -212,6 +213,7 @@ export class AlgorandGraphAPI {
           data: {
             id: tx.group,
             label: tx.group.substring(0, 8),
+            distanceFromCenter: 100
           },
           classes: "group",
         });
@@ -228,7 +230,7 @@ export class AlgorandGraphAPI {
           id: tx.id,
           label: txAmount,
           parent: groupID,
-          distanceFromCenter: 50,
+          distanceFromCenter: 100,
           json: tx
         },
         classes: txClass + " asset-transfer-transaction",
@@ -245,7 +247,7 @@ export class AlgorandGraphAPI {
         data: {
           id: tx.sender,
           label: this.nameToAccountIDMap.get(tx.sender),
-          distanceFromCenter: 100,
+          distanceFromCenter: 0,
         },
         classes: "account",
       });
@@ -261,7 +263,7 @@ export class AlgorandGraphAPI {
         data: {
           id: txDetails.receiver,
           label: this.nameToAccountIDMap.get(txDetails.receiver),
-          distanceFromCenter: 100,
+          distanceFromCenter: 0,
         },
         classes: "account",
       });
@@ -313,7 +315,7 @@ export class AlgorandGraphAPI {
         data: {
           id: tx.sender,
           label: this.nameToAccountIDMap.get(tx.sender),
-          distanceFromCenter: 100,
+          distanceFromCenter: 0,
         },
         classes: "account",
       });
@@ -328,6 +330,7 @@ export class AlgorandGraphAPI {
         data: {
           id: txDetails["application-id"],
           label: this.nameToAccountIDMap.get(txDetails["application-id"]),
+          distanceFromCenter: 0
         },
         classes: "application",
       });
@@ -344,6 +347,7 @@ export class AlgorandGraphAPI {
           data: {
             id: tx.group,
             label: tx.group.substring(0, 8),
+            distanceFromCenter: 100
           },
           classes: "group",
         });
@@ -361,7 +365,7 @@ export class AlgorandGraphAPI {
           id: tx.id,
           label: this.nameToAccountIDMap.get(txDetails["application-id"]) + "()",
           parent: groupID,
-          distanceFromCenter: 50,
+          distanceFromCenter: 100,
           json: tx
         },
         classes: txClass,
@@ -403,7 +407,7 @@ export class AlgorandGraphAPI {
           data: {
             id: acID,
             label: this.nameToAccountIDMap.get(acID),
-            distanceFromCenter: 100,
+            distanceFromCenter: 0,
           },
           classes: "account",
         });
