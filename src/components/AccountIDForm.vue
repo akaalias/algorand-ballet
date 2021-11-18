@@ -42,46 +42,47 @@
             </v-col>
           </v-row>
       </v-form>
-      <v-form v-if="!!apiKey">
-        <v-row>
-          <v-col cols="1">
-            <v-select
-              v-model="selectedNetwork"
-              item-text="name"
-              item-value="domain"
-              :items="networks"
-              label="Network"
-              return-object
-            ></v-select>
-          </v-col>
-          <v-col cols="6">
-            <v-text-field
-              v-model="accountID"
-              :rules="accountIDRules"
-              label="Algorand Target Account ID"
-              required
-            ></v-text-field>
-          </v-col>
-          <v-col cols="2">
-            <v-btn
-              color="primary"
-              elevation="2"
-              v-on:click="search"
-              :disabled="searching"
-              block
-            >
-              {{ buttonText }}
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-form>
-      <div class="cyHolder" v-if="elements.length !== 0">
-        <cytoscape :config="cyConfig" :afterCreated="afterCreated"/>
-
+      <div class="cyHolder" v-if="!!apiKey">
+        <v-form v-if="!!apiKey" class="pl-4 pr-4">
+          <v-row>
+            <v-col cols="2">
+              <v-select
+                v-model="selectedNetwork"
+                item-text="name"
+                item-value="domain"
+                :items="networks"
+                label="Network"
+                single-line
+                return-object
+              ></v-select>
+            </v-col>
+            <v-col cols="8">
+              <v-text-field
+                v-model="accountID"
+                :rules="accountIDRules"
+                label="Algorand Target Account ID"
+                required
+                single-line
+              ></v-text-field>
+            </v-col>
+            <v-col cols="2">
+              <v-btn
+                color="primary"
+                elevation="2"
+                v-on:click="search"
+                :disabled="searching"
+                block
+              >
+                {{ buttonText }}
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-form>
+        <cytoscape :config="cyConfig" :afterCreated="afterCreated" v-if="elements.length !== 0"/>
         <v-card
-          style="position: absolute; top: 90px; left: 25px; z-index: 10000;"
-          flat
+          style="position: absolute; top: 100px; left: 25px; z-index: 10000;"
           tile
+          v-if="elements.length !== 0"
         >
             <v-list>
               <v-subheader>PARTICIPANTS</v-subheader>
@@ -284,7 +285,7 @@ export default {
           selector: ':parent',
           style: {
             'border-width': 1,
-            "background-color": "white",
+            "background-color": "aliceblue",
             "shape": "roundrectangle",
             "label": ""
           }
@@ -444,6 +445,6 @@ export default {
 
 <style scoped>
 .cyHolder {
-  background-color: cornsilk;
+  min-height: 700px;
 }
 </style>
