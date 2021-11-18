@@ -14,6 +14,7 @@ export class AlgorandGraphAPI {
   nameToAccountIDMap: Map<any, any>;
   elements: Array<any>;
   capturedIDs: Map<string, string>;
+  static assetIDToInfoMap: Map<string, any>;
 
   customNamingConfig: Config = {
     dictionaries: [adjectives, colors, names, animals, starWars],
@@ -35,6 +36,29 @@ export class AlgorandGraphAPI {
     this.nameToAccountIDMap = new Map();
     this.elements = []
     this.capturedIDs = new Map()
+    if(AlgorandGraphAPI.assetIDToInfoMap == null) {
+      AlgorandGraphAPI.assetIDToInfoMap = new Map();
+    }
+  }
+
+  async assetInformationForAssetID(assetID: string) {
+    console.log("In assetInformationForAssetID for " + assetID);
+    if(AlgorandGraphAPI.assetIDToInfoMap.has(assetID)) {
+      console.log("Already set. Returning");
+      return AlgorandGraphAPI.assetIDToInfoMap.get(assetID);
+    }
+
+    console.log("Need to get info for this assetID");
+    const requestURL = `https://${this.networkDomain}/idx2/v2/assets/${assetID}`;
+    const response = await fetch(requestURL, {
+      method: "GET",
+      headers: { accept: "application/json", "x-api-key": this.apiKey },
+    });
+    const jsonData = await response.json();
+
+    AlgorandGraphAPI.assetIDToInfoMap.set(assetID, jsonData);
+
+    return AlgorandGraphAPI.assetIDToInfoMap.get(assetID);
   }
 
   async accountIDGraphForRootAccountID(rootAccountID: string, depth: number) {
@@ -63,7 +87,6 @@ export class AlgorandGraphAPI {
       classes: "root rootAccount",
     });
     this.capturedIDs.set(rootAccountID, rootAccountID)
-
 
     if (transactions != null) {
       for (const tx of transactions) {
@@ -112,6 +135,7 @@ export class AlgorandGraphAPI {
             distanceFromCenter: 100
           },
           classes: "group",
+          type: "group",
         });
       }
       this.capturedIDs.set(tx.group, tx.group);
@@ -131,6 +155,7 @@ export class AlgorandGraphAPI {
           json: tx
         },
         classes: txClass + " payment-transaction",
+        type: "payment-transaction-node"
       });
       this.capturedIDs.set(tx.id, tx.id);
     }
@@ -147,6 +172,7 @@ export class AlgorandGraphAPI {
           distanceFromCenter: 0,
         },
         classes: "account",
+        type: "account-node",
       });
       this.capturedIDs.set(tx.sender, tx.sender);
     }
@@ -162,6 +188,7 @@ export class AlgorandGraphAPI {
           distanceFromCenter: 0,
         },
         classes: "account",
+        type: "account-node",
       });
       this.capturedIDs.set(txDetails.receiver, txDetails.receiver);
     }
@@ -172,6 +199,7 @@ export class AlgorandGraphAPI {
     this.elements.push({
       data: { id: tx.id + tx.sender, target: tx.id, source: tx.sender, json: tx},
       classes: "outgoing payment-transaction",
+      type: "payment-transaction-edge",
     });
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -182,6 +210,7 @@ export class AlgorandGraphAPI {
         target: txDetails.receiver
       },
       classes: "incoming payment-transaction",
+      type: "payment-transaction-edge",
     });
   }
   private setElementsForAssetTransferTransaction(tx: any) {
@@ -216,6 +245,7 @@ export class AlgorandGraphAPI {
             distanceFromCenter: 100
           },
           classes: "group",
+          type: "group",
         });
       }
       this.capturedIDs.set(tx.group, tx.group)
@@ -231,9 +261,11 @@ export class AlgorandGraphAPI {
           label: txAmount,
           parent: groupID,
           distanceFromCenter: 100,
-          json: tx
+          json: tx,
+          "assetID": txDetails["asset-id"],
         },
         classes: txClass + " asset-transfer-transaction",
+        type: "asset-transfer-transaction-node"
       });
       this.capturedIDs.set(tx.id, tx.id);
     }
@@ -250,6 +282,7 @@ export class AlgorandGraphAPI {
           distanceFromCenter: 0,
         },
         classes: "account",
+        type: "account",
       });
 
       this.capturedIDs.set(tx.sender, tx.sender);
@@ -266,6 +299,7 @@ export class AlgorandGraphAPI {
           distanceFromCenter: 0,
         },
         classes: "account",
+        type: "account"
       });
       this.capturedIDs.set(txDetails.receiver, txDetails.receiver);
     }
@@ -277,6 +311,7 @@ export class AlgorandGraphAPI {
     this.elements.push({
       data: { id: tx.id + tx.sender, target: tx.id, source: tx.sender, json: tx },
       classes: "outgoing asset-transfer-transaction",
+      type: "asset-transfer-transaction-edge",
     });
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -287,8 +322,10 @@ export class AlgorandGraphAPI {
         target: txDetails.receiver
       },
       classes: "incoming asset-transfer-transaction",
+      type: "asset-transfer-transaction-edge",
     });
   }
+
   private setElementsForApplicationTransaction(tx: any) {
     const txDetails = tx["application-transaction"];
     const txClass = "application-transaction";
@@ -318,6 +355,7 @@ export class AlgorandGraphAPI {
           distanceFromCenter: 0,
         },
         classes: "account",
+        type: "account-node",
       });
       this.capturedIDs.set(tx.sender, tx.sender);
     }
@@ -333,6 +371,7 @@ export class AlgorandGraphAPI {
           distanceFromCenter: 0
         },
         classes: "application",
+        type: "application-node"
       });
       this.capturedIDs.set(txDetails["application-id"], txDetails["application-id"]);
     }
@@ -350,6 +389,7 @@ export class AlgorandGraphAPI {
             distanceFromCenter: 100
           },
           classes: "group",
+          type: "group"
         });
       }
       this.capturedIDs.set(tx.group, tx.group)
@@ -369,6 +409,7 @@ export class AlgorandGraphAPI {
           json: tx
         },
         classes: txClass,
+        type: "application-transaction-node"
       });
       this.capturedIDs.set(tx.id, tx.id);
     }

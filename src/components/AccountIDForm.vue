@@ -13,7 +13,7 @@
               </p>
 
               <p>
-                I've gotten my key at Purestake: It works really well, it's free for personal use and was easy to get via their <a href="https://developer.purestake.io/">Developer Portal</a>. (I have no affiliation with Purestake)
+                I've gotten mine from Purestake: It works really well, it's free for personal use and was easy to get via their <a href="https://developer.purestake.io/">Developer Portal</a>. (I have no affiliation with Purestake)
               </p>
 
               <p>
@@ -27,14 +27,14 @@
                   <v-text-field
                     v-model="userAPIKey"
                     :rules="userAPIKeyRules"
-                    :counter="40"
                     label="My API Key"
                     required
                     @keydown.enter.prevent="setAPIKey"
                   ></v-text-field>
                 </v-col>
                   <v-col cols="3">
-                    <v-btn :disabled="!isAPIKeyValid" @click="setAPIKey" primary>Set Key</v-btn>
+                    <v-btn :disabled="!isAPIKeyValid" @click="setAPIKey" color="primary"
+                    >Set Key</v-btn>
                   </v-col>
               </v-row>
             </v-col>
@@ -68,7 +68,6 @@
             <v-btn
               color="primary"
               elevation="2"
-              large
               v-on:click="search"
               :disabled="searching"
               block
@@ -155,7 +154,7 @@ import { AlgorandGraphAPI } from "@/models/AlgorandGraphAPI";
 export default {
   name: "AccountIDForm",
   data: () => ({
-    apiKey: "",
+    apiKey: "pksIgccdqX9ADKvMLfVhf3hZqClM949951K9966v",
     userAPIKey: "",
     userAPIKeyRules: [
       (v) => !!v || "API Key is required",
@@ -327,43 +326,48 @@ export default {
     rootNodeVisible: true,
     jsonData: "",
     dialog: false,
+    persistentAPI: null
   }),
   methods: {
     async search() {
-      let api = new AlgorandGraphAPI(this.selectedNetwork.domain)
+      this.persistentAPI = new AlgorandGraphAPI(this.selectedNetwork.domain)
       this.searching = true;
       this.elements = []
       this.buttonText = "Searching"
-
-      this.elements = await api.accountIDGraphForRootAccountID(this.accountID)
+      this.elements = await this.persistentAPI.accountIDGraphForRootAccountID(this.accountID)
       this.buttonText = "Build Graph"
       this.searching = false
-
-      if(!(this.cy == undefined)) {
-        this.cy.add(this.elements);
-        this.cy.layout(this.concentricOptions).run();
-        // this.cy.resize();
-        this.cy.fit();
-      }
     },
     preConfig(cytoscape) {
       console.log("")
     },
-    afterCreated(cy) {
+    async afterCreated(cy) {
       this.cy = cy
-      this.addInitialNodes()
-      this.cy.on('tap', 'node', function(evt){
+      this.cy.add(this.elements);
+      this.cy.on('tap', 'node', function(evt) {
         var node = evt.target;
-        if(node.data().json != null) {
+        if (node.data().json != null) {
           this.jsonData = node.data().json
         } else {
           this.jsonData = node.data()
         }
       }.bind(this))
-    },
-    addInitialNodes() {
-      this.cy.add(this.elements);
       this.cy.layout(this.concentricOptions).run();
+
+      // start populating assets with better labels
+      for (const element of this.elements) {
+        if (element["type"] && element["type"] == "asset-transfer-transaction-node") {
+          await new Promise(f => setTimeout(f, 1000));
+
+          let info = await this.persistentAPI.assetInformationForAssetID(element.data.assetID)
+          element["asset"] = info
+          let newLabel = element.data.label + " " + info.asset.params.name
+          element.data.label = newLabel
+
+          let node = this.cy.$('#' + element.data.id);
+          node.data('label', newLabel)
+        }
+      }
     },
     togglePaymentTransactions() {
       if(!this.paymentTransactionsVisible) {
