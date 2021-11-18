@@ -42,7 +42,6 @@
             </v-col>
           </v-row>
       </v-form>
-
       <v-form v-if="!!apiKey">
         <v-row>
           <v-col cols="1">
@@ -59,7 +58,6 @@
             <v-text-field
               v-model="accountID"
               :rules="accountIDRules"
-              :counter="58"
               label="Algorand Target Account ID"
               required
             ></v-text-field>
@@ -74,75 +72,79 @@
             >
               {{ buttonText }}
             </v-btn>
-            <small class="align-center">
-            API Key: {{apiKey.substring(0, 8) + "..." + apiKey.substring(32, 39)}}
-            </small>
           </v-col>
         </v-row>
       </v-form>
+      <div class="cyHolder" v-if="elements.length !== 0">
+        <cytoscape :config="cyConfig" :afterCreated="afterCreated"/>
 
-      <v-row>
-        <v-col cols="12" class="cyHolder" v-if="elements.length !== 0">
-            <cytoscape :config="cyConfig" :afterCreated="afterCreated" />
-        </v-col>
-      </v-row>
-
-      <v-row v-if="elements.length !== 0">
-        <v-col cols="2">
-          <v-row>
-            <v-col cols="6">
-              <h1 class="text-body-1">Nodes</h1>
-              <v-switch
-                v-model="rootNodeVisible"
-                label="Target"
-                class="text-body-1"
-                v-on:click="toggleRootNode"
-              />
-
-              <v-switch
-                v-model="accountNodesVisible"
-                label="Accounts"
-                v-on:click="toggleAccountNodes"
-              />
-
-              <v-switch
-                v-model="applicationNodesVisible"
-                label="Apps"
-                v-on:click="toggleApplicationNodes"
-              />
-            </v-col>
-            <v-col cols="6">
-              <h1 class="text-body-1">Transactions</h1>
-              <v-switch
-                v-model="paymentTransactionsVisible"
-                label="Payments"
-                class="text-sm-body-1"
-                v-on:click="togglePaymentTransactions"
-              />
-
-              <v-switch
-                v-model="assetTransferTransactionsVisible"
-                label="Assets"
-                v-on:click="toggleAssetTransferTransactions"
-              />
-
-              <v-switch
-                v-model="applicationTransactionsVisible"
-                label="Apps"
-                v-on:click="toggleApplicationTransactions"
-              />
-            </v-col>
-          </v-row>
-        </v-col>
-        <v-col cols="1">
-        </v-col>
-        <v-col cols="9">
-          <h1 class="text-body-1">Element JSON</h1>
-
-          <vue-json-pretty :data="jsonData">
-          </vue-json-pretty>
-        </v-col>
-      </v-row>
+        <v-card
+          style="position: absolute; top: 90px; left: 25px; z-index: 10000;"
+          flat
+          tile
+        >
+            <v-list>
+              <v-subheader>PARTICIPANTS</v-subheader>
+              <v-list-item-group
+                color="primary"
+              >
+              <v-list-item>
+                <v-switch
+                  v-model="rootNodeVisible"
+                  inset
+                  label="Target"
+                  v-on:click="toggleRootNode"
+                />
+              </v-list-item>
+                <v-list-item>
+                    <v-switch
+                      v-model="accountNodesVisible"
+                      label="Accounts"
+                      inset
+                      v-on:click="toggleAccountNodes"
+                    />
+                </v-list-item>
+                <v-list-item>
+                  <v-switch
+                    v-model="applicationNodesVisible"
+                    label="Apps"
+                    inset
+                    v-on:click="toggleApplicationNodes"
+                  />
+                </v-list-item>
+              </v-list-item-group>
+              <v-subheader>TRANSACTIONS</v-subheader>
+              <v-list-item-group
+                color="secondary"
+              >
+                <v-list-item>
+                  <v-switch
+                    v-model="paymentTransactionsVisible"
+                    label="Payments"
+                    inset
+                    v-on:click="togglePaymentTransactions"
+                  />
+                </v-list-item>
+                <v-list-item>
+                  <v-switch
+                    v-model="assetTransferTransactionsVisible"
+                    label="Assets"
+                    inset
+                    v-on:click="toggleAssetTransferTransactions"
+                  />
+                </v-list-item>
+                <v-list-item>
+                  <v-switch
+                    v-model="applicationTransactionsVisible"
+                    label="Apps"
+                    inset
+                    v-on:click="toggleApplicationTransactions"
+                  />
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+        </v-card>
+      </div>
     </v-container>
 </template>
 
@@ -326,7 +328,8 @@ export default {
     rootNodeVisible: true,
     jsonData: "",
     dialog: false,
-    persistentAPI: null
+    persistentAPI: null,
+    mini: true,
   }),
   methods: {
     async search() {
@@ -353,21 +356,25 @@ export default {
         }
       }.bind(this))
       this.cy.layout(this.concentricOptions).run();
+      document.getElementById("cytoscape-div").style.minHeight="680px";
 
-      // start populating assets with better labels
-      for (const element of this.elements) {
-        if (element["type"] && element["type"] == "asset-transfer-transaction-node") {
-          await new Promise(f => setTimeout(f, 1000));
+      this.cy.resize();
+      this.cy.fit();
 
-          let info = await this.persistentAPI.assetInformationForAssetID(element.data.assetID)
-          element["asset"] = info
-          let newLabel = element.data.label + " " + info.asset.params.name
-          element.data.label = newLabel
-
-          let node = this.cy.$('#' + element.data.id);
-          node.data('label', newLabel)
-        }
-      }
+      // // start populating assets with better labels
+      // for (const element of this.elements) {
+      //   if (element["type"] && element["type"] == "asset-transfer-transaction-node") {
+      //     await new Promise(f => setTimeout(f, 1000));
+      //
+      //     let info = await this.persistentAPI.assetInformationForAssetID(element.data.assetID)
+      //     element["asset"] = info
+      //     let newLabel = element.data.label + " " + info.asset.params.name
+      //     element.data.label = newLabel
+      //
+      //     let node = this.cy.$('#' + element.data.id);
+      //     node.data('label', newLabel)
+      //   }
+      // }
     },
     togglePaymentTransactions() {
       if(!this.paymentTransactionsVisible) {
@@ -437,16 +444,6 @@ export default {
 
 <style scoped>
 .cyHolder {
-  width: 100%;
-  border: 1px solid #ccc;
-  background-color: aliceblue;
-}
-
-#searchForm {
-  margin-bottom: 20px;
-}
-
-#container {
-  height: 100%;
+  background-color: cornsilk;
 }
 </style>
