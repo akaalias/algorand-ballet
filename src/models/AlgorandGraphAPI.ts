@@ -83,7 +83,7 @@ export class AlgorandGraphAPI {
   private setElementsForPaymentTransaction(tx: any) {
     const txDetails = tx["payment-transaction"];
     const txClass = "payment-transaction";
-    const txAmount = txDetails.amount / 1000.0 + "Ⱥ";
+    const txAmount = (txDetails.amount / 1000000) + "Ⱥ";
 
     if (!this.nameToAccountIDMap.has(tx.sender)) {
       this.nameToAccountIDMap.set(

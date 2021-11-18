@@ -1,106 +1,107 @@
 <template>
   <v-form v-model="valid">
-    <v-container fluid>
+    <v-container id="container" fluid>
       <v-row>
         <v-col cols="1">
-            <v-select
-              v-model="selectedNetwork"
-              item-text="name"
-              item-value="domain"
-              :items="networks"
-              label="Network"
-              return-object
-            ></v-select>
+          <v-select
+            v-model="selectedNetwork"
+            item-text="name"
+            item-value="domain"
+            :items="networks"
+            label="Network"
+            return-object
+          ></v-select>
         </v-col>
         <v-col cols="6">
-            <v-text-field
-              v-model="accountID"
-              :rules="accountIDRules"
-              :counter="58"
-              label="Algorand Target Account ID"
-              required
-            ></v-text-field>
+          <v-text-field
+            v-model="accountID"
+            :rules="accountIDRules"
+            :counter="58"
+            label="Algorand Target Account ID"
+            required
+          ></v-text-field>
         </v-col>
         <v-col cols="1">
-            <v-select
-              v-model="searchDepth"
-              :items="searchDepths"
-              label="Search Depth"
-              persistent-hint
-            ></v-select>
+          <v-select
+            v-model="searchDepth"
+            :items="searchDepths"
+            label="Search Depth"
+            persistent-hint
+          ></v-select>
         </v-col>
-
         <v-col cols="2">
-              <v-btn
-                color="primary"
-                elevation="2"
-                large
-                v-on:click="search"
-                :disabled="searching"
-              >
-                {{ buttonText }}
-              </v-btn>
-        </v-col>
-       </v-row>
-
-      <v-row v-if="elements.length != 0">
-        <v-col cols="2">
-          <h1 class="text-sm-h6">Nodes</h1>
-          <v-switch
-            v-model="rootNodeVisible"
-            label="Target"
-            v-on:click="toggleRootNode"
-          />
-
-          <v-switch
-            v-model="accountNodesVisible"
-            label="Accounts"
-            v-on:click="toggleAccountNodes"
-          />
-
-          <v-switch
-            v-model="applicationNodesVisible"
-            label="Apps"
-            v-on:click="toggleApplicationNodes"
-          />
-
-          <h1 class="text-sm-h6">Transactions</h1>
-          <v-switch
-            v-model="paymentTransactionsVisible"
-            label="Payments"
-            class="text-sm-body-1"
-            v-on:click="togglePaymentTransactions"
-          />
-
-          <v-switch
-            v-model="assetTransferTransactionsVisible"
-            label="Assets"
-            v-on:click="toggleAssetTransferTransactions"
-          />
-
-          <v-switch
-            v-model="applicationTransactionsVisible"
-            label="Apps"
-            v-on:click="toggleApplicationTransactions"
-          />
-
-          <v-switch
-            v-model="groupNodesVisible"
-            label="Groups"
-            v-on:click="toggleGroupNodes"
-          />
-
-        </v-col>
-        <v-col cols="10">
-          <div class="cyHolder" id="">
-            <cytoscape :config="cyConfig"
-                       :afterCreated="afterCreated"/>
-          </div>
+          <v-btn
+            color="primary"
+            elevation="2"
+            large
+            v-on:click="search"
+            :disabled="searching"
+          >
+            {{ buttonText }}
+          </v-btn>
         </v-col>
       </v-row>
 
       <v-row>
-        <v-col cols="12">
+        <v-col cols="12" class="cyHolder">
+          <div v-if="elements.length !== 0">
+            <cytoscape :config="cyConfig" :afterCreated="afterCreated" />
+          </div>
+        </v-col>
+      </v-row>
+
+      <v-row v-if="elements.length !== 0">
+        <v-col cols="2">
+          <v-row>
+            <v-col cols="6">
+              <h1 class="text-body-1">Nodes</h1>
+              <v-switch
+                v-model="rootNodeVisible"
+                label="Target"
+                class="text-body-1"
+                v-on:click="toggleRootNode"
+              />
+
+              <v-switch
+                v-model="accountNodesVisible"
+                label="Accounts"
+                v-on:click="toggleAccountNodes"
+              />
+
+              <v-switch
+                v-model="applicationNodesVisible"
+                label="Apps"
+                v-on:click="toggleApplicationNodes"
+              />
+            </v-col>
+            <v-col cols="6">
+              <h1 class="text-body-1">Transactions</h1>
+              <v-switch
+                v-model="paymentTransactionsVisible"
+                label="Payments"
+                class="text-sm-body-1"
+                v-on:click="togglePaymentTransactions"
+              />
+
+              <v-switch
+                v-model="assetTransferTransactionsVisible"
+                label="Assets"
+                v-on:click="toggleAssetTransferTransactions"
+              />
+
+              <v-switch
+                v-model="applicationTransactionsVisible"
+                label="Apps"
+                v-on:click="toggleApplicationTransactions"
+              />
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col cols="1">
+        </v-col>
+        <v-col cols="9">
+          <h1 class="text-body-1">Element JSON</h1>
+
           <vue-json-pretty :data="jsonData">
           </vue-json-pretty>
         </v-col>
@@ -158,7 +159,7 @@ export default {
             'line-color': '#ccc',
           }
         }, {
-        selector: 'node.root',
+          selector: 'node.root',
           style: {
             width: '100',
             height: '100',
@@ -238,25 +239,19 @@ export default {
           }
         },
         {
-          selector: 'node.group',
+          selector: ':parent',
           style: {
             'border-width': 1,
-            'border-color': "#555",
             "background-color": "white",
-            "shape": "round-rectangle",
-            "text-valign": "top",
-            "text-halign": "center",
-            "text-outline-width": "0px",
-            "color": "gray",
-            "font-size": "8px",
-            'label': '',
+            "shape": "roundrectangle",
+            "label": ""
           }
         }
       ]
     },
     concentricOptions: {
       name: 'concentric',
-      fit: true, // whether to fit the viewport to the graph
+      // fit: true, // whether to fit the viewport to the graph
       padding: 30, // the padding on fit
       startAngle: 3 / 2 * Math.PI, // where nodes start in radians
       sweep: undefined, // how many radians should be between the first and last node (defaults to full circle)
@@ -266,7 +261,6 @@ export default {
       boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
       avoidOverlap: true, // prevents node overlap, may overflow boundingBox if not enough space
       nodeDimensionsIncludeLabels: false, // Excludes the label when calculating node bounding boxes for the layout algorithm
-      height: "100%", // height of layout area (overrides container height)
       width: "100%", // width of layout area (overrides container width)
       spacingFactor: 1, // Applies a multiplicative factor (>0) to expand or compress the overall area that the nodes take up
       concentric: function( node ){ // returns numeric value for each node, placing higher nodes in levels towards the centre
@@ -307,7 +301,7 @@ export default {
       if(!(this.cy == undefined)) {
         this.cy.add(this.elements);
         this.cy.layout(this.concentricOptions).run();
-        this.cy.resize();
+        // this.cy.resize();
         this.cy.fit();
       }
     },
@@ -389,8 +383,9 @@ export default {
 <style scoped>
 .cyHolder {
   width: 100%;
-  height: 100%;
-  display: block;
+  min-height: 630px;
   border: 1px solid #ccc;
+  background-color: aliceblue;
 }
+
 </style>
