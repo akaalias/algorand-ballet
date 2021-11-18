@@ -1,52 +1,90 @@
 <template>
-  <v-form v-model="valid">
     <v-container id="container" fluid>
-      <v-row>
-        <v-col cols="1">
-          <v-select
-            v-model="selectedNetwork"
-            item-text="name"
-            item-value="domain"
-            :items="networks"
-            label="Network"
-            return-object
-          ></v-select>
-        </v-col>
-        <v-col cols="6">
-          <v-text-field
-            v-model="accountID"
-            :rules="accountIDRules"
-            :counter="58"
-            label="Algorand Target Account ID"
-            required
-          ></v-text-field>
-        </v-col>
-        <v-col cols="1">
-          <v-select
-            v-model="searchDepth"
-            :items="searchDepths"
-            label="Search Depth"
-            persistent-hint
-          ></v-select>
-        </v-col>
-        <v-col cols="2">
-          <v-btn
-            color="primary"
-            elevation="2"
-            large
-            v-on:click="search"
-            :disabled="searching"
-          >
-            {{ buttonText }}
-          </v-btn>
-        </v-col>
-      </v-row>
+      <v-form v-if="apiKey === ''">
+          <v-row align="center">
+            <v-col cols="4">
+            </v-col>
+            <v-col cols="4">
+              <h1 class="text-h6">Please configure your API Key</h1>
+              <p>
+                Hi there!
+
+                To use the explorer you need access to Algorand's data via an API key.
+              </p>
+
+              <p>
+                I've gotten my key at Purestake: It works really well, it's free for personal use and was easy to get via their <a href="https://developer.purestake.io/">Developer Portal</a>. (I have no affiliation with Purestake)
+              </p>
+
+              <p>
+                After signing up, please copy and paste your key below. It will be stored locally for the duration of your session.
+              </p>
+
+              <v-divider>
+              </v-divider>
+              <v-row class="light-blue lighten-5">
+                <v-col cols="9">
+                  <v-text-field
+                    v-model="userAPIKey"
+                    :rules="userAPIKeyRules"
+                    :counter="40"
+                    label="My API Key"
+                    required
+                    @keydown.enter.prevent="setAPIKey"
+                  ></v-text-field>
+                </v-col>
+                  <v-col cols="3">
+                    <v-btn :disabled="!isAPIKeyValid" @click="setAPIKey" primary>Set Key</v-btn>
+                  </v-col>
+              </v-row>
+            </v-col>
+            <v-col cols="4">
+            </v-col>
+          </v-row>
+      </v-form>
+
+      <v-form v-if="!!apiKey">
+        <v-row>
+          <v-col cols="1">
+            <v-select
+              v-model="selectedNetwork"
+              item-text="name"
+              item-value="domain"
+              :items="networks"
+              label="Network"
+              return-object
+            ></v-select>
+          </v-col>
+          <v-col cols="6">
+            <v-text-field
+              v-model="accountID"
+              :rules="accountIDRules"
+              :counter="58"
+              label="Algorand Target Account ID"
+              required
+            ></v-text-field>
+          </v-col>
+          <v-col cols="2">
+            <v-btn
+              color="primary"
+              elevation="2"
+              large
+              v-on:click="search"
+              :disabled="searching"
+              block
+            >
+              {{ buttonText }}
+            </v-btn>
+            <small class="align-center">
+            API Key: {{apiKey.substring(0, 8) + "..." + apiKey.substring(32, 39)}}
+            </small>
+          </v-col>
+        </v-row>
+      </v-form>
 
       <v-row>
-        <v-col cols="12" class="cyHolder">
-          <div v-if="elements.length !== 0">
+        <v-col cols="12" class="cyHolder" v-if="elements.length !== 0">
             <cytoscape :config="cyConfig" :afterCreated="afterCreated" />
-          </div>
         </v-col>
       </v-row>
 
@@ -107,7 +145,6 @@
         </v-col>
       </v-row>
     </v-container>
-  </v-form>
 </template>
 
 <script>
@@ -118,11 +155,16 @@ import { AlgorandGraphAPI } from "@/models/AlgorandGraphAPI";
 export default {
   name: "AccountIDForm",
   data: () => ({
-    valid: false,
+    apiKey: "",
+    userAPIKey: "",
+    userAPIKeyRules: [
+      (v) => !!v || "API Key is required",
+      (v) => v.length == 40 || "API Key must be exactly 40 characters",
+    ],
     accountID: "A3XVEBGTEN6ZKUC3UO3BZ3BMVXCZ6TA4LO6R2LLYRYIRU5IHORXDJJVIOE",
     accountIDRules: [
       (v) => !!v || "AccountID is required",
-      (v) => v.length >= 58 || "AccountID must be exactly than 58 characters",
+      (v) => v.length == 58 || "AccountID must be exactly 58 characters long",
     ],
     networks: [
       { name: "MainNet", domain: "mainnet-algorand.api.purestake.io" },
@@ -136,7 +178,6 @@ export default {
     searchDepths: [0, 1, 2, 3, 4],
     searching: false,
     buttonText: "Build Graph",
-    apiKey: "pksIgccdqX9ADKvMLfVhf3hZqClM949951K9966v",
     requestURL: "",
     elements: [],
     cyConfig: {
@@ -372,7 +413,17 @@ export default {
       } else {
         this.cy.$('.root').style("display","element");
       }
+    },
+    setAPIKey() {
+      if(this.userAPIKey.length == 40) {
+        this.apiKey = this.userAPIKey
+      }
     }
+  },
+  computed: {
+    isAPIKeyValid() {
+      return this.userAPIKey.length == 40
+    },
   },
   components: {
     VueJsonPretty,
@@ -383,9 +434,15 @@ export default {
 <style scoped>
 .cyHolder {
   width: 100%;
-  min-height: 630px;
   border: 1px solid #ccc;
   background-color: aliceblue;
 }
 
+#searchForm {
+  margin-bottom: 20px;
+}
+
+#container {
+  height: 100%;
+}
 </style>
