@@ -1,27 +1,25 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
+    <v-app-bar app dense>
+      <div class="">
         <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
           contain
+
           src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
           transition="scale-transition"
-          width="40"
+          width="32"
         />
       </div>
 
       <v-spacer></v-spacer>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Algorand Network Explorer</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+      <br/>
+      <v-switch
+        v-model="$vuetify.theme.dark"
+        single-line
+        label="Dark Mode"
+        class="pt-5"
+      ></v-switch>
     </v-app-bar>
 
     <v-main>

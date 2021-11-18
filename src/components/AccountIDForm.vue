@@ -187,7 +187,6 @@ export default {
         {
           selector: 'node',
           style: {
-            'background-color': '#666',
             'label': 'data(label)',
             "text-valign": "center",
             "text-halign": "center",
@@ -284,8 +283,8 @@ export default {
         {
           selector: ':parent',
           style: {
-            'border-width': 1,
-            "background-color": "aliceblue",
+            'border-width': 2,
+            'border-color': 'aliceblue',
             "shape": "roundrectangle",
             "label": ""
           }
@@ -361,21 +360,6 @@ export default {
 
       this.cy.resize();
       this.cy.fit();
-
-      // // start populating assets with better labels
-      // for (const element of this.elements) {
-      //   if (element["type"] && element["type"] == "asset-transfer-transaction-node") {
-      //     await new Promise(f => setTimeout(f, 1000));
-      //
-      //     let info = await this.persistentAPI.assetInformationForAssetID(element.data.assetID)
-      //     element["asset"] = info
-      //     let newLabel = element.data.label + " " + info.asset.params.name
-      //     element.data.label = newLabel
-      //
-      //     let node = this.cy.$('#' + element.data.id);
-      //     node.data('label', newLabel)
-      //   }
-      // }
     },
     togglePaymentTransactions() {
       if(!this.paymentTransactionsVisible) {
