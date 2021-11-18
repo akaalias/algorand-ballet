@@ -142,6 +142,15 @@
                     v-on:click="toggleApplicationTransactions"
                   />
                 </v-list-item>
+                <v-list-item>
+                  <v-switch
+                    v-model="transactionGroupsVisible"
+                    label="Groups"
+                    inset
+                    v-on:click="toggleTransactionGroups"
+                  />
+                </v-list-item>
+
               </v-list-item-group>
             </v-list>
         </v-card>
@@ -284,9 +293,10 @@ export default {
           selector: ':parent',
           style: {
             'border-width': 2,
-            'border-color': 'aliceblue',
+            'border-color': '#ccc',
             "shape": "roundrectangle",
-            "label": ""
+            "label": "",
+            "background-opacity": 0
           }
         }
       ]
@@ -329,12 +339,19 @@ export default {
     jsonData: "",
     dialog: false,
     persistentAPI: null,
-    mini: true,
+    transactionGroupsVisible: true
   }),
   methods: {
     async search() {
       this.persistentAPI = new AlgorandGraphAPI(this.selectedNetwork.domain)
       this.searching = true;
+      this.rootNodeVisible = true
+      this.accountNodesVisible = true
+      this.applicationNodesVisible = true
+      this.applicationTransactionsVisible = true
+      this.paymentTransactionsVisible = true
+      this.assetTransferTransactionsVisible = true
+
       this.elements = []
       this.buttonText = "Searching"
       this.elements = await this.persistentAPI.accountIDGraphForRootAccountID(this.accountID)
@@ -413,6 +430,13 @@ export default {
     setAPIKey() {
       if(this.userAPIKey.length == 40) {
         this.apiKey = this.userAPIKey
+      }
+    },
+    toggleTransactionGroups() {
+      if(!this.transactionGroupsVisible) {
+        this.cy.$(':parent').style("border-opacity", "0")
+      } else {
+        this.cy.$(':parent').style("border-opacity", "1")
       }
     }
   },
