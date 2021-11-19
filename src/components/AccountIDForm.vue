@@ -436,7 +436,8 @@ export default {
           url = url + "/tx/" + node.data().id
         }
         console.log(url);
-        window.open(url, '_blank', 'minimizable=false')
+        const w = window.open(url, '_blank', 'minimizable=false')
+        w.focus();
 
       }.bind(this));
 
