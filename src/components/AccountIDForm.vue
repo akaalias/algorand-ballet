@@ -396,11 +396,25 @@ export default {
       // open node info on algoexplorer
       this.cy.on('cxttapstart', 'node', function(evt){
         let node = evt.target;
-        if(node.data().type == "account-node") {
-          let url = "https://" + this.selectedNetwork.algoExplorerDomain + "/address/" + node.data().id
-          console.log(url);
-          window.open(url, '_blank', 'minimizable=false')
+        let url = "https://" + this.selectedNetwork.algoExplorerDomain
+
+        console.log(node.data());
+        const type = node.data().type
+        // Account Node
+        if(type == "account-node") {
+          url = url + "/address/" + node.data().id
         }
+        // App Node
+        if(type == "application-node") {
+          url = url + "/application/" + node.data().id
+        }
+        // TXs
+        if(type == "payment-transaction-node" || type == "asset-transfer-transaction-node" || type == "application-transaction-node") {
+          url = url + "/tx/" + node.data().id
+        }
+        console.log(url);
+        window.open(url, '_blank', 'minimizable=false')
+
       }.bind(this));
 
       this.cy.layout({name: this.selectedLayout}).run();
