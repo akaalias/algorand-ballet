@@ -22,8 +22,8 @@
             stored locally for the duration of your session.
           </p>
 
-          <v-divider> </v-divider>
-          <v-row class="light-blue lighten-5">
+          <br/>
+          <v-row class="">
             <v-col cols="9">
               <v-text-field
                 v-model="userAPIKey"
@@ -193,7 +193,7 @@ import cola from "cytoscape-cola";
 export default {
   name: "AccountIDForm",
   data: () => ({
-    apiKey: "pksIgccdqX9ADKvMLfVhf3hZqClM949951K9966v",
+    apiKey: "",
     userAPIKey: "",
     userAPIKeyRules: [
       (v) => !!v || "API Key is required",
@@ -399,14 +399,15 @@ export default {
   methods: {
     async search() {
       this.persistentAPI = new AlgorandGraphAPI(this.selectedNetwork.domain);
-      this.searching = true;
-      this.rootNodeVisible = true;
-      this.accountNodesVisible = true;
-      this.applicationNodesVisible = true;
-      this.applicationTransactionsVisible = true;
-      this.paymentTransactionsVisible = true;
-      this.assetTransferTransactionsVisible = true;
-      this.transactionGroupsVisible = true;
+      // this.searching = true;
+      // this.rootNodeVisible = true;
+      // this.accountNodesVisible = true;
+      // this.applicationNodesVisible = true;
+      // this.applicationTransactionsVisible = true;
+      // this.paymentTransactionsVisible = true;
+      // this.assetTransferTransactionsVisible = true;
+      // this.transactionGroupsVisible = true;
+      // this.assetNodesVisible = true;
 
       this.elements = [];
       this.buttonText = "Searching";
@@ -471,6 +472,17 @@ export default {
       this.cy.layout({ name: this.selectedLayout }).run();
       // document.getElementById("cytoscape-div").style.minHeight="680px";
       document.getElementById("cytoscape-div").style.minHeight = "800px";
+
+      this.toggleRootNode();
+      this.toggleAccountNodes();
+      this.toggleAssetNodes();
+      this.toggleApplicationNodes();
+
+      this.togglePaymentTransactions();
+      this.toggleAssetTransferTransactions();
+      this.toggleApplicationTransactions();
+      this.toggleTransactionGroups();
+
       this.cy.resize();
       this.cy.fit();
     },
