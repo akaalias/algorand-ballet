@@ -126,6 +126,14 @@
                       v-on:click="toggleAccountNodes"
                     />
                 </v-list-item>
+                <v-list-item class="assetNodesVisible">
+                  <v-switch
+                    v-model="assetNodesVisible"
+                    label="Assets"
+                    inset
+                    v-on:click="toggleAssetNodes"
+                  />
+                </v-list-item>
                 <v-list-item class="applicationNodesVisible">
                   <v-switch
                     v-model="applicationNodesVisible"
@@ -180,10 +188,6 @@
               </v-list-item>
             </v-list>
         </v-card>
-
-        <div>
-          Deeplink: {{deepLinkID}}
-        </div>
       </div>
     </v-container>
 </template>
@@ -370,6 +374,7 @@ export default {
     accountNodesVisible: true,
     applicationNodesVisible: true,
     rootNodeVisible: true,
+    assetNodesVisible: true,
     jsonData: "",
     dialog: false,
     persistentAPI: null,
@@ -484,6 +489,13 @@ export default {
         this.cy.$('.root').style("display","element");
       }
     },
+    toggleAssetNodes() {
+      if(!this.assetNodesVisible) {
+        this.cy.$('.asset').style("display","none");
+      } else {
+        this.cy.$('.asset').style("display","element");
+      }
+    },
     setAPIKey() {
       if(this.userAPIKey.length == 40) {
         this.apiKey = this.userAPIKey
@@ -554,6 +566,10 @@ export default {
 
 .transactionGroupsVisible {
   border-left: 2px solid #333;
+}
+
+.assetNodesVisible {
+  border-left: 2px solid #a05195;
 }
 
 </style>
