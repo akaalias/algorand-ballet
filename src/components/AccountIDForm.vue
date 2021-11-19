@@ -427,10 +427,15 @@ export default {
         if(type == "application-node") {
           url = url + "/application/" + node.data().id
         }
+        // App Node
+        if(type == "asset-node") {
+          url = url + "/asset/" + node.data().id
+        }
         // TXs
         if(type == "payment-transaction-node" || type == "asset-transfer-transaction-node" || type == "application-transaction-node") {
           url = url + "/tx/" + node.data().id
         }
+        console.log(url);
         window.open(url, '_blank', 'minimizable=false')
 
       }.bind(this));
