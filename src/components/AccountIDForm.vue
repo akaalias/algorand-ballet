@@ -78,9 +78,12 @@
             </v-col>
           </v-row>
         </v-form>
-        <cytoscape :config="cyConfig" :afterCreated="afterCreated" v-if="elements.length !== 0"/>
+        <cytoscape :config="cyConfig"
+                   :preConfig="preConfig"
+                   :afterCreated="afterCreated"
+                   v-if="elements.length !== 0"/>
         <v-card
-          style="position: absolute; top: 100px; left: 25px; z-index: 10000; width: 200px;"
+          style="position: absolute; top: 90px; left: 25px; z-index: 10000; width: 180px;"
           tile
           v-if="elements.length !== 0"
         >
@@ -177,6 +180,7 @@
 import VueJsonPretty from "vue-json-pretty";
 import "vue-json-pretty/lib/styles.css";
 import { AlgorandGraphAPI } from "@/models/AlgorandGraphAPI";
+import cola from "cytoscape-cola";
 
 export default {
   name: "AccountIDForm",
@@ -200,7 +204,7 @@ export default {
       name: "TestNet",
       domain: "testnet-algorand.api.purestake.io",
     },
-    layouts: ['grid', 'random', 'circle', 'concentric', 'breadthfirst', 'cose'],
+    layouts: ['grid', 'random', 'circle', 'concentric', 'breadthfirst', 'cose', 'cola'],
     selectedLayout: 'concentric',
     searching: false,
     buttonText: "Build Graph",
@@ -348,6 +352,7 @@ export default {
     },
     preConfig(cytoscape) {
       console.log("")
+      cytoscape.use(cola);
     },
     async afterCreated(cy) {
       this.cy = cy
@@ -428,7 +433,7 @@ export default {
       }
     },
     changeLayout() {
-      this.cy.layout({name: this.selectedLayout}).run();
+      this.cy.layout({name: this.selectedLayout, animate: true}).run();
       this.cy.resize();
       this.cy.fit();
     }
