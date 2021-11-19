@@ -65,7 +65,7 @@
                 single-line
               ></v-text-field>
             </v-col>
-            <v-col cols="2">
+            <v-col cols="2" class="pt-5">
               <v-btn
                 color="primary"
                 elevation="2"
@@ -316,34 +316,6 @@ export default {
         }
       ]
     },
-    concentricOptions: {
-      name: 'concentric',
-      // fit: true, // whether to fit the viewport to the graph
-      padding: 30, // the padding on fit
-      startAngle: 3 / 2 * Math.PI, // where nodes start in radians
-      sweep: undefined, // how many radians should be between the first and last node (defaults to full circle)
-      clockwise: true, // whether the layout should go clockwise (true) or counterclockwise/anticlockwise (false)
-      equidistant: false, // whether levels have an equal radial distance betwen them, may cause bounding box overflow
-      minNodeSpacing: 50, // min spacing between outside of nodes (used for radius adjustment)
-      boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
-      avoidOverlap: true, // prevents node overlap, may overflow boundingBox if not enough space
-      nodeDimensionsIncludeLabels: false, // Excludes the label when calculating node bounding boxes for the layout algorithm
-      width: "100%", // width of layout area (overrides container width)
-      spacingFactor: 1, // Applies a multiplicative factor (>0) to expand or compress the overall area that the nodes take up
-      concentric: function( node ){ // returns numeric value for each node, placing higher nodes in levels towards the centre
-        return node.degree()
-      },
-      levelWidth: function( nodes ){ // the variation of concentric values in each level
-        return nodes.maxDegree() / 4;
-      },
-      animate: false, // whether to transition the node positions
-      animationDuration: 500, // duration of animation in ms if enabled
-      animationEasing: undefined, // easing of animation if enabled
-      animateFilter: function ( node, i ){ return true; }, // a function that determines whether the node should be animated.  All nodes animated by default on animate enabled.  Non-animated nodes are positioned immediately when the layout starts
-      ready: undefined, // callback on layoutready
-      stop: undefined, // callback on layoutstop
-      transform: function (node, position ){ return position; } // transform a given node position. Useful for changing flow direction in discrete layouts
-    },
     paymentTransactionsVisible: true,
     assetTransferTransactionsVisible: true,
     applicationTransactionsVisible: true,
@@ -366,6 +338,7 @@ export default {
       this.applicationTransactionsVisible = true
       this.paymentTransactionsVisible = true
       this.assetTransferTransactionsVisible = true
+      this.transactionGroupsVisible = true
 
       this.elements = []
       this.buttonText = "Searching"
@@ -379,17 +352,17 @@ export default {
     async afterCreated(cy) {
       this.cy = cy
       this.cy.add(this.elements);
-      this.cy.on('tap', 'node', function(evt) {
-        var node = evt.target;
-        if (node.data().json != null) {
-          this.jsonData = node.data().json
-        } else {
-          this.jsonData = node.data()
-        }
-      }.bind(this))
-      this.cy.layout(this.concentricOptions).run();
-      document.getElementById("cytoscape-div").style.minHeight="680px";
 
+      this.cy.on('taphold', 'node', function(evt){
+        let node = evt.target;
+        console.log(node);
+        if(node.data().type == "account-node") {
+          this.accountID = node.data().id
+        }
+      }.bind(this));
+
+      this.cy.layout({name: this.selectedLayout}).run();
+      document.getElementById("cytoscape-div").style.minHeight="680px";
       this.cy.resize();
       this.cy.fit();
     },

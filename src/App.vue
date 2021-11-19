@@ -4,7 +4,6 @@
       <div class="">
         <v-img
           contain
-
           src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
           transition="scale-transition"
           width="32"
