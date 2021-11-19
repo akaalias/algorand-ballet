@@ -80,11 +80,26 @@
         </v-form>
         <cytoscape :config="cyConfig" :afterCreated="afterCreated" v-if="elements.length !== 0"/>
         <v-card
-          style="position: absolute; top: 100px; left: 25px; z-index: 10000;"
+          style="position: absolute; top: 100px; left: 25px; z-index: 10000; width: 200px;"
           tile
           v-if="elements.length !== 0"
         >
             <v-list>
+              <v-subheader>LAYOUTS</v-subheader>
+              <v-list-item-group
+                color="primary"
+              >
+                <v-list-item>
+                <v-select
+                  v-model="selectedLayout"
+                  :items="layouts"
+                  single-line
+                  v-on:change="changeLayout"
+                >
+                </v-select>
+                </v-list-item>
+              </v-list-item-group>
+
               <v-subheader>PARTICIPANTS</v-subheader>
               <v-list-item-group
                 color="primary"
@@ -185,8 +200,8 @@ export default {
       name: "TestNet",
       domain: "testnet-algorand.api.purestake.io",
     },
-    searchDepth: 1,
-    searchDepths: [0, 1, 2, 3, 4],
+    layouts: ['grid', 'random', 'circle', 'concentric', 'breadthfirst', 'cose'],
+    selectedLayout: 'concentric',
     searching: false,
     buttonText: "Build Graph",
     requestURL: "",
@@ -438,6 +453,11 @@ export default {
       } else {
         this.cy.$(':parent').style("border-opacity", "1")
       }
+    },
+    changeLayout() {
+      this.cy.layout({name: this.selectedLayout}).run();
+      this.cy.resize();
+      this.cy.fit();
     }
   },
   computed: {
