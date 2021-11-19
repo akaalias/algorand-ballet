@@ -193,7 +193,7 @@ import cola from "cytoscape-cola";
 export default {
   name: "AccountIDForm",
   data: () => ({
-    apiKey: "",
+    apiKey: "pksIgccdqX9ADKvMLfVhf3hZqClM949951K9966v",
     userAPIKey: "",
     userAPIKeyRules: [
       (v) => !!v || "API Key is required",
