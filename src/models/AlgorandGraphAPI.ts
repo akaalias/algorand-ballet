@@ -81,7 +81,7 @@ export class AlgorandGraphAPI {
     this.elements.push({
       data: {
         id: rootAccountID,
-        label: this.nameToAccountIDMap.get(rootAccountID),
+        label: rootAccountID.substring(0, 7),
         distanceFromCenter: 300,
         type: "account-node"
       },
@@ -171,7 +171,7 @@ export class AlgorandGraphAPI {
       this.elements.push({
         data: {
           id: tx.sender,
-          label: this.nameToAccountIDMap.get(tx.sender),
+          label: tx.sender.substring(0,7),
           distanceFromCenter: 0,
           type: "account-node",
         },
@@ -188,7 +188,7 @@ export class AlgorandGraphAPI {
       this.elements.push({
         data: {
           id: txDetails.receiver,
-          label: this.nameToAccountIDMap.get(txDetails.receiver),
+          label: txDetails.receiver.substring(0,7),
           distanceFromCenter: 0,
           type: "account-node",
         },
@@ -203,7 +203,7 @@ export class AlgorandGraphAPI {
     // @ts-ignore
     this.elements.push({
       data: { id: tx.id + tx.sender, target: tx.id, source: tx.sender, json: tx},
-      classes: "outgoing payment-transaction",
+      classes: "outgoing-payment payment-transaction",
       type: "payment-transaction-edge",
     });
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -214,7 +214,7 @@ export class AlgorandGraphAPI {
         source: tx.id,
         target: txDetails.receiver
       },
-      classes: "incoming payment-transaction",
+      classes: "incoming-payment payment-transaction",
       type: "payment-transaction-edge",
     });
   }
@@ -257,14 +257,14 @@ export class AlgorandGraphAPI {
       this.capturedIDs.set(tx.group, tx.group)
     }
 
-    // TX Node
+    // Asset TX Node
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if(!this.capturedIDs.has(tx.id)) {
       this.elements.push({
         data: {
           id: tx.id,
-          label: txAmount,
+          label: txAmount + "/ASA:" + txDetails["asset-id"],
           parent: groupID,
           distanceFromCenter: 100,
           json: tx,
@@ -277,7 +277,6 @@ export class AlgorandGraphAPI {
       this.capturedIDs.set(tx.id, tx.id);
     }
 
-
     // Sender Node
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -285,7 +284,7 @@ export class AlgorandGraphAPI {
       this.elements.push({
         data: {
           id: tx.sender,
-          label: this.nameToAccountIDMap.get(tx.sender),
+          label: tx.sender.substring(0, 7),
           distanceFromCenter: 0,
           type: "account-node",
         },
@@ -303,7 +302,7 @@ export class AlgorandGraphAPI {
       this.elements.push({
         data: {
           id: txDetails.receiver,
-          label: this.nameToAccountIDMap.get(txDetails.receiver),
+          label: txDetails.receiver.substring(0,7),
           distanceFromCenter: 0,
           type: "account-node",
         },
@@ -319,7 +318,7 @@ export class AlgorandGraphAPI {
     // @ts-ignore
     this.elements.push({
       data: { id: tx.id + tx.sender, target: tx.id, source: tx.sender, json: tx },
-      classes: "outgoing asset-transfer-transaction",
+      classes: "outgoing-asset asset-transfer-transaction",
       type: "asset-transfer-transaction-edge",
     });
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -330,7 +329,7 @@ export class AlgorandGraphAPI {
         source: tx.id,
         target: txDetails.receiver
       },
-      classes: "incoming asset-transfer-transaction",
+      classes: "incoming-asset asset-transfer-transaction",
       type: "asset-transfer-transaction-edge",
     });
   }
@@ -360,7 +359,7 @@ export class AlgorandGraphAPI {
       this.elements.push({
         data: {
           id: tx.sender,
-          label: this.nameToAccountIDMap.get(tx.sender),
+          label: tx.sender.substring(0,7),
           distanceFromCenter: 0,
           type: "account-node",
         },
@@ -377,7 +376,7 @@ export class AlgorandGraphAPI {
       this.elements.push({
         data: {
           id: txDetails["application-id"],
-          label: this.nameToAccountIDMap.get(txDetails["application-id"]),
+          label: txDetails["application-id"],
           distanceFromCenter: 0,
           type: "application-node"
         },
@@ -415,7 +414,7 @@ export class AlgorandGraphAPI {
       this.elements.push({
         data: {
           id: tx.id,
-          label: this.nameToAccountIDMap.get(txDetails["application-id"]) + "()",
+          label: txDetails["application-id"] + "()",
           parent: groupID,
           distanceFromCenter: 100,
           json: tx,
@@ -426,7 +425,6 @@ export class AlgorandGraphAPI {
       });
       this.capturedIDs.set(tx.id, tx.id);
     }
-
 
     // Edge sender -> Application TX
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -460,7 +458,7 @@ export class AlgorandGraphAPI {
         this.elements.push({
           data: {
             id: acID,
-            label: this.nameToAccountIDMap.get(acID),
+            label: acID.substring(0,7),
             distanceFromCenter: 0,
             type: "account-node",
           },

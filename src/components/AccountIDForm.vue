@@ -43,7 +43,7 @@
           </v-row>
       </v-form>
       <div class="cyHolder" v-if="!!apiKey">
-        <v-form v-if="!!apiKey" class="pl-4 pr-4">
+        <v-form v-if="!!apiKey" class="pl-4 pr-4" id="searchForm">
           <v-row>
             <v-col cols="2">
               <v-select
@@ -107,7 +107,9 @@
               <v-list-item-group
                 color="primary"
               >
-              <v-list-item>
+              <v-list-item
+                class="rootNodeVisible"
+              >
                 <v-switch
                   v-model="rootNodeVisible"
                   inset
@@ -115,7 +117,8 @@
                   v-on:click="toggleRootNode"
                 />
               </v-list-item>
-                <v-list-item>
+                <v-list-item
+                  class="accountNodesVisible">
                     <v-switch
                       v-model="accountNodesVisible"
                       label="Accounts"
@@ -123,7 +126,7 @@
                       v-on:click="toggleAccountNodes"
                     />
                 </v-list-item>
-                <v-list-item>
+                <v-list-item class="applicationNodesVisible">
                   <v-switch
                     v-model="applicationNodesVisible"
                     label="Apps"
@@ -136,7 +139,7 @@
               <v-list-item-group
                 color="secondary"
               >
-                <v-list-item>
+                <v-list-item class="paymentTransactionsVisible">
                   <v-switch
                     v-model="paymentTransactionsVisible"
                     label="Payments"
@@ -144,7 +147,7 @@
                     v-on:click="togglePaymentTransactions"
                   />
                 </v-list-item>
-                <v-list-item>
+                <v-list-item class="assetTransferTransactionsVisible">
                   <v-switch
                     v-model="assetTransferTransactionsVisible"
                     label="Assets"
@@ -152,7 +155,7 @@
                     v-on:click="toggleAssetTransferTransactions"
                   />
                 </v-list-item>
-                <v-list-item>
+                <v-list-item class="applicationTransactionsVisible">
                   <v-switch
                     v-model="applicationTransactionsVisible"
                     label="Apps"
@@ -160,7 +163,7 @@
                     v-on:click="toggleApplicationTransactions"
                   />
                 </v-list-item>
-                <v-list-item>
+                <v-list-item class="transactionGroupsVisible">
                   <v-switch
                     v-model="transactionGroupsVisible"
                     label="Groups"
@@ -231,40 +234,11 @@ export default {
         }, {
           selector: 'node.root',
           style: {
-            width: '100',
-            height: '100',
-            "background-color": 'yellow',
+            width: '150',
+            height: '150',
+            "background-color": '#ffa600',
             'label': 'data(label)',
-            'border-width': 3,
-            'border-color': "#555",
-            'font-size': 18
-          }
-        },
-        {
-          selector: 'node.payment-transaction',
-          style: {
-            'shape': 'rectangle',
-            "background-color": "green",
-            width: '50',
-            height: '50',
-          }
-        },
-        {
-          selector: 'node.asset-transfer-transaction',
-          style: {
-            'shape': 'triangle',
-            "background-color": "orange",
-            width: '50',
-            height: '50',
-          }
-        },
-        {
-          selector: 'node.application-transaction',
-          style: {
-            'shape': 'diamond',
-            "background-color": "blue",
-            width: '50',
-            height: '50',
+            'font-size': 20
           }
         },
         {
@@ -274,6 +248,7 @@ export default {
             height: '100',
             'shape': 'ellipse',
             'label': 'data(label)',
+            "background-color": "#ff7c43"
           }
         },
         {
@@ -282,37 +257,80 @@ export default {
             width: '100',
             height: '100',
             'shape': 'diamond',
-            "background-color": "blue",
+            "background-color": "#003f5c",
             'label': 'data(label)',
           }
         },
         {
-          selector: 'edge.outgoing',
+          selector: 'node.payment-transaction',
           style: {
-            "line-color": "red",
+            'shape': 'rectangle',
+            "background-color": "#f95d6a",
+            width: '50',
+            height: '50',
+          }
+        },
+        {
+          selector: 'node.asset-transfer-transaction',
+          style: {
+            'shape': 'triangle',
+            "background-color": "#a05195",
+            width: '50',
+            height: '50',
+          }
+        },
+        {
+          selector: 'node.application-transaction',
+          style: {
+            'shape': 'diamond',
+            "background-color": "#2f4b7c",
+            width: '50',
+            height: '50',
+          }
+        },
+        {
+          selector: 'edge.outgoing-payment',
+          style: {
+            "line-color": "#800000",
             'mid-target-arrow-shape': 'triangle',
-            'mid-target-arrow-color': 'red',
+            'mid-target-arrow-color': '#800000',
+          }
+        },
+        {
+          selector: 'edge.incoming-payment',
+          style: {
+            "line-color": "#008a0b",
+            'mid-target-arrow-shape': 'triangle',
+            'mid-target-arrow-color': '#008a0b',
+          }
+        },
+        {
+          selector: 'edge.outgoing-asset',
+          style: {
+            "line-color": "#800000",
+            'mid-target-arrow-shape': 'triangle',
+            'mid-target-arrow-color': '#800000',
+          }
+        },
+        {
+          selector: 'edge.incoming-asset',
+          style: {
+            "line-color": "#008a0b",
+            'mid-target-arrow-shape': 'triangle',
+            'mid-target-arrow-color': '#008a0b',
           }
         },
         {
           selector: 'edge.application-call',
           style: {
-            "line-color": "lightblue",
-          }
-        },
-        {
-          selector: 'edge.incoming',
-          style: {
-            "line-color": "green",
-            'mid-target-arrow-shape': 'triangle',
-            'mid-target-arrow-color': 'green',
+            "line-color": "#565589",
           }
         },
         {
           selector: ':parent',
           style: {
             'border-width': 2,
-            'border-color': '#ccc',
+            'border-color': '#333',
             "shape": "roundrectangle",
             "label": "",
             "background-opacity": 0
@@ -453,4 +471,33 @@ export default {
 .cyHolder {
   min-height: 700px;
 }
+
+.rootNodeVisible {
+  border-left: 2px solid #ffa600;
+}
+
+.accountNodesVisible {
+  border-left: 2px solid #ff7c43;
+}
+
+.applicationNodesVisible {
+  border-left: 2px solid #2f4b7c;
+}
+
+.paymentTransactionsVisible {
+  border-left: 2px solid #f95d6a;
+}
+
+.assetTransferTransactionsVisible {
+  border-left: 2px solid #a05195;
+}
+
+.applicationTransactionsVisible {
+  border-left: 2px solid #2f4b7c;
+}
+
+.transactionGroupsVisible {
+  border-left: 2px solid #333;
+}
+
 </style>
