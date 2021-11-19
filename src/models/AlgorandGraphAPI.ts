@@ -22,7 +22,6 @@ export class AlgorandGraphAPI {
     length: 2,
     style: "capital",
   };
-
   applicationNamingConfig: Config = {
     dictionaries: [adjectives, colors, names, animals, starWars],
     separator: "",
@@ -237,6 +236,18 @@ export class AlgorandGraphAPI {
       );
     }
 
+    // Asset Node
+    this.elements.push({
+      data: {
+        id: txDetails["asset-id"],
+        label: "ASA " + txDetails["asset-id"],
+        distanceFromCenter: 100,
+        type: "asset-node",
+      },
+      classes: "asset",
+      type: "asset-node",
+    });
+
     // Group
     const groupID = tx.group;
     if (groupID != null) {
@@ -264,11 +275,10 @@ export class AlgorandGraphAPI {
       this.elements.push({
         data: {
           id: tx.id,
-          label: txAmount + "/ASA:" + txDetails["asset-id"],
+          label: txAmount,
           parent: groupID,
           distanceFromCenter: 100,
           json: tx,
-          "assetID": txDetails["asset-id"],
           type: "asset-transfer-transaction-node",
         },
         classes: txClass + " asset-transfer-transaction",
@@ -332,6 +342,19 @@ export class AlgorandGraphAPI {
       classes: "incoming-asset asset-transfer-transaction",
       type: "asset-transfer-transaction-edge",
     });
+
+    // ASA TX -> ASA Node
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    this.elements.push({
+      data: {
+        id: tx.id + txDetails['asset-id'],
+        source: tx.id,
+        target: txDetails['asset-id']
+      },
+      classes: "asset-call",
+      type: "asset-call",
+    });
   }
 
   private setElementsForApplicationTransaction(tx: any) {
@@ -376,7 +399,7 @@ export class AlgorandGraphAPI {
       this.elements.push({
         data: {
           id: txDetails["application-id"],
-          label: txDetails["application-id"],
+          label: "APP " + txDetails["application-id"],
           distanceFromCenter: 0,
           type: "application-node"
         },

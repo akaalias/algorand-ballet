@@ -272,6 +272,15 @@ export default {
           }
         },
         {
+          selector: 'node.asset',
+          style: {
+            width: '100',
+            height: '100',
+            'shape': 'triangle',
+            "background-color": "#6e3866",
+            'label': 'data(label)',
+          }
+        },        {
           selector: 'node.payment-transaction',
           style: {
             'shape': 'rectangle',
@@ -337,6 +346,12 @@ export default {
           }
         },
         {
+          selector: 'edge.asset-call',
+          style: {
+            "line-color": "#40203b",
+          }
+        },
+        {
           selector: ':parent',
           style: {
             'border-width': 2,
@@ -398,7 +413,6 @@ export default {
         let node = evt.target;
         let url = "https://" + this.selectedNetwork.algoExplorerDomain
 
-        console.log(node.data());
         const type = node.data().type
         // Account Node
         if(type == "account-node") {
@@ -412,7 +426,6 @@ export default {
         if(type == "payment-transaction-node" || type == "asset-transfer-transaction-node" || type == "application-transaction-node") {
           url = url + "/tx/" + node.data().id
         }
-        console.log(url);
         window.open(url, '_blank', 'minimizable=false')
 
       }.bind(this));
