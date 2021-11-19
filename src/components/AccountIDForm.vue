@@ -171,10 +171,19 @@
                     v-on:click="toggleTransactionGroups"
                   />
                 </v-list-item>
-
               </v-list-item-group>
+
+              <v-list-item class="exportPNG">
+                <v-btn v-on:click="exportPNG">
+                  Export PNG
+                </v-btn>
+              </v-list-item>
             </v-list>
         </v-card>
+
+        <div>
+          Deeplink: {{deepLinkID}}
+        </div>
       </div>
     </v-container>
 </template>
@@ -200,12 +209,13 @@ export default {
       (v) => v.length == 58 || "AccountID must be exactly 58 characters long",
     ],
     networks: [
-      { name: "MainNet", domain: "mainnet-algorand.api.purestake.io" },
-      { name: "TestNet", domain: "testnet-algorand.api.purestake.io" },
+      { name: "MainNet", domain: "mainnet-algorand.api.purestake.io", algoExplorerDomain: "algoexplorer.io" },
+      { name: "TestNet", domain: "testnet-algorand.api.purestake.io", algoExplorerDomain: "testnet.algoexplorer.io" },
     ],
     selectedNetwork: {
       name: "TestNet",
       domain: "testnet-algorand.api.purestake.io",
+      algoExplorerDomain: "testnet.algoexplorer.io",
     },
     layouts: ['grid', 'random', 'circle', 'concentric', 'breadthfirst', 'cose', 'cola'],
     selectedLayout: 'concentric',
@@ -348,7 +358,8 @@ export default {
     jsonData: "",
     dialog: false,
     persistentAPI: null,
-    transactionGroupsVisible: true
+    transactionGroupsVisible: true,
+    deepLinkID: ""
   }),
   methods: {
     async search() {
@@ -375,12 +386,20 @@ export default {
     async afterCreated(cy) {
       this.cy = cy
       this.cy.add(this.elements);
-
       this.cy.on('taphold', 'node', function(evt){
         let node = evt.target;
-        console.log(node);
         if(node.data().type == "account-node") {
           this.accountID = node.data().id
+        }
+      }.bind(this));
+
+      // open node info on algoexplorer
+      this.cy.on('cxttapstart', 'node', function(evt){
+        let node = evt.target;
+        if(node.data().type == "account-node") {
+          let url = "https://" + this.selectedNetwork.algoExplorerDomain + "/address/" + node.data().id
+          console.log(url);
+          window.open(url, '_blank', 'minimizable=false')
         }
       }.bind(this));
 
@@ -454,6 +473,10 @@ export default {
       this.cy.layout({name: this.selectedLayout, animate: true}).run();
       this.cy.resize();
       this.cy.fit();
+    },
+    exportPNG() {
+      const img = this.cy.png();
+      window.open(img, '_blank');
     }
   },
   computed: {
@@ -473,26 +496,32 @@ export default {
 }
 
 .rootNodeVisible {
+  max-height: 30px;
   border-left: 2px solid #ffa600;
 }
 
 .accountNodesVisible {
+  max-height: 30px;
   border-left: 2px solid #ff7c43;
 }
 
 .applicationNodesVisible {
+  max-height: 30px;
   border-left: 2px solid #2f4b7c;
 }
 
 .paymentTransactionsVisible {
+  max-height: 30px;
   border-left: 2px solid #f95d6a;
 }
 
 .assetTransferTransactionsVisible {
+  max-height: 30px;
   border-left: 2px solid #a05195;
 }
 
 .applicationTransactionsVisible {
+  max-height: 30px;
   border-left: 2px solid #2f4b7c;
 }
 
