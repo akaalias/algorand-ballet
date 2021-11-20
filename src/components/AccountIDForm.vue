@@ -403,6 +403,30 @@ export default {
           style: {
             width: "data(weight)",
             "line-color": "#008a0b",
+            "curve-style": "unbundled-bezier",
+            "haystack-radius": "0.4",
+          },
+        },
+        {
+          selector: "edge.loop",
+          style: {
+            width: "data(weight)",
+            "line-color": "red",
+            'curve-style': 'unbundled-bezier',
+            'loop-direction': '90deg',
+            'loop-sweep': '-90deg',
+            'target-endpoint': '90deg',
+            'source-endpoint': '105deg',
+          },
+        },
+        {
+          selector: "edge.application-relationship",
+          style: {
+            width: "data(weight)",
+            "line-color": "#565589",
+            "curve-style": "unbundled-bezier",
+            "control-point-weights": [0,0.3],
+            "haystack-radius": "0.2"
           },
         },
       ],
@@ -446,7 +470,7 @@ export default {
     },
     preConfig(cytoscape) {
       console.log("");
-      // cytoscape.use(cola);
+      cytoscape.use(cola);
     },
     async afterCreated(cy) {
       this.cy = cy;
