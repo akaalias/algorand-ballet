@@ -4,6 +4,7 @@ export class AlgorandGraphAPI {
   nameToAccountIDMap: Map<any, any>;
   elements: Array<any>;
   capturedIDs: Map<string, string>;
+  capturedEdges: Map<string, string>;
   static assetIDToInfoMap: Map<string, any>;
 
   constructor(networkDomain: string) {
@@ -12,33 +13,91 @@ export class AlgorandGraphAPI {
     this.nameToAccountIDMap = new Map();
     this.elements = [];
     this.capturedIDs = new Map();
+    this.capturedEdges = new Map();
     if (AlgorandGraphAPI.assetIDToInfoMap == null) {
       AlgorandGraphAPI.assetIDToInfoMap = new Map();
     }
   }
+  async graphForRootAccountID(rootAccountID: string) {
+    this.setRootNodeInElements(rootAccountID);
+    console.log("In graphForRootAccountID()");
+    console.log("In graphForRootAccountID() – this.elements: ");
 
-  async accountIDGraphForRootAccountID(rootAccountID: string) {
-    const requestURL = `https://${this.networkDomain}/idx2/v2/accounts/${rootAccountID}/transactions`;
+    const transactions = await this.getTransactions(rootAccountID);
 
-    const response = await fetch(requestURL, {
-      method: "GET",
-      headers: { accept: "application/json", "x-api-key": this.apiKey },
-    });
+    if (transactions != null) {
+      console.log("Transactions from API: ");
+      console.log(transactions);
+      for (const tx of transactions) {
+        // Add sender Node
+        if (!this.capturedIDs.has(tx.sender)) {
+          this.elements.push({
+            data: {
+              id: tx.sender,
+              label: tx.sender.substring(0, 7),
+              distanceFromCenter: 0,
+              type: "account-node",
+            },
+            classes: "account",
+            type: "account-node",
+          });
+          this.capturedIDs.set(tx.sender, tx.sender);
+        } else {
+          console.log("Not adding new sender node b/c already seen.")
+        }
 
-    const jsonData = await response.json();
-    const transactions = jsonData.transactions;
+        if(tx["tx-type"] === "pay" ) {
+          const txDetails = tx["payment-transaction"];
+          // Receiver Node
+          if (!this.capturedIDs.has(txDetails.receiver)) {
+            this.elements.push({
+              data: {
+                id: txDetails.receiver,
+                label: txDetails.receiver.substring(0, 7),
+                type: "account-node",
+              },
+              classes: "account",
+              type: "account-node",
+            });
+            this.capturedIDs.set(txDetails.receiver, txDetails.receiver);
+          } else {
+            console.log("Not adding new payment-transaction receiver b/c already seen.")
+          }
 
-    // Root Node
-    this.elements.push({
-      data: {
-        id: rootAccountID,
-        label: rootAccountID.substring(0, 7),
-        distanceFromCenter: 300,
-        type: "account-node",
-      },
-      classes: "root rootAccount",
-    });
-    this.capturedIDs.set(rootAccountID, rootAccountID);
+          const compoundEdgeID = tx.sender + txDetails.receiver;
+
+          if (!this.capturedEdges.has(compoundEdgeID)) {
+            this.elements.push({
+              data: {
+                id: compoundEdgeID,
+                target: tx.sender,
+                source: txDetails.receiver,
+                weight: 1,
+                type: "relationship",
+              },
+              classes: "relationship",
+              type: "relationship",
+            });
+            this.capturedEdges.set(compoundEdgeID, compoundEdgeID);
+          } else {
+            // find
+            console.log("Edge exists! Need to UPDATE this edge")
+            const objIndex = this.elements.findIndex((obj => obj.data.id === compoundEdgeID));
+            this.elements[objIndex].data.weight += 1;
+          }
+        }
+      }
+    }
+
+    console.log("Elements before returning:");
+    console.log(this.elements);
+    return this.elements
+  }
+
+  async networkForRootAccountID(rootAccountID: string) {
+    this.setRootNodeInElements(rootAccountID);
+
+    const transactions = await this.getTransactions(rootAccountID);
 
     if (transactions != null) {
       for (const tx of transactions) {
@@ -55,6 +114,34 @@ export class AlgorandGraphAPI {
       return this.elements;
     }
   }
+
+  private async getTransactions(rootAccountID: string) {
+    const requestURL = `https://${this.networkDomain}/idx2/v2/accounts/${rootAccountID}/transactions`;
+
+    const response = await fetch(requestURL, {
+      method: "GET",
+      headers: { accept: "application/json", "x-api-key": this.apiKey }
+    });
+
+    const jsonData = await response.json();
+    const transactions = jsonData.transactions;
+    return transactions;
+  }
+
+  private setRootNodeInElements(rootAccountID: string) {
+    // Root Node
+    this.elements.push({
+      data: {
+        id: rootAccountID,
+        label: rootAccountID.substring(0, 7),
+        distanceFromCenter: 300,
+        type: "account-node"
+      },
+      classes: "root rootAccount"
+    });
+    this.capturedIDs.set(rootAccountID, rootAccountID);
+  }
+
   private setElementsForPaymentTransaction(tx: any) {
     const txDetails = tx["payment-transaction"];
     const txClass = "payment-transaction";

@@ -91,6 +91,22 @@
       />
       <v-card id="graphMenuCard" tile v-if="elements.length !== 0">
         <v-list>
+          <v-subheader>FOCUS</v-subheader>
+          <v-list-item-group color="primary">
+            <v-list-item>
+              <v-select
+                v-model="selectedFocus"
+                item-text="name"
+                item-value="focus"
+                :items="focuses"
+                label="Focus"
+                single-line
+                return-object
+                v-on:change="search"
+              ></v-select>
+            </v-list-item>
+          </v-list-item-group>
+
           <v-subheader>LAYOUTS</v-subheader>
           <v-list-item-group color="primary">
             <v-list-item>
@@ -105,7 +121,7 @@
           </v-list-item-group>
 
           <v-subheader>PARTICIPANTS</v-subheader>
-          <v-list-item-group color="primary">
+          <v-list-item-group>
             <v-list-item class="rootNodeVisible">
               <v-switch
                 v-model="rootNodeVisible"
@@ -204,6 +220,8 @@ export default {
       (v) => !!v || "AccountID is required",
       (v) => v.length === 58 || "AccountID must be exactly 58 characters long",
     ],
+    focuses: [{name: "Network of Transactions", focus: "network"}, {name: "Graph of Relationships", focus: "graph"}],
+    selectedFocus: {name: "Network of Transactions", focus: "network"},
     networks: [
       {
         name: "MainNet",
@@ -380,6 +398,13 @@ export default {
             "background-opacity": 0,
           },
         },
+        {
+          selector: "edge.relationship",
+          style: {
+            width: "data(weight)",
+            "line-color": "#008a0b",
+          },
+        },
       ],
     },
     paymentTransactionsVisible: true,
@@ -397,29 +422,31 @@ export default {
     deepLinkID: "",
   }),
   methods: {
-    async search() {
+    async updateGraph() {
+      console.log("In updateGraph()");
+      console.log("this.selectedFocus.focus: " + this.selectedFocus.focus);
       this.persistentAPI = new AlgorandGraphAPI(this.selectedNetwork.domain);
-      // this.searching = true;
-      // this.rootNodeVisible = true;
-      // this.accountNodesVisible = true;
-      // this.applicationNodesVisible = true;
-      // this.applicationTransactionsVisible = true;
-      // this.paymentTransactionsVisible = true;
-      // this.assetTransferTransactionsVisible = true;
-      // this.transactionGroupsVisible = true;
-      // this.assetNodesVisible = true;
-
-      this.elements = [];
-      this.buttonText = "Searching";
-      this.elements = await this.persistentAPI.accountIDGraphForRootAccountID(
-        this.accountID
-      );
-      this.buttonText = "Build Graph";
+      if(this.selectedFocus.focus === "network") {
+        console.log("Calling: this.persistentAPI.networkForRootAccountID");
+        this.elements = [];
+        this.elements = await this.persistentAPI.networkForRootAccountID(this.accountID);
+      } else if (this.selectedFocus.focus === "graph") {
+        this.elements = [];
+        console.log("Calling: this.persistentAPI.graphForRootAccountID");
+        this.elements = await this.persistentAPI.graphForRootAccountID(this.accountID);
+      } else {
+        console.log("No focus set...");
+      }
       this.searching = false;
+    },
+    async search() {
+      this.buttonText = "Searching";
+      await this.updateGraph();
+      this.buttonText = "Build Graph";
     },
     preConfig(cytoscape) {
       console.log("");
-      cytoscape.use(cola);
+      // cytoscape.use(cola);
     },
     async afterCreated(cy) {
       this.cy = cy;
@@ -470,7 +497,6 @@ export default {
       );
 
       this.cy.layout({ name: this.selectedLayout }).run();
-      // document.getElementById("cytoscape-div").style.minHeight="680px";
       document.getElementById("cytoscape-div").style.minHeight = "800px";
 
       this.toggleRootNode();
