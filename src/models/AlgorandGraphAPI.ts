@@ -151,7 +151,12 @@ export class AlgorandGraphAPI {
 
           // Add relationship receiver -> asset
           const receiverID = txDetails.receiver;
-          const receiverEdgeID = receiverID + "-" + assetID;
+          const inverseReceiverEdgeID = assetID + "-" + receiverID;
+          let receiverEdgeID = receiverID + "-" + assetID;
+
+          if(this.capturedIDs.has(inverseReceiverEdgeID)) {
+            receiverEdgeID = assetID + "-" + receiverID
+          }
 
           if (!this.capturedIDs.has(receiverID)) {
             this.elements.push({

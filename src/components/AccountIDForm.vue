@@ -405,13 +405,8 @@ export default {
             "line-color": "#008a0b",
             "curve-style": "unbundled-bezier",
             "control-point-weights": [0.25],
-          },
-        },
-        {
-          selector: "edge.loop",
-          style: {
-            width: "data(weight)",
-            "line-color": "red",
+            "source-endpoint": "inside-to-node",
+            "target-endpoint": "inside-to-node",
           },
         },
         {
@@ -421,6 +416,8 @@ export default {
             "line-color": "#2f4b7c",
             "curve-style": "unbundled-bezier",
             "control-point-weights": [0.25],
+            "source-endpoint": "inside-to-node",
+            "target-endpoint": "inside-to-node",
           },
         },
         {
@@ -430,6 +427,8 @@ export default {
             "line-color": "#a05195",
             "curve-style": "unbundled-bezier",
             "control-point-weights": [0.25],
+            "source-endpoint": "inside-to-node",
+            "target-endpoint": "inside-to-node",
           },
         },
       ],
