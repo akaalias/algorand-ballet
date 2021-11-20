@@ -1,7 +1,7 @@
 export class AlgorandGraphAPI {
   apiKey: string;
   networkDomain: string;
-  nameToAccountIDMap: Map<any, any>;
+  nameToAccountIDMap: Map<unknown, any>;
   elements: Array<any>;
   capturedIDs: Map<string, string>;
   capturedEdges: Map<string, string>;
@@ -19,291 +19,328 @@ export class AlgorandGraphAPI {
     }
   }
   async graphForRootAccountID(rootAccountID: string) {
-    this.setRootNodeInElements(rootAccountID);
-
     const transactions = await this.getTransactions(rootAccountID);
+
+    this.setRootNodeInElements(rootAccountID);
 
     if (transactions != null) {
       for (const tx of transactions) {
-
-        // Add sender root Node
-        if (!this.capturedIDs.has(tx.sender)) {
-          this.elements.push({
-            data: {
-              id: tx.sender,
-              label: tx.sender.substring(0, 7),
-              distanceFromCenter: 0,
-              type: "account-node",
-            },
-            classes: "account",
-            type: "account-node",
-          });
-          this.capturedIDs.set(tx.sender, tx.sender);
-        } else {
-          console.log();
-        }
-
-        let txDetails: any;
+        // Add Sender Node regardless of what kind of TX it is
+        this.addSenderNode(tx);
 
         // Handle payment TXs
         if (tx["tx-type"] === "pay") {
-          txDetails = tx["payment-transaction"];
-
-          // Receiver Node
-          if (!this.capturedIDs.has(txDetails.receiver)) {
-            this.elements.push({
-              data: {
-                id: txDetails.receiver,
-                label: txDetails.receiver.substring(0, 7),
-                type: "account-node",
-              },
-              classes: "account",
-              type: "account-node",
-            });
-            this.capturedIDs.set(txDetails.receiver, txDetails.receiver);
-          } else {
-            console.log(
-            );
-          }
-
-          let senderID = tx.sender;
-          let receiverID = txDetails.receiver;
-          let compoundEdgeID = senderID + "-" + receiverID;
-
-          // Avoid adding an extra edge
-          if (!this.capturedEdges.has(compoundEdgeID)) {
-            senderID = txDetails.receiver;
-            receiverID = tx.sender;
-            compoundEdgeID = senderID + "-" + receiverID;
-          }
-
-          if (!this.capturedEdges.has(compoundEdgeID)) {
-            // Looping Edges
-            if (senderID === receiverID) {
-              this.elements.push({
-                data: {
-                  id: compoundEdgeID,
-                  target: senderID,
-                  source: receiverID,
-                  weight: 1,
-                },
-                classes: "loop",
-              });
-            } else {
-              this.elements.push({
-                data: {
-                  id: compoundEdgeID,
-                  target: senderID,
-                  source: receiverID,
-                  weight: 1,
-                },
-                classes: "payment-relationship",
-              });
-            }
-
-            this.capturedEdges.set(compoundEdgeID, compoundEdgeID);
-          } else {
-            const objIndex = this.elements.findIndex(
-              (obj) => obj.data.id === compoundEdgeID
-            );
-            this.elements[objIndex].data.weight += 1;
-          }
-        }
-
-        // Handle Asset XFER Tx
-        if (tx["tx-type"] === "axfer") {
-          txDetails = tx["asset-transfer-transaction"];
-          const assetID = txDetails["asset-id"]
-
-          // Add Asset Node
-          if (!this.capturedIDs.has(assetID)) {
-            this.elements.push({
-              data: {
-                id: assetID,
-                label: "ASA " + assetID,
-              },
-              classes: "asset"
-            });
-            this.capturedIDs.set(assetID, assetID);
-          }
-
-          // Add relationship sender -> asset
-          const senderID = tx.sender;
-          const compoundAccountAssetEdgeID = senderID + "-" + assetID;
-          if(!this.capturedEdges.has(compoundAccountAssetEdgeID)) {
-            this.elements.push({
-              data: {
-                id: compoundAccountAssetEdgeID,
-                target: assetID,
-                source: senderID,
-                weight: 1,
-              },
-              classes: "asset-relationship",
-            });
-
-            this.capturedEdges.set(compoundAccountAssetEdgeID, compoundAccountAssetEdgeID);
-          } else {
-            const objIndex = this.elements.findIndex(
-              (obj) => obj.data.id === compoundAccountAssetEdgeID
-            );
-            this.elements[objIndex].data.weight += 1;
-          }
-
-          // Add relationship receiver -> asset
-          const receiverID = txDetails.receiver;
-          const inverseReceiverEdgeID = assetID + "-" + receiverID;
-          let receiverEdgeID = receiverID + "-" + assetID;
-
-          if(this.capturedIDs.has(inverseReceiverEdgeID)) {
-            receiverEdgeID = assetID + "-" + receiverID
-          }
-
-          if (!this.capturedIDs.has(receiverID)) {
-            this.elements.push({
-              data: {
-                id: receiverID,
-                label: receiverID.substring(0, 7),
-              },
-              classes: "account"
-            });
-            this.capturedIDs.set(receiverID, receiverID);
-          }
-
-          if(!this.capturedEdges.has(receiverEdgeID)) {
-            this.elements.push({
-              data: {
-                id: receiverEdgeID,
-                target: assetID,
-                source: receiverID,
-                weight: 1,
-              },
-              classes: "asset-relationship",
-            });
-
-            this.capturedEdges.set(receiverEdgeID, receiverEdgeID);
-          } else {
-            const objIndex = this.elements.findIndex(
-              (obj) => obj.data.id === receiverEdgeID
-            );
-            this.elements[objIndex].data.weight += 1;
-          }
-
-        }
-
-          // Handle application TXs
-        if (tx["tx-type"] === "appl") {
-          txDetails = tx["application-transaction"];
-          const applicationID = txDetails["application-id"];
-
-          // Add Application Node
-          if(!this.capturedIDs.has(applicationID)) {
-            this.elements.push({
-              data: {
-                id: applicationID,
-                label: "APP " + applicationID,
-              },
-              classes: "application",
-            });
-            this.capturedIDs.set(
-              applicationID,
-              applicationID
-            );
-          }
-
-          // Add relationship sender -> application
-          const senderID = tx.sender;
-          const compoundAccountApplicationEdgeID = senderID + "-" + applicationID;
-
-          if(!this.capturedEdges.has(compoundAccountApplicationEdgeID)) {
-            this.elements.push({
-              data: {
-                id: compoundAccountApplicationEdgeID,
-                target: applicationID,
-                source: senderID,
-                weight: 1,
-              },
-              classes: "application-relationship",
-            });
-
-            this.capturedEdges.set(compoundAccountApplicationEdgeID, compoundAccountApplicationEdgeID);
-          } else {
-            const objIndex = this.elements.findIndex(
-              (obj) => obj.data.id === compoundAccountApplicationEdgeID
-            );
-            this.elements[objIndex].data.weight += 1;
-          }
-
-          // Iterate over accounts in TX details
-          for (const involvedAccountID of txDetails["accounts"]) {
-            // Add involved accounts
-            if (!this.capturedIDs.has(involvedAccountID)) {
-              this.elements.push({
-                data: {
-                  id: involvedAccountID,
-                  label: involvedAccountID.substring(0, 7),
-                },
-                classes: "account",
-              });
-              this.capturedIDs.set(
-                involvedAccountID,
-                involvedAccountID
-              );
-            } else {
-              console.log(
-              );
-            }
-
-            // Add edge between involved account and application
-            const connectionBetweenInvolvedAccountAndApplication =
-              involvedAccountID + "-" + applicationID;
-
-            if (!this.capturedEdges.has(connectionBetweenInvolvedAccountAndApplication)) {
-              this.elements.push({
-                data: {
-                  id: connectionBetweenInvolvedAccountAndApplication,
-                  target: applicationID,
-                  source: involvedAccountID,
-                  weight: 1,
-                },
-                classes: "application-relationship",
-              });
-
-              this.capturedEdges.set(connectionBetweenInvolvedAccountAndApplication, connectionBetweenInvolvedAccountAndApplication);
-            } else {
-              const objIndex = this.elements.findIndex(
-                (obj) => obj.data.id === connectionBetweenInvolvedAccountAndApplication
-              );
-              this.elements[objIndex].data.weight += 1;
-            }
-
-              // Add edge between sender account and involved account
-            const compoundEdgeID =
-              involvedAccountID +
-              "-" + senderID + "-" + applicationID;
-            if (!this.capturedEdges.has(compoundEdgeID)) {
-              this.elements.push({
-                data: {
-                  id: compoundEdgeID,
-                  target: tx.sender,
-                  source: involvedAccountID,
-                  weight: 1,
-                },
-                classes: "application-relationship",
-              });
-
-              this.capturedEdges.set(compoundEdgeID, compoundEdgeID);
-            } else {
-              const objIndex = this.elements.findIndex(
-                (obj) => obj.data.id === compoundEdgeID
-              );
-              this.elements[objIndex].data.weight += 1;
-            }
-          }
+          this.handlePaymentTransaction(tx);
+        } else if (tx["tx-type"] === "axfer") {
+          this.handleAssetTransferTransaction(tx);
+        } else if (tx["tx-type"] === "appl") {
+          this.handleApplicationTransaction(tx);
         }
       }
     }
 
     return this.elements;
+  }
+
+  private addSenderNode(tx: any) {
+    if (!this.capturedIDs.has(tx.sender)) {
+      this.elements.push({
+        data: {
+          id: tx.sender,
+          label: tx.sender.substring(0, 7),
+          distanceFromCenter: 0,
+          type: "account-node",
+        },
+        classes: "account",
+        type: "account-node",
+      });
+      this.capturedIDs.set(tx.sender, tx.sender);
+    } else {
+      console.log();
+    }
+  }
+
+  private handleApplicationTransaction(tx: any) {
+    const txDetails = tx["application-transaction"];
+    const applicationID = txDetails["application-id"];
+
+    // Add Application Node
+    if (!this.capturedIDs.has(applicationID)) {
+      this.elements.push({
+        data: {
+          id: applicationID,
+          label: "APP " + applicationID,
+        },
+        classes: "application",
+      });
+      this.capturedIDs.set(applicationID, applicationID);
+    }
+
+    // Add relationship sender -> application
+    const senderID = tx.sender;
+    const compoundAccountApplicationEdgeID = senderID + "-" + applicationID;
+
+    if (!this.capturedEdges.has(compoundAccountApplicationEdgeID)) {
+      this.elements.push({
+        data: {
+          id: compoundAccountApplicationEdgeID,
+          target: applicationID,
+          source: senderID,
+          weight: 1,
+        },
+        classes: "application-relationship",
+      });
+
+      this.capturedEdges.set(
+        compoundAccountApplicationEdgeID,
+        compoundAccountApplicationEdgeID
+      );
+    } else {
+      const objIndex = this.elements.findIndex(
+        (obj) => obj.data.id === compoundAccountApplicationEdgeID
+      );
+      this.elements[objIndex].data.weight += 1;
+    }
+
+    // Iterate over accounts in TX details
+    for (const involvedAccountID of txDetails["accounts"]) {
+      // Add involved accounts
+      if (!this.capturedIDs.has(involvedAccountID)) {
+        this.elements.push({
+          data: {
+            id: involvedAccountID,
+            label: involvedAccountID.substring(0, 7),
+            type: "account-node",
+          },
+          classes: "account",
+        });
+        this.capturedIDs.set(involvedAccountID, involvedAccountID);
+      } else {
+        console.log();
+      }
+
+      // Add edge between involved account and application
+      const connectionBetweenInvolvedAccountAndApplication =
+        involvedAccountID + "-" + applicationID;
+
+      if (
+        !this.capturedEdges.has(connectionBetweenInvolvedAccountAndApplication)
+      ) {
+        this.elements.push({
+          data: {
+            id: connectionBetweenInvolvedAccountAndApplication,
+            target: applicationID,
+            source: involvedAccountID,
+            weight: 1,
+          },
+          classes: "application-relationship",
+        });
+
+        this.capturedEdges.set(
+          connectionBetweenInvolvedAccountAndApplication,
+          connectionBetweenInvolvedAccountAndApplication
+        );
+      } else {
+        const objIndex = this.elements.findIndex(
+          (obj) =>
+            obj.data.id === connectionBetweenInvolvedAccountAndApplication
+        );
+        this.elements[objIndex].data.weight += 1;
+      }
+
+      // Add edge between sender account and involved account
+      const compoundEdgeID =
+        involvedAccountID + "-" + senderID + "-" + applicationID;
+      if (!this.capturedEdges.has(compoundEdgeID)) {
+        this.elements.push({
+          data: {
+            id: compoundEdgeID,
+            target: tx.sender,
+            source: involvedAccountID,
+            weight: 1,
+          },
+          classes: "application-relationship",
+        });
+
+        this.capturedEdges.set(compoundEdgeID, compoundEdgeID);
+      } else {
+        const objIndex = this.elements.findIndex(
+          (obj) => obj.data.id === compoundEdgeID
+        );
+        this.elements[objIndex].data.weight += 1;
+      }
+    }
+  }
+
+  private handleAssetTransferTransaction(tx: any) {
+    const txDetails = tx["asset-transfer-transaction"];
+    const assetID = txDetails["asset-id"];
+    const senderID = tx.sender;
+    const receiverID = txDetails.receiver;
+
+    // Add Asset Node
+    if (!this.capturedIDs.has(assetID)) {
+      this.elements.push({
+        data: {
+          id: assetID,
+          label: "ASA " + assetID,
+        },
+        classes: "asset",
+      });
+      this.capturedIDs.set(assetID, assetID);
+    }
+
+    // Add relationship sender -> asset
+    const compoundAccountAssetEdgeID = senderID + "-" + assetID;
+
+    if (!this.capturedEdges.has(compoundAccountAssetEdgeID)) {
+      this.elements.push({
+        data: {
+          id: compoundAccountAssetEdgeID,
+          target: assetID,
+          source: senderID,
+          weight: 1,
+        },
+        classes: "asset-relationship",
+      });
+
+      this.capturedEdges.set(
+        compoundAccountAssetEdgeID,
+        compoundAccountAssetEdgeID
+      );
+    } else {
+      const objIndex = this.elements.findIndex(
+        (obj) => obj.data.id === compoundAccountAssetEdgeID
+      );
+      this.elements[objIndex].data.weight += 1;
+    }
+
+
+    // Create Receiver
+    if (!this.capturedIDs.has(receiverID)) {
+      this.elements.push({
+        data: {
+          id: receiverID,
+          label: receiverID.substring(0, 7),
+          type: "account-node",
+        },
+        classes: "account",
+      });
+      this.capturedIDs.set(receiverID, receiverID);
+    }
+
+    // Add relationship receiver -> asset
+    const inverseReceiverEdgeID = assetID + "-" + receiverID;
+    let receiverEdgeID = receiverID + "-" + assetID;
+
+    if (this.capturedIDs.has(inverseReceiverEdgeID)) {
+      receiverEdgeID = assetID + "-" + receiverID;
+    }
+
+    if (!this.capturedEdges.has(receiverEdgeID)) {
+      this.elements.push({
+        data: {
+          id: receiverEdgeID,
+          target: assetID,
+          source: receiverID,
+          weight: 1,
+        },
+        classes: "asset-relationship",
+      });
+
+      this.capturedEdges.set(receiverEdgeID, receiverEdgeID);
+    } else {
+      const objIndex = this.elements.findIndex(
+        (obj) => obj.data.id === receiverEdgeID
+      );
+      this.elements[objIndex].data.weight += 1;
+    }
+
+    // Add Sender -> Receiver Edge
+    const compoundIDSenderReceiver = senderID + "-" + receiverID
+
+    if(!this.capturedEdges.has(compoundIDSenderReceiver)) {
+      console.log("Let's add edge between " + senderID.substring(0,7) + " and " + receiverID.substring(0,7))
+      this.elements.push({
+        data: {
+          id: compoundIDSenderReceiver,
+          target: txDetails.receiver,
+          source: senderID,
+          weight: 1,
+        },
+        classes: "asset-relationship",
+      });
+
+      this.capturedEdges.set(compoundIDSenderReceiver, compoundIDSenderReceiver);
+    } else {
+      const objIndex = this.elements.findIndex(
+        (obj) => obj.data.id === compoundIDSenderReceiver
+      );
+      this.elements[objIndex].data.weight += 1;
+    }
+  }
+
+  private handlePaymentTransaction(tx: any) {
+    const txDetails = tx["payment-transaction"];
+
+    // Receiver Node
+    if (!this.capturedIDs.has(txDetails.receiver)) {
+      this.elements.push({
+        data: {
+          id: txDetails.receiver,
+          label: txDetails.receiver.substring(0, 7),
+          type: "account-node",
+        },
+        classes: "account",
+        type: "account-node",
+      });
+      this.capturedIDs.set(txDetails.receiver, txDetails.receiver);
+    } else {
+      console.log();
+    }
+
+    let senderID = tx.sender;
+    let receiverID = txDetails.receiver;
+    let compoundEdgeID = senderID + "-" + receiverID;
+
+    // Avoid adding an extra edge
+    if (!this.capturedEdges.has(compoundEdgeID)) {
+      senderID = txDetails.receiver;
+      receiverID = tx.sender;
+      compoundEdgeID = senderID + "-" + receiverID;
+    }
+
+    if (!this.capturedEdges.has(compoundEdgeID)) {
+      // Looping Edges
+      if (senderID === receiverID) {
+        this.elements.push({
+          data: {
+            id: compoundEdgeID,
+            target: senderID,
+            source: receiverID,
+            weight: 1,
+          },
+          classes: "loop",
+        });
+      } else {
+        this.elements.push({
+          data: {
+            id: compoundEdgeID,
+            target: senderID,
+            source: receiverID,
+            weight: 1,
+          },
+          classes: "payment-relationship",
+        });
+      }
+
+      this.capturedEdges.set(compoundEdgeID, compoundEdgeID);
+    } else {
+      const objIndex = this.elements.findIndex(
+        (obj) => obj.data.id === compoundEdgeID
+      );
+      this.elements[objIndex].data.weight += 1;
+    }
   }
 
   async networkForRootAccountID(rootAccountID: string) {
@@ -349,7 +386,7 @@ export class AlgorandGraphAPI {
         distanceFromCenter: 300,
         type: "account-node",
       },
-      classes: "root rootAccount",
+      classes: "root",
     });
     this.capturedIDs.set(rootAccountID, rootAccountID);
   }

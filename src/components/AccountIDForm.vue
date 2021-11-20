@@ -215,7 +215,7 @@ export default {
       (v) => !!v || "API Key is required",
       (v) => v.length === 40 || "API Key must be exactly 40 characters",
     ],
-    accountID: "A3XVEBGTEN6ZKUC3UO3BZ3BMVXCZ6TA4LO6R2LLYRYIRU5IHORXDJJVIOE",
+    accountID: "627GFZFMQ2EZXQYSASJP77UB7WNR4XWNCSFJNW3UQJELI3MQXYXXFAT7EI",
     accountIDRules: [
       (v) => !!v || "AccountID is required",
       (v) => v.length === 58 || "AccountID must be exactly 58 characters long",
@@ -402,9 +402,10 @@ export default {
           selector: "edge.payment-relationship",
           style: {
             width: "mapData(weight, 0, 100, 0, 100)",
-            "line-color": "#008a0b",
+            "line-color": "rgba(151,53,0,0.69)",
             "curve-style": "unbundled-bezier",
-            "control-point-weights": [0.25],
+            "control-point-distances": [20],
+            "control-point-weights": [0, 0.5, 1],
             "source-endpoint": "inside-to-node",
             "target-endpoint": "inside-to-node",
           },
@@ -415,7 +416,7 @@ export default {
             width: "mapData(weight, 0, 100, 0, 100)",
             "line-color": "#2f4b7c",
             "curve-style": "unbundled-bezier",
-            "control-point-weights": [0.25],
+            "control-point-weights": [0.2],
             "source-endpoint": "inside-to-node",
             "target-endpoint": "inside-to-node",
           },
@@ -426,7 +427,7 @@ export default {
             width: "mapData(weight, 0, 100, 0, 100)",
             "line-color": "#a05195",
             "curve-style": "unbundled-bezier",
-            "control-point-weights": [0.25],
+            "control-point-weights": [0.1],
             "source-endpoint": "inside-to-node",
             "target-endpoint": "inside-to-node",
           },
@@ -484,6 +485,8 @@ export default {
           let node = evt.target;
           if (node.data().type === "account-node") {
             this.accountID = node.data().id;
+          } else {
+            console.log("Unsure how to handle taphold for this node");
           }
         }.bind(this)
       );
@@ -670,6 +673,10 @@ export default {
 .assetNodesVisible {
   max-height: 30px;
   border-left: 2px solid #a05195;
+}
+
+.v-list-item {
+  max-height: 30px;
 }
 
 #graphMenuCard {
