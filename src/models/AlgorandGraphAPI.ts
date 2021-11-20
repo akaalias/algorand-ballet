@@ -20,16 +20,13 @@ export class AlgorandGraphAPI {
   }
   async graphForRootAccountID(rootAccountID: string) {
     this.setRootNodeInElements(rootAccountID);
-    console.log("In graphForRootAccountID()");
-    console.log("In graphForRootAccountID() – this.elements: ");
 
     const transactions = await this.getTransactions(rootAccountID);
 
     if (transactions != null) {
-      console.log("Transactions from API: ");
-      console.log(transactions);
       for (const tx of transactions) {
-        // Add sender Node
+
+        // Add sender root Node
         if (!this.capturedIDs.has(tx.sender)) {
           this.elements.push({
             data: {
@@ -43,9 +40,8 @@ export class AlgorandGraphAPI {
           });
           this.capturedIDs.set(tx.sender, tx.sender);
         } else {
-          console.log("Not adding new sender node b/c already seen.");
+          console.log();
         }
-
         // Handle payment and asset TXs
         if (tx["tx-type"] === "pay" || tx["tx-type"] === "axfer") {
           let txDetails: any;
@@ -69,7 +65,6 @@ export class AlgorandGraphAPI {
             this.capturedIDs.set(txDetails.receiver, txDetails.receiver);
           } else {
             console.log(
-              "Not adding new payment-transaction receiver b/c already seen."
             );
           }
 
@@ -87,7 +82,6 @@ export class AlgorandGraphAPI {
           if (!this.capturedEdges.has(compoundEdgeID)) {
             // Looping Edges
             if (senderID === receiverID) {
-              console.log("Have to create a LOOP edge!");
               this.elements.push({
                 data: {
                   id: compoundEdgeID,
@@ -111,21 +105,16 @@ export class AlgorandGraphAPI {
 
             this.capturedEdges.set(compoundEdgeID, compoundEdgeID);
           } else {
-            console.log("Edge exists! Need to UPDATE this edge");
             const objIndex = this.elements.findIndex(
               (obj) => obj.data.id === compoundEdgeID
             );
             this.elements[objIndex].data.weight += 1;
           }
         }
-
         // Handle application TXs
-        // Add
         if (tx["tx-type"] === "appl") {
           const txDetails = tx["application-transaction"];
           const applicationID = txDetails["application-id"];
-
-          console.log("applicationID: " + applicationID);
 
           // Add Application Node
           if(!this.capturedIDs.has(applicationID)) {
@@ -142,84 +131,91 @@ export class AlgorandGraphAPI {
             );
           }
 
-          const compoundSenderApplicationEdge = tx.sender + "-" + applicationID;
-          if(!this.capturedEdges.has(compoundSenderApplicationEdge)) {
+          // Add relationship sender -> application
+          const senderID = tx.sender;
+          const compoundAccountApplicationEdgeID = senderID + "-" + applicationID;
+
+          if(!this.capturedEdges.has(compoundAccountApplicationEdgeID)) {
             this.elements.push({
               data: {
-                id: compoundSenderApplicationEdge,
-                target: tx.sender,
-                source: applicationID,
+                id: compoundAccountApplicationEdgeID,
+                target: applicationID,
+                source: senderID,
                 weight: 1,
               },
               classes: "application-relationship",
             });
+
+            this.capturedEdges.set(compoundAccountApplicationEdgeID, compoundAccountApplicationEdgeID);
           } else {
             const objIndex = this.elements.findIndex(
-              (obj) => obj.data.id === compoundSenderApplicationEdge
+              (obj) => obj.data.id === compoundAccountApplicationEdgeID
             );
             this.elements[objIndex].data.weight += 1;
           }
 
-          for (const applicationTransactionAccountID of txDetails["accounts"]) {
+          // Iterate over accounts in TX details
+          for (const involvedAccountID of txDetails["accounts"]) {
             // Add involved accounts
-            if (!this.capturedIDs.has(applicationTransactionAccountID)) {
+            if (!this.capturedIDs.has(involvedAccountID)) {
               this.elements.push({
                 data: {
-                  id: applicationTransactionAccountID,
-                  label: applicationTransactionAccountID.substring(0, 7),
+                  id: involvedAccountID,
+                  label: involvedAccountID.substring(0, 7),
                 },
                 classes: "account",
               });
               this.capturedIDs.set(
-                applicationTransactionAccountID,
-                applicationTransactionAccountID
+                involvedAccountID,
+                involvedAccountID
               );
             } else {
               console.log(
-                "Not adding this application-transaction accountID b/c we already know it"
               );
             }
 
+            // Add edge between involved account and application
+            const connectionBetweenInvolvedAccountAndApplication =
+              involvedAccountID + "-" + applicationID;
+
+            if (!this.capturedEdges.has(connectionBetweenInvolvedAccountAndApplication)) {
+              this.elements.push({
+                data: {
+                  id: connectionBetweenInvolvedAccountAndApplication,
+                  target: applicationID,
+                  source: involvedAccountID,
+                  weight: 1,
+                },
+                classes: "application-relationship",
+              });
+
+              this.capturedEdges.set(connectionBetweenInvolvedAccountAndApplication, connectionBetweenInvolvedAccountAndApplication);
+            } else {
+              const objIndex = this.elements.findIndex(
+                (obj) => obj.data.id === connectionBetweenInvolvedAccountAndApplication
+              );
+              this.elements[objIndex].data.weight += 1;
+            }
+
+              // Add edge between sender account and involved account
             const compoundEdgeID =
-              tx.sender +
-              "-" +
-              applicationTransactionAccountID +
-              "-" +
-              txDetails["application-id"];
+              involvedAccountID +
+              "-" + senderID + "-" + applicationID;
             if (!this.capturedEdges.has(compoundEdgeID)) {
               this.elements.push({
                 data: {
                   id: compoundEdgeID,
                   target: tx.sender,
-                  source: applicationTransactionAccountID,
+                  source: involvedAccountID,
                   weight: 1,
                 },
                 classes: "application-relationship",
               });
+
+              this.capturedEdges.set(compoundEdgeID, compoundEdgeID);
             } else {
-              console.log("Edge exists! Need to UPDATE this edge");
               const objIndex = this.elements.findIndex(
                 (obj) => obj.data.id === compoundEdgeID
-              );
-              this.elements[objIndex].data.weight += 1;
-            }
-
-
-            // Add relationship between involved applicationTransactionAccountID to Application
-            const compoundAccountApplicationEdge = applicationTransactionAccountID + "-" + applicationID;
-            if(!this.capturedEdges.has(compoundAccountApplicationEdge)) {
-              this.elements.push({
-                data: {
-                  id: compoundAccountApplicationEdge,
-                  target: applicationID,
-                  source: applicationTransactionAccountID,
-                  weight: 1,
-                },
-                classes: "application-relationship",
-              });
-            } else {
-              const objIndex = this.elements.findIndex(
-                (obj) => obj.data.id === compoundAccountApplicationEdge
               );
               this.elements[objIndex].data.weight += 1;
             }
@@ -228,8 +224,6 @@ export class AlgorandGraphAPI {
       }
     }
 
-    console.log("Elements before returning:");
-    console.log(this.elements);
     return this.elements;
   }
 

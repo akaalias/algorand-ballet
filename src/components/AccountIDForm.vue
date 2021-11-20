@@ -424,9 +424,9 @@ export default {
           style: {
             width: "data(weight)",
             "line-color": "#565589",
-            "curve-style": "unbundled-bezier",
+            "curve-style": "haystack",
             "control-point-weights": [0,0.3],
-            "haystack-radius": "0.2"
+            "haystack-radius": "0.2",
           },
         },
       ],
