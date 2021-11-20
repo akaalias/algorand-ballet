@@ -399,12 +399,12 @@ export default {
           },
         },
         {
-          selector: "edge.relationship",
+          selector: "edge.payment-relationship",
           style: {
             width: "data(weight)",
             "line-color": "#008a0b",
             "curve-style": "unbundled-bezier",
-            "haystack-radius": "0.4",
+            "control-point-weights": [0.25],
           },
         },
         {
@@ -412,21 +412,24 @@ export default {
           style: {
             width: "data(weight)",
             "line-color": "red",
-            'curve-style': 'unbundled-bezier',
-            'loop-direction': '90deg',
-            'loop-sweep': '-90deg',
-            'target-endpoint': '90deg',
-            'source-endpoint': '105deg',
           },
         },
         {
           selector: "edge.application-relationship",
           style: {
             width: "data(weight)",
-            "line-color": "#565589",
-            "curve-style": "haystack",
-            "control-point-weights": [0,0.3],
-            "haystack-radius": "0.2",
+            "line-color": "#2f4b7c",
+            "curve-style": "unbundled-bezier",
+            "control-point-weights": [0.25],
+          },
+        },
+        {
+          selector: "edge.asset-relationship",
+          style: {
+            width: "data(weight)",
+            "line-color": "#a05195",
+            "curve-style": "unbundled-bezier",
+            "control-point-weights": [0.25],
           },
         },
       ],
