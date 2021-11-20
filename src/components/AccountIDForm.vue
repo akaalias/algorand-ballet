@@ -401,7 +401,7 @@ export default {
         {
           selector: "edge.payment-relationship",
           style: {
-            width: "data(weight)",
+            width: "mapData(weight, 0, 100, 0, 100)",
             "line-color": "#008a0b",
             "curve-style": "unbundled-bezier",
             "control-point-weights": [0.25],
@@ -417,7 +417,7 @@ export default {
         {
           selector: "edge.application-relationship",
           style: {
-            width: "data(weight)",
+            width: "mapData(weight, 0, 100, 0, 100)",
             "line-color": "#2f4b7c",
             "curve-style": "unbundled-bezier",
             "control-point-weights": [0.25],
@@ -426,7 +426,7 @@ export default {
         {
           selector: "edge.asset-relationship",
           style: {
-            width: "data(weight)",
+            width: "mapData(weight, 0, 100, 0, 100)",
             "line-color": "#a05195",
             "curve-style": "unbundled-bezier",
             "control-point-weights": [0.25],
