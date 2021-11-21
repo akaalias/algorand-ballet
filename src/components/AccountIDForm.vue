@@ -286,8 +286,8 @@ export default {
         {
           selector: "node.account",
           style: {
-            width: "100",
-            height: "100",
+            width: "120",
+            height: "120",
             shape: "ellipse",
             label: "data(label)",
             "background-color": "#ff7c43",
@@ -296,8 +296,8 @@ export default {
         {
           selector: "node.application",
           style: {
-            width: "100",
-            height: "100",
+            width: "120",
+            height: "120",
             shape: "diamond",
             "background-color": "#003f5c",
             label: "data(label)",
@@ -306,8 +306,8 @@ export default {
         {
           selector: "node.asset",
           style: {
-            width: "100",
-            height: "100",
+            width: "120",
+            height: "120",
             shape: "triangle",
             "background-color": "#6e3866",
             label: "data(label)",
@@ -408,6 +408,10 @@ export default {
             "control-point-weights": [0, 0.5, 1],
             "source-endpoint": "inside-to-node",
             "target-endpoint": "inside-to-node",
+            "text-outline-color": "#555",
+            "text-outline-width": "3px",
+            color: "#fff",
+            label: "data(weight)"
           },
         },
         {
@@ -419,6 +423,10 @@ export default {
             "control-point-weights": [0.2],
             "source-endpoint": "inside-to-node",
             "target-endpoint": "inside-to-node",
+            "text-outline-color": "#555",
+            "text-outline-width": "3px",
+            color: "#fff",
+            label: "data(weight)"
           },
         },
         {
@@ -430,6 +438,10 @@ export default {
             "control-point-weights": [0.1],
             "source-endpoint": "inside-to-node",
             "target-endpoint": "inside-to-node",
+            "text-outline-color": "#555",
+            "text-outline-width": "3px",
+            color: "#fff",
+            label: "data(weight)"
           },
         },
       ],
@@ -543,23 +555,23 @@ export default {
     },
     togglePaymentTransactions() {
       if (!this.paymentTransactionsVisible) {
-        this.cy.$(".payment-transaction").style("display", "none");
+        this.cy.$(".payment-transaction, .payment-relationship").style("display", "none");
       } else {
-        this.cy.$(".payment-transaction").style("display", "element");
+        this.cy.$(".payment-transaction, .payment-relationship").style("display", "element");
       }
     },
     toggleAssetTransferTransactions() {
       if (!this.assetTransferTransactionsVisible) {
-        this.cy.$(".asset-transfer-transaction").style("display", "none");
+        this.cy.$(".asset-transfer-transaction, .asset-relationship").style("display", "none");
       } else {
-        this.cy.$(".asset-transfer-transaction").style("display", "element");
+        this.cy.$(".asset-transfer-transaction, .asset-relationship").style("display", "element");
       }
     },
     toggleApplicationTransactions() {
       if (!this.applicationTransactionsVisible) {
-        this.cy.$(".application-transaction").style("display", "none");
+        this.cy.$(".application-transaction, .application-relationship").style("display", "none");
       } else {
-        this.cy.$(".application-transaction").style("display", "element");
+        this.cy.$(".application-transaction, .application-relationship").style("display", "element");
       }
     },
     toggleAccountNodes() {

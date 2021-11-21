@@ -257,7 +257,12 @@ export class AlgorandGraphAPI {
     }
 
     // Add Sender -> Receiver Edge
-    const compoundIDSenderReceiver = senderID + "-" + receiverID
+    let compoundIDSenderReceiver = senderID + "-" + receiverID
+    const inverseCompoundIDSenderReceiver = receiverID + "-" + senderID
+
+    if(this.capturedEdges.has(inverseCompoundIDSenderReceiver)) {
+      compoundIDSenderReceiver = inverseCompoundIDSenderReceiver
+    }
 
     if(!this.capturedEdges.has(compoundIDSenderReceiver)) {
       console.log("Let's add edge between " + senderID.substring(0,7) + " and " + receiverID.substring(0,7))
