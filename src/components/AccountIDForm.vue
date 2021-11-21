@@ -271,6 +271,7 @@ export default {
           style: {
             width: 3,
             "line-color": "#ccc",
+            "font-size": 14,
           },
         },
         {
@@ -291,6 +292,7 @@ export default {
             shape: "ellipse",
             label: "data(label)",
             "background-color": "#ff7c43",
+            "font-size": 20,
           },
         },
         {
@@ -627,7 +629,8 @@ export default {
       this.cy.fit();
     },
     exportPNG() {
-      const img = this.cy.png();
+      const img = this.cy.png({output:'blob-promise'});
+
       window.open(img, "_blank");
     },
   },
