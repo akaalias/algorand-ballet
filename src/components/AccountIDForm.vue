@@ -205,11 +205,14 @@ import VueJsonPretty from "vue-json-pretty/lib/vue-json-pretty";
 import "vue-json-pretty/lib/styles.css";
 import { AlgorandGraphAPI } from "@/models/AlgorandGraphAPI";
 import cola from "cytoscape-cola";
+import { CytoscapeConfig } from "@/models/CytoscapeConfig";
+import { AlgorandAPIConfig } from "@/models/AlgorandAPIConfig";
+import { QualitativeResearchApproach } from "@/models/QualitativeResearchApproach";
 
 export default {
   name: "AccountIDForm",
   data: () => ({
-    apiKey: "pksIgccdqX9ADKvMLfVhf3hZqClM949951K9966v",
+    apiKey: AlgorandAPIConfig.key,
     userAPIKey: "",
     userAPIKeyRules: [
       (v) => !!v || "API Key is required",
@@ -220,234 +223,16 @@ export default {
       (v) => !!v || "AccountID is required",
       (v) => v.length === 58 || "AccountID must be exactly 58 characters long",
     ],
-    focuses: [{name: "Network of Transactions", focus: "network"}, {name: "Graph of Relationships", focus: "graph"}],
-    selectedFocus: {name: "Network of Transactions", focus: "network"},
-    networks: [
-      {
-        name: "MainNet",
-        domain: "mainnet-algorand.api.purestake.io",
-        algoExplorerDomain: "algoexplorer.io",
-      },
-      {
-        name: "TestNet",
-        domain: "testnet-algorand.api.purestake.io",
-        algoExplorerDomain: "testnet.algoexplorer.io",
-      },
-    ],
-    selectedNetwork: {
-      name: "TestNet",
-      domain: "testnet-algorand.api.purestake.io",
-      algoExplorerDomain: "testnet.algoexplorer.io",
-    },
-    layouts: [
-      "grid",
-      "random",
-      "circle",
-      "concentric",
-      "breadthfirst",
-      "cose",
-      "cola",
-    ],
-    selectedLayout: "concentric",
+    focuses: QualitativeResearchApproach.researchApproaches,
+    selectedFocus: QualitativeResearchApproach.defaultResearchApproach,
+    networks: AlgorandAPIConfig.apiNetworks,
+    selectedNetwork: AlgorandAPIConfig.defaultNetwork,
+    selectedLayout: CytoscapeConfig.defaultLayoutName,
+    cyConfig: CytoscapeConfig.cyConfig,
+    layoutConfigurations: CytoscapeConfig.layoutConfigurations,
     searching: false,
     buttonText: "Build Graph",
-    requestURL: "",
     elements: [],
-    cyConfig: {
-      style: [
-        {
-          selector: "node",
-          style: {
-            label: "data(label)",
-            "text-valign": "center",
-            "text-halign": "center",
-            "text-outline-color": "#555",
-            "text-outline-width": "3px",
-            color: "#fff",
-          },
-        },
-        {
-          selector: "edge",
-          style: {
-            width: 3,
-            "line-color": "#ccc",
-            "font-size": 14,
-          },
-        },
-        {
-          selector: "node.root",
-          style: {
-            width: "150",
-            height: "150",
-            "background-color": "#ffa600",
-            label: "data(label)",
-            "font-size": 20,
-          },
-        },
-        {
-          selector: "node.account",
-          style: {
-            width: "120",
-            height: "120",
-            shape: "ellipse",
-            label: "data(label)",
-            "background-color": "#ff7c43",
-            "font-size": 20,
-          },
-        },
-        {
-          selector: "node.application",
-          style: {
-            width: "120",
-            height: "120",
-            shape: "diamond",
-            "background-color": "#003f5c",
-            label: "data(label)",
-          },
-        },
-        {
-          selector: "node.asset",
-          style: {
-            width: "120",
-            height: "120",
-            shape: "triangle",
-            "background-color": "#6e3866",
-            label: "data(label)",
-          },
-        },
-        {
-          selector: "node.payment-transaction",
-          style: {
-            shape: "rectangle",
-            "background-color": "#f95d6a",
-            width: "50",
-            height: "50",
-          },
-        },
-        {
-          selector: "node.asset-transfer-transaction",
-          style: {
-            shape: "triangle",
-            "background-color": "#a05195",
-            width: "50",
-            height: "50",
-          },
-        },
-        {
-          selector: "node.application-transaction",
-          style: {
-            shape: "diamond",
-            "background-color": "#2f4b7c",
-            width: "50",
-            height: "50",
-          },
-        },
-        {
-          selector: "edge.outgoing-payment",
-          style: {
-            "line-color": "#f95d6a",
-            "mid-target-arrow-shape": "triangle",
-            "mid-target-arrow-color": "#f95d6a",
-            "arrow-scale": 1.5,
-          },
-        },
-        {
-          selector: "edge.incoming-payment",
-          style: {
-            "line-color": "#008a0b",
-            "mid-target-arrow-shape": "triangle",
-            "mid-target-arrow-color": "#008a0b",
-            "arrow-scale": 1.5,
-          },
-        },
-        {
-          selector: "edge.outgoing-asset",
-          style: {
-            "line-color": "#800000",
-            "mid-target-arrow-shape": "triangle",
-            "mid-target-arrow-color": "#800000",
-            "arrow-scale": 1.5,
-          },
-        },
-        {
-          selector: "edge.incoming-asset",
-          style: {
-            "line-color": "#008a0b",
-            "mid-target-arrow-shape": "triangle",
-            "mid-target-arrow-color": "#008a0b",
-            "arrow-scale": 1.5,
-          },
-        },
-        {
-          selector: "edge.application-call",
-          style: {
-            "line-color": "#565589",
-          },
-        },
-        {
-          selector: "edge.asset-call",
-          style: {
-            "line-color": "#40203b",
-          },
-        },
-        {
-          selector: ":parent",
-          style: {
-            "border-width": 2,
-            "border-color": "#333",
-            shape: "roundrectangle",
-            label: "",
-            "background-opacity": 0,
-          },
-        },
-        {
-          selector: "edge.payment-relationship",
-          style: {
-            width: "mapData(weight, 0, 100, 0, 100)",
-            "line-color": "rgba(151,53,0,0.69)",
-            "curve-style": "unbundled-bezier",
-            "control-point-distances": [20],
-            "control-point-weights": [0, 0.5, 1],
-            "source-endpoint": "inside-to-node",
-            "target-endpoint": "inside-to-node",
-            "text-outline-color": "#555",
-            "text-outline-width": "3px",
-            color: "#fff",
-            label: "data(weight)"
-          },
-        },
-        {
-          selector: "edge.application-relationship",
-          style: {
-            width: "mapData(weight, 0, 100, 0, 100)",
-            "line-color": "#2f4b7c",
-            "curve-style": "unbundled-bezier",
-            "control-point-weights": [0.2],
-            "source-endpoint": "inside-to-node",
-            "target-endpoint": "inside-to-node",
-            "text-outline-color": "#555",
-            "text-outline-width": "3px",
-            color: "#fff",
-            label: "data(weight)"
-          },
-        },
-        {
-          selector: "edge.asset-relationship",
-          style: {
-            width: "mapData(weight, 0, 100, 0, 100)",
-            "line-color": "#a05195",
-            "curve-style": "unbundled-bezier",
-            "control-point-weights": [0.1],
-            "source-endpoint": "inside-to-node",
-            "target-endpoint": "inside-to-node",
-            "text-outline-color": "#555",
-            "text-outline-width": "3px",
-            color: "#fff",
-            label: "data(weight)"
-          },
-        },
-      ],
-    },
     paymentTransactionsVisible: true,
     assetTransferTransactionsVisible: true,
     applicationTransactionsVisible: true,
@@ -456,34 +241,23 @@ export default {
     applicationNodesVisible: true,
     rootNodeVisible: true,
     assetNodesVisible: true,
-    jsonData: "",
-    dialog: false,
-    persistentAPI: null,
+    algorandAPI: null,
     transactionGroupsVisible: true,
     deepLinkID: "",
-    layoutConfigurations: {
-        "grid": {name: "grid", animate: true},
-        "circle": {name: "circle", animate: true},
-        "concentric": {name: "concentric", animate: true},
-        "breadthfirst": {name: "breadthfirst", animate: true},
-        "cose": {name: "cose", animate: false},
-        "cola": {name: "cola", animate: false},
-        "random": {name: "random", animate: false},
-    },
   }),
   methods: {
     async updateGraph() {
       console.log("In updateGraph()");
       console.log("this.selectedFocus.focus: " + this.selectedFocus.focus);
-      this.persistentAPI = new AlgorandGraphAPI(this.selectedNetwork.domain);
+      this.algorandAPI = new AlgorandGraphAPI(this.selectedNetwork.domain);
       if(this.selectedFocus.focus === "network") {
         console.log("Calling: this.persistentAPI.networkForRootAccountID");
         this.elements = [];
-        this.elements = await this.persistentAPI.networkForRootAccountID(this.accountID);
+        this.elements = await this.algorandAPI.networkForRootAccountID(this.accountID);
       } else if (this.selectedFocus.focus === "graph") {
         this.elements = [];
         console.log("Calling: this.persistentAPI.graphForRootAccountID");
-        this.elements = await this.persistentAPI.graphForRootAccountID(this.accountID);
+        this.elements = await this.algorandAPI.graphForRootAccountID(this.accountID);
       } else {
         console.log("No focus set...");
       }
@@ -637,10 +411,15 @@ export default {
       this.cy.resize();
       this.cy.fit();
     },
-    exportPNG() {
-      const img = this.cy.png({output:'blob-promise'});
+    async exportPNG() {
+      Promise.resolve(this.cy.png({output:'blob-promise'})).then((result) => {
+        console.log(result);
 
-      window.open(img, "_blank");
+        var image = new Image();
+        image.src = URL.createObjectURL(result);
+
+        window.open(image.src, "_blank");
+      });
     },
   },
   computed: {
@@ -662,50 +441,6 @@ export default {
   min-height: 700px;
 }
 
-.rootNodeVisible {
-  max-height: 30px;
-  border-left: 2px solid #ffa600;
-}
-
-.accountNodesVisible {
-  max-height: 30px;
-  border-left: 2px solid #ff7c43;
-}
-
-.applicationNodesVisible {
-  max-height: 30px;
-  border-left: 2px solid #2f4b7c;
-}
-
-.paymentTransactionsVisible {
-  max-height: 30px;
-  border-left: 2px solid #f95d6a;
-}
-
-.assetTransferTransactionsVisible {
-  max-height: 30px;
-  border-left: 2px solid #a05195;
-}
-
-.applicationTransactionsVisible {
-  max-height: 30px;
-  border-left: 2px solid #2f4b7c;
-}
-
-.transactionGroupsVisible {
-  max-height: 30px;
-  border-left: 2px solid #333;
-}
-
-.assetNodesVisible {
-  max-height: 30px;
-  border-left: 2px solid #a05195;
-}
-
-.v-list-item {
-  max-height: 30px;
-}
-
 #graphMenuCard {
   position: absolute;
   top: 90px;
@@ -713,6 +448,55 @@ export default {
   z-index: 100;
   width: 180px;
 }
+
+#graphMenuCard .rootNodeVisible {
+  max-height: 30px;
+  border-left: 2px solid #ffa600;
+}
+
+#graphMenuCard .accountNodesVisible {
+  max-height: 30px;
+  border-left: 2px solid #ff7c43;
+}
+
+#graphMenuCard .applicationNodesVisible {
+  max-height: 30px;
+  border-left: 2px solid #2f4b7c;
+}
+
+#graphMenuCard .paymentTransactionsVisible {
+  max-height: 30px;
+  border-left: 2px solid #f95d6a;
+}
+
+#graphMenuCard .assetTransferTransactionsVisible {
+  max-height: 30px;
+  border-left: 2px solid #a05195;
+}
+
+#graphMenuCard .applicationTransactionsVisible {
+  max-height: 30px;
+  border-left: 2px solid #2f4b7c;
+}
+
+#graphMenuCard .transactionGroupsVisible {
+  max-height: 30px;
+  border-left: 2px solid #333;
+}
+
+#graphMenuCard .assetNodesVisible {
+  max-height: 30px;
+  border-left: 2px solid #a05195;
+}
+
+#graphMenuCard .v-list-item {
+  max-height: 30px;
+}
+
+#graphMenuCard .v-subheader {
+  max-height: 30px;
+}
+
 
 .top-z {
   z-index: 101;
