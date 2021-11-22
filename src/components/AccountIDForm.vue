@@ -22,7 +22,7 @@
             stored locally for the duration of your session.
           </p>
 
-          <br/>
+          <br />
           <v-row class="">
             <v-col cols="9">
               <v-text-field
@@ -244,23 +244,24 @@ export default {
     algorandAPI: null,
     transactionGroupsVisible: true,
     deepLinkID: "",
+    doubleClickDelayMs: 350,
+    previousTapStamp: 0,
   }),
   methods: {
     async updateGraph() {
-      console.log("In updateGraph()");
-      console.log("this.selectedFocus.focus: " + this.selectedFocus.focus);
       this.algorandAPI = new AlgorandGraphAPI(this.selectedNetwork.domain);
-      if(this.selectedFocus.focus === "network") {
-        console.log("Calling: this.persistentAPI.networkForRootAccountID");
+      if (this.selectedFocus.focus === "network") {
         this.elements = [];
-        this.elements = await this.algorandAPI.networkForRootAccountID(this.accountID);
+        this.elements = await this.algorandAPI.networkForRootAccountID(
+          this.accountID
+        );
       } else if (this.selectedFocus.focus === "graph") {
         this.elements = [];
-        console.log("Calling: this.persistentAPI.graphForRootAccountID");
-        this.elements = await this.algorandAPI.graphForRootAccountID(this.accountID);
-      } else {
-        console.log("No focus set...");
+        this.elements = await this.algorandAPI.graphForRootAccountID(
+          this.accountID
+        );
       }
+
       this.searching = false;
     },
     async search() {
@@ -269,14 +270,13 @@ export default {
       this.buttonText = "Build Graph";
     },
     preConfig(cytoscape) {
-      console.log("");
       cytoscape.use(cola);
     },
     async afterCreated(cy) {
       this.cy = cy;
       this.cy.add(this.elements);
       this.cy.on(
-        "taphold",
+        "doubleTap",
         "node",
         function (evt) {
           let node = evt.target;
@@ -288,34 +288,43 @@ export default {
         }.bind(this)
       );
 
-      // open node info on algoexplorer
+      // handle double click node info on algoexplorer
       this.cy.on(
-        "cxttapstart",
+        "tap",
         "node",
         function (evt) {
-          let node = evt.target;
+          const currentTapStamp = evt.timeStamp;
+          const msFromLastTap = currentTapStamp - this.previousTapStamp;
+          if (msFromLastTap < this.doubleClickDelayMs) {
+            evt.target.trigger("doubleTap", evt);
+          }
+          this.previousTapStamp = currentTapStamp;
+        }.bind(this)
+      );
+
+      this.cy.on(
+        "taphold",
+        "node",
+        function (event, orignalEvent) {
+          let node = event.target;
           let url = "https://" + this.selectedNetwork.algoExplorerDomain;
 
           const type = node.data().type;
           // Account Node
           if (type === "account-node") {
             url = url + "/address/" + node.data().id;
-          }
-          // App Node
-          if (type === "application-node") {
+          } else if (type === "application-node") {
             url = url + "/application/" + node.data().id;
-          }
-          // App Node
-          if (type === "asset-node") {
+          } else if (type === "asset-node") {
             url = url + "/asset/" + node.data().id;
-          }
-          // TXs
-          if (
+          } else if (
             type === "payment-transaction-node" ||
             type === "asset-transfer-transaction-node" ||
             type === "application-transaction-node"
           ) {
             url = url + "/tx/" + node.data().id;
+          } else {
+            console.log("Unsure how to handle this node");
           }
           console.log(url);
           window.open(url, "_blank", "minimizable=false").focus();
@@ -340,23 +349,35 @@ export default {
     },
     togglePaymentTransactions() {
       if (!this.paymentTransactionsVisible) {
-        this.cy.$(".payment-transaction, .payment-relationship").style("display", "none");
+        this.cy
+          .$(".payment-transaction, .payment-relationship")
+          .style("display", "none");
       } else {
-        this.cy.$(".payment-transaction, .payment-relationship").style("display", "element");
+        this.cy
+          .$(".payment-transaction, .payment-relationship")
+          .style("display", "element");
       }
     },
     toggleAssetTransferTransactions() {
       if (!this.assetTransferTransactionsVisible) {
-        this.cy.$(".asset-transfer-transaction, .asset-relationship").style("display", "none");
+        this.cy
+          .$(".asset-transfer-transaction, .asset-relationship")
+          .style("display", "none");
       } else {
-        this.cy.$(".asset-transfer-transaction, .asset-relationship").style("display", "element");
+        this.cy
+          .$(".asset-transfer-transaction, .asset-relationship")
+          .style("display", "element");
       }
     },
     toggleApplicationTransactions() {
       if (!this.applicationTransactionsVisible) {
-        this.cy.$(".application-transaction, .application-relationship").style("display", "none");
+        this.cy
+          .$(".application-transaction, .application-relationship")
+          .style("display", "none");
       } else {
-        this.cy.$(".application-transaction, .application-relationship").style("display", "element");
+        this.cy
+          .$(".application-transaction, .application-relationship")
+          .style("display", "element");
       }
     },
     toggleAccountNodes() {
@@ -412,14 +433,14 @@ export default {
       this.cy.fit();
     },
     async exportPNG() {
-      Promise.resolve(this.cy.png({output:'blob-promise'})).then((result) => {
-        console.log(result);
+      Promise.resolve(this.cy.png({ output: "blob-promise" })).then(
+        (result) => {
+          var image = new Image();
+          image.src = URL.createObjectURL(result);
 
-        var image = new Image();
-        image.src = URL.createObjectURL(result);
-
-        window.open(image.src, "_blank");
-      });
+          window.open(image.src, "_blank");
+        }
+      );
     },
   },
   computed: {
@@ -428,7 +449,7 @@ export default {
     },
     layoutConfigurationKeys() {
       return Object.keys(this.layoutConfigurations);
-    }
+    },
   },
   components: {
     VueJsonPretty,
@@ -496,7 +517,6 @@ export default {
 #graphMenuCard .v-subheader {
   max-height: 30px;
 }
-
 
 .top-z {
   z-index: 101;

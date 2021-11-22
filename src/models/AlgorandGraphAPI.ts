@@ -59,7 +59,6 @@ export class AlgorandGraphAPI {
       console.log();
     }
   }
-
   private handleApplicationTransaction(tx: any) {
     const txDetails = tx["application-transaction"];
     const applicationID = txDetails["application-id"];
@@ -70,6 +69,7 @@ export class AlgorandGraphAPI {
         data: {
           id: applicationID,
           label: "APP " + applicationID,
+          type: "application-node",
         },
         classes: "application",
       });
@@ -171,7 +171,6 @@ export class AlgorandGraphAPI {
       }
     }
   }
-
   private handleAssetTransferTransaction(tx: any) {
     const txDetails = tx["asset-transfer-transaction"];
     const assetID = txDetails["asset-id"];
@@ -184,6 +183,7 @@ export class AlgorandGraphAPI {
         data: {
           id: assetID,
           label: "ASA " + assetID,
+          type: "asset-node",
         },
         classes: "asset",
       });
@@ -214,7 +214,6 @@ export class AlgorandGraphAPI {
       );
       this.elements[objIndex].data.weight += 1;
     }
-
 
     // Create Receiver
     if (!this.capturedIDs.has(receiverID)) {
@@ -284,7 +283,6 @@ export class AlgorandGraphAPI {
       this.elements[objIndex].data.weight += 1;
     }
   }
-
   private handlePaymentTransaction(tx: any) {
     const txDetails = tx["payment-transaction"];
 
@@ -368,7 +366,6 @@ export class AlgorandGraphAPI {
       return this.elements;
     }
   }
-
   private async getTransactions(rootAccountID: string) {
     const requestURL = `https://${this.networkDomain}/idx2/v2/accounts/${rootAccountID}/transactions`;
 
@@ -381,7 +378,6 @@ export class AlgorandGraphAPI {
     const transactions = jsonData.transactions;
     return transactions;
   }
-
   private setRootNodeInElements(rootAccountID: string) {
     // Root Node
     this.elements.push({
@@ -395,7 +391,6 @@ export class AlgorandGraphAPI {
     });
     this.capturedIDs.set(rootAccountID, rootAccountID);
   }
-
   private setElementsForPaymentTransaction(tx: any) {
     const txDetails = tx["payment-transaction"];
     const txClass = "payment-transaction";
@@ -413,7 +408,6 @@ export class AlgorandGraphAPI {
             type: "group-node",
           },
           classes: "group",
-          type: "group",
         });
       }
       this.capturedIDs.set(tx.group, tx.group);
@@ -431,7 +425,6 @@ export class AlgorandGraphAPI {
           type: "payment-transaction-node",
         },
         classes: txClass + " payment-transaction",
-        type: "payment-transaction-node",
       });
       this.capturedIDs.set(tx.id, tx.id);
     }
@@ -446,7 +439,6 @@ export class AlgorandGraphAPI {
           type: "account-node",
         },
         classes: "account",
-        type: "account-node",
       });
       this.capturedIDs.set(tx.sender, tx.sender);
     }
@@ -461,7 +453,6 @@ export class AlgorandGraphAPI {
           type: "account-node",
         },
         classes: "account",
-        type: "account-node",
       });
       this.capturedIDs.set(txDetails.receiver, txDetails.receiver);
     }
@@ -604,7 +595,6 @@ export class AlgorandGraphAPI {
       type: "asset-call",
     });
   }
-
   private setElementsForApplicationTransaction(tx: any) {
     const txDetails = tx["application-transaction"];
     const txClass = "application-transaction";
