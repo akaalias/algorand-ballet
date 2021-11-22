@@ -1,22 +1,16 @@
 export class AlgorandGraphAPI {
   apiKey: string;
   networkDomain: string;
-  nameToAccountIDMap: Map<unknown, any>;
   elements: Array<any>;
   capturedIDs: Map<string, string>;
   capturedEdges: Map<string, string>;
-  static assetIDToInfoMap: Map<string, any>;
 
-  constructor(networkDomain: string) {
-    this.apiKey = "pksIgccdqX9ADKvMLfVhf3hZqClM949951K9966v";
+  constructor(networkDomain: string, apiKey: string) {
+    this.apiKey = apiKey;
     this.networkDomain = networkDomain;
-    this.nameToAccountIDMap = new Map();
     this.elements = [];
     this.capturedIDs = new Map();
     this.capturedEdges = new Map();
-    if (AlgorandGraphAPI.assetIDToInfoMap == null) {
-      AlgorandGraphAPI.assetIDToInfoMap = new Map();
-    }
   }
   async graphForRootAccountID(rootAccountID: string) {
     const transactions = await this.getTransactions(rootAccountID);
@@ -41,7 +35,6 @@ export class AlgorandGraphAPI {
 
     return this.elements;
   }
-
   private addSenderNode(tx: any) {
     if (!this.capturedIDs.has(tx.sender)) {
       this.elements.push({
@@ -347,6 +340,8 @@ export class AlgorandGraphAPI {
   }
 
   async networkForRootAccountID(rootAccountID: string) {
+    console.log("API: " + this.apiKey);
+
     this.setRootNodeInElements(rootAccountID);
 
     const transactions = await this.getTransactions(rootAccountID);

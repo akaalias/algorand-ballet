@@ -8,7 +8,7 @@
 
     <div class="cyHolder" v-if="apiKey !== ''">
 
-      <SearchForm :accountID="accountID" @searchReady="startSearch($event)"/>
+      <SearchForm :parentAccountID="accountID" @searchReady="startSearch($event)"/>
 
       <cytoscape
         :config="cyConfig"
@@ -143,7 +143,7 @@ export default {
   name: "AccountIDForm",
   data: () => ({
     apiKey: "",
-    accountID: "Y74RXNAUAZT2U5PD57Y22NVU6UPW5WNLRLHA763EE5IJSLSJXRAX6YY4OE",
+    accountID: "",
     selectedNetwork: AlgorandAPIConfig.defaultNetwork,
 
     focuses: QualitativeResearchApproach.researchApproaches,
@@ -168,8 +168,8 @@ export default {
     previousTapStamp: 0,
   }),
   methods: {
-    async updateGraph() {
-      this.algorandAPI = new AlgorandGraphAPI(this.selectedNetwork.domain);
+    async callAPIThenUpdateGraphView() {
+      this.algorandAPI = new AlgorandGraphAPI(this.selectedNetwork.domain, this.apiKey);
       if (this.selectedFocus.focus === "network") {
         this.elements = [];
         this.elements = await this.algorandAPI.networkForRootAccountID(
@@ -185,9 +185,7 @@ export default {
       this.searching = false;
     },
     async search() {
-      this.buttonText = "Searching";
-      await this.updateGraph();
-      this.buttonText = "Build Graph";
+      await this.callAPIThenUpdateGraphView();
     },
     preConfig(cytoscape) {
       cytoscape.use(cola);

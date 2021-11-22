@@ -3,7 +3,10 @@
     <v-row align="center">
       <v-col cols="4"> </v-col>
       <v-col cols="4">
-        <h1 class="text-h6">Please configure your API Key</h1>
+        <h1 class="text-h6">
+          <v-icon>mdi-account-check</v-icon>
+          Please configure your API Key
+        </h1>
         <p>
           Hi there! To use the explorer you need access to Algorand's data via
           an API key.

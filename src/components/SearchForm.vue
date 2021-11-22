@@ -42,8 +42,9 @@ import { AlgorandAPIConfig } from "../models/AlgorandAPIConfig";
 
 export default {
   name: "SearchForm",
-  props: ["accountID"],
+  props: ["parentAccountID"],
   data:() => ({
+    accountID: "",
     accountIDRules: [
       (v) => !!v || "AccountID is required",
       (v) => v.length === 58 || "AccountID must be exactly 58 characters long",
@@ -56,6 +57,11 @@ export default {
   methods: {
     searchReady() {
       this.$emit('searchReady', {accountID: this.accountID, network: this.selectedNetwork});
+    }
+  },
+  watch: {
+    parentAccountID: function(newVal, oldVal) {
+      this.accountID = newVal;
     }
   }
 };
