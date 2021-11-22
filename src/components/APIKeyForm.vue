@@ -54,7 +54,7 @@ export default {
   name: "APIKeyForm",
   data:() => ({
     apiKey: AlgorandAPIConfig.key,
-    userAPIKey: "",
+    userAPIKey: AlgorandAPIConfig.key,
     userAPIKeyRules: [
       (v) => !!v || "API Key is required",
       (v) => v.length === 40 || "API Key must be exactly 40 characters",

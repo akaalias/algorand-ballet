@@ -5,50 +5,18 @@
       v-if="apiKey === ''"
       @apiKeySet="setMyAPIKey($event)"
     />
-    
-    <div class="cyHolder" v-if="!!apiKey">
-      <v-form v-if="!!apiKey" class="pl-4 pr-4" id="searchForm">
-        <v-row>
-          <v-col cols="2">
-            <v-select
-              v-model="selectedNetwork"
-              item-text="name"
-              item-value="domain"
-              :items="networks"
-              label="Network"
-              single-line
-              return-object
-              class="top-z"
-            ></v-select>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field
-              v-model="accountID"
-              :rules="accountIDRules"
-              label="Algorand Target Account ID"
-              required
-              single-line
-            ></v-text-field>
-          </v-col>
-          <v-col cols="2" class="pt-5">
-            <v-btn
-              color="primary"
-              elevation="2"
-              v-on:click="search"
-              :disabled="searching"
-              block
-            >
-              {{ buttonText }}
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-form>
+
+    <div class="cyHolder" v-if="apiKey !== ''">
+
+      <SearchForm :accountID="accountID" @searchReady="startSearch($event)"/>
+
       <cytoscape
         :config="cyConfig"
         :preConfig="preConfig"
         :afterCreated="afterCreated"
         v-if="elements.length !== 0"
       />
+
       <v-card id="graphMenuCard" tile v-if="elements.length !== 0">
         <v-list>
           <v-subheader>FOCUS</v-subheader>
@@ -162,32 +130,28 @@
 
 <script>
 import VueJsonPretty from "vue-json-pretty/lib/vue-json-pretty";
+import cola from "cytoscape-cola";
 import "vue-json-pretty/lib/styles.css";
 import { AlgorandGraphAPI } from "@/models/AlgorandGraphAPI";
-import cola from "cytoscape-cola";
 import { CytoscapeConfig } from "@/models/CytoscapeConfig";
 import { AlgorandAPIConfig } from "@/models/AlgorandAPIConfig";
 import { QualitativeResearchApproach } from "@/models/QualitativeResearchApproach";
 import APIKeyForm from "@/components/APIKeyForm";
+import SearchForm from "@/components/SearchForm";
 
 export default {
   name: "AccountIDForm",
   data: () => ({
     apiKey: "",
-    accountID: "627GFZFMQ2EZXQYSASJP77UB7WNR4XWNCSFJNW3UQJELI3MQXYXXFAT7EI",
-    accountIDRules: [
-      (v) => !!v || "AccountID is required",
-      (v) => v.length === 58 || "AccountID must be exactly 58 characters long",
-    ],
+    accountID: "Y74RXNAUAZT2U5PD57Y22NVU6UPW5WNLRLHA763EE5IJSLSJXRAX6YY4OE",
+    selectedNetwork: AlgorandAPIConfig.defaultNetwork,
+
     focuses: QualitativeResearchApproach.researchApproaches,
     selectedFocus: QualitativeResearchApproach.defaultResearchApproach,
-    networks: AlgorandAPIConfig.apiNetworks,
-    selectedNetwork: AlgorandAPIConfig.defaultNetwork,
+
     selectedLayout: CytoscapeConfig.defaultLayoutName,
     cyConfig: CytoscapeConfig.cyConfig,
     layoutConfigurations: CytoscapeConfig.layoutConfigurations,
-    searching: false,
-    buttonText: "Build Graph",
     elements: [],
     paymentTransactionsVisible: true,
     assetTransferTransactionsVisible: true,
@@ -375,6 +339,11 @@ export default {
       console.log("News from sub-component!");
       this.apiKey = key;
     },
+    startSearch(event) {
+      this.accountID = event.accountID;
+      this.selectedNetwork = event.network;
+      this.search();
+    },
     toggleTransactionGroups() {
       if (!this.transactionGroupsVisible) {
         this.cy.$(":parent").style("border-opacity", "0");
@@ -404,6 +373,7 @@ export default {
     },
   },
   components: {
+    SearchForm,
     VueJsonPretty,
     APIKeyForm,
   },
