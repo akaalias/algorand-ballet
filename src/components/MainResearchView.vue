@@ -241,10 +241,11 @@ export default {
             type === "application-transaction-node"
           ) {
             url = url + "/tx/" + node.data().id;
+          } else if(type === "group-node") {
+            url = url + "/tx/group/" + encodeURI(node.data().id);
           } else {
             console.log("Unsure how to handle this node");
           }
-          console.log(url);
           window.open(url, "_blank", "minimizable=false").focus();
         }.bind(this)
       );
