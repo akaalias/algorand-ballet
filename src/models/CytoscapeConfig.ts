@@ -18,6 +18,10 @@ export class CytoscapeConfig {
           width: 3,
           "line-color": "#ccc",
           "font-size": 14,
+          "curve-style": "unbundled-bezier",
+          "control-point-weights": [0.5],
+          "source-endpoint": "inside-to-node",
+          "target-endpoint": "inside-to-node",
         },
       },
       {
@@ -152,7 +156,6 @@ export class CytoscapeConfig {
           width: "mapData(weight, 0, 100, 0, 100)",
           "line-color": "rgba(151,53,0,0.69)",
           "curve-style": "unbundled-bezier",
-          "control-point-distances": [20],
           "control-point-weights": [0, 0.5, 1],
           "source-endpoint": "inside-to-node",
           "target-endpoint": "inside-to-node",
