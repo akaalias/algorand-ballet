@@ -1,51 +1,11 @@
 <template>
   <v-container id="container" fluid>
-    <v-form v-if="apiKey === ''">
-      <v-row align="center">
-        <v-col cols="4"> </v-col>
-        <v-col cols="4">
-          <h1 class="text-h6">Please configure your API Key</h1>
-          <p>
-            Hi there! To use the explorer you need access to Algorand's data via
-            an API key.
-          </p>
 
-          <p>
-            I've gotten mine from Purestake: It works really well, it's free for
-            personal use and was easy to get via their
-            <a href="https://developer.purestake.io/">Developer Portal</a>. (I
-            have no affiliation with Purestake)
-          </p>
-
-          <p>
-            After signing up, please copy and paste your key below. It will be
-            stored locally for the duration of your session.
-          </p>
-
-          <br />
-          <v-row class="">
-            <v-col cols="9">
-              <v-text-field
-                v-model="userAPIKey"
-                :rules="userAPIKeyRules"
-                label="My API Key"
-                required
-                @keydown.enter.prevent="setAPIKey"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="3">
-              <v-btn
-                :disabled="!isAPIKeyValid"
-                @click="setAPIKey"
-                color="primary"
-                >Set Key</v-btn
-              >
-            </v-col>
-          </v-row>
-        </v-col>
-        <v-col cols="4"> </v-col>
-      </v-row>
-    </v-form>
+    <APIKeyForm
+      v-if="apiKey === ''"
+      @apiKeySet="setMyAPIKey($event)"
+    />
+    
     <div class="cyHolder" v-if="!!apiKey">
       <v-form v-if="!!apiKey" class="pl-4 pr-4" id="searchForm">
         <v-row>
@@ -208,16 +168,12 @@ import cola from "cytoscape-cola";
 import { CytoscapeConfig } from "@/models/CytoscapeConfig";
 import { AlgorandAPIConfig } from "@/models/AlgorandAPIConfig";
 import { QualitativeResearchApproach } from "@/models/QualitativeResearchApproach";
+import APIKeyForm from "@/components/APIKeyForm";
 
 export default {
   name: "AccountIDForm",
   data: () => ({
-    apiKey: AlgorandAPIConfig.key,
-    userAPIKey: "",
-    userAPIKeyRules: [
-      (v) => !!v || "API Key is required",
-      (v) => v.length === 40 || "API Key must be exactly 40 characters",
-    ],
+    apiKey: "",
     accountID: "627GFZFMQ2EZXQYSASJP77UB7WNR4XWNCSFJNW3UQJELI3MQXYXXFAT7EI",
     accountIDRules: [
       (v) => !!v || "AccountID is required",
@@ -415,10 +371,9 @@ export default {
         this.cy.$(".asset").style("display", "element");
       }
     },
-    setAPIKey() {
-      if (this.userAPIKey.length == 40) {
-        this.apiKey = this.userAPIKey;
-      }
+    setMyAPIKey(key) {
+      console.log("News from sub-component!");
+      this.apiKey = key;
     },
     toggleTransactionGroups() {
       if (!this.transactionGroupsVisible) {
@@ -444,15 +399,13 @@ export default {
     },
   },
   computed: {
-    isAPIKeyValid() {
-      return this.userAPIKey.length == 40;
-    },
     layoutConfigurationKeys() {
       return Object.keys(this.layoutConfigurations);
     },
   },
   components: {
     VueJsonPretty,
+    APIKeyForm,
   },
 };
 </script>
