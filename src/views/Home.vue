@@ -1,16 +1,15 @@
 <template>
-  <account-i-d-form></account-i-d-form>
+  <MainResearchView></MainResearchView>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import AccountIDForm from "@/components/AccountIDForm.vue";
+import MainResearchView from "@/components/MainResearchView.vue";
 
 export default Vue.extend({
   name: "Home",
-
   components: {
-    AccountIDForm,
+    MainResearchView,
   },
 });
 </script>
