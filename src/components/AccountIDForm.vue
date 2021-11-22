@@ -112,7 +112,7 @@
             <v-list-item>
               <v-select
                 v-model="selectedLayout"
-                :items="layouts"
+                :items="layoutConfigurationKeys"
                 single-line
                 v-on:change="changeLayout"
               >
@@ -461,6 +461,15 @@ export default {
     persistentAPI: null,
     transactionGroupsVisible: true,
     deepLinkID: "",
+    layoutConfigurations: {
+        "grid": {name: "grid", animate: true},
+        "circle": {name: "circle", animate: true},
+        "concentric": {name: "concentric", animate: true},
+        "breadthfirst": {name: "breadthfirst", animate: true},
+        "cose": {name: "cose", animate: false},
+        "cola": {name: "cola", animate: false},
+        "random": {name: "random", animate: false},
+    },
   }),
   methods: {
     async updateGraph() {
@@ -539,7 +548,7 @@ export default {
         }.bind(this)
       );
 
-      this.cy.layout({ name: this.selectedLayout }).run();
+      this.cy.layout(this.layoutConfigurations[this.selectedLayout]).run();
       document.getElementById("cytoscape-div").style.minHeight = "800px";
 
       this.toggleRootNode();
@@ -624,7 +633,7 @@ export default {
       }
     },
     changeLayout() {
-      this.cy.layout({ name: this.selectedLayout, animate: true }).run();
+      this.cy.layout(this.layoutConfigurations[this.selectedLayout]).run();
       this.cy.resize();
       this.cy.fit();
     },
@@ -638,6 +647,9 @@ export default {
     isAPIKeyValid() {
       return this.userAPIKey.length == 40;
     },
+    layoutConfigurationKeys() {
+      return Object.keys(this.layoutConfigurations);
+    }
   },
   components: {
     VueJsonPretty,
