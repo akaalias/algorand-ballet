@@ -20,7 +20,6 @@
         class="pt-5"
       ></v-switch>
     </v-app-bar>
-
     <v-main>
       <!-- Here, the page is injected -->
       <router-view />
