@@ -122,6 +122,16 @@
           <v-list-item class="exportPNG">
             <v-btn v-on:click="exportPNG"> Export PNG </v-btn>
           </v-list-item>
+
+          <v-list-item>
+            <v-switch
+              v-model="$vuetify.theme.dark"
+              single-line
+              label="Dark Mode"
+              class="pt-5"
+            ></v-switch>
+
+          </v-list-item>
         </v-list>
       </v-card>
     </div>
@@ -129,9 +139,6 @@
 </template>
 
 <script>
-import VueJsonPretty from "vue-json-pretty/lib/vue-json-pretty";
-import cola from "cytoscape-cola";
-import "vue-json-pretty/lib/styles.css";
 import { AlgorandGraphAPI } from "@/models/AlgorandGraphAPI";
 import { CytoscapeConfig } from "@/models/CytoscapeConfig";
 import { AlgorandAPIConfig } from "@/models/AlgorandAPIConfig";
@@ -140,15 +147,13 @@ import APIKeyForm from "@/components/APIKeyForm";
 import SearchForm from "@/components/SearchForm";
 
 export default {
-  name: "AccountIDForm",
+  name: "MainResearchView",
   data: () => ({
-    apiKey: "",
     accountID: "",
+    apiKey: AlgorandAPIConfig.key,
     selectedNetwork: AlgorandAPIConfig.defaultNetwork,
-
     focuses: QualitativeResearchApproach.researchApproaches,
     selectedFocus: QualitativeResearchApproach.defaultResearchApproach,
-
     selectedLayout: CytoscapeConfig.defaultLayoutName,
     cyConfig: CytoscapeConfig.cyConfig,
     layoutConfigurations: CytoscapeConfig.layoutConfigurations,
@@ -188,7 +193,7 @@ export default {
       await this.callAPIThenUpdateGraphView();
     },
     preConfig(cytoscape) {
-      cytoscape.use(cola);
+      console.log('...');
     },
     async afterCreated(cy) {
       this.cy = cy;
@@ -373,7 +378,6 @@ export default {
   },
   components: {
     SearchForm,
-    VueJsonPretty,
     APIKeyForm,
   },
 };

@@ -1,15 +1,16 @@
 <template>
-  <MainResearchView></MainResearchView>
+  <main-research-view></main-research-view>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import MainResearchView from "@/components/MainResearchView.vue";
+  import Vue from 'vue'
+  import MainResearchView from "@/components/MainResearchView.vue";
 
-export default Vue.extend({
-  name: "Home",
-  components: {
-    MainResearchView,
-  },
-});
+  export default Vue.extend({
+    name: 'Home',
+
+    components: {
+      MainResearchView,
+    },
+  })
 </script>

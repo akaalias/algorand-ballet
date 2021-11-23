@@ -340,10 +340,7 @@ export class AlgorandGraphAPI {
   }
 
   async networkForRootAccountID(rootAccountID: string) {
-    console.log("API: " + this.apiKey);
-
     this.setRootNodeInElements(rootAccountID);
-
     const transactions = await this.getTransactions(rootAccountID);
 
     if (transactions != null) {

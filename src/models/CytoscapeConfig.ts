@@ -18,10 +18,10 @@ export class CytoscapeConfig {
           width: 3,
           "line-color": "#ccc",
           "font-size": 14,
-          "curve-style": "unbundled-bezier",
-          "control-point-weights": [0.5],
-          "source-endpoint": "inside-to-node",
-          "target-endpoint": "inside-to-node",
+          // "curve-style": "unbundled-bezier",
+          // "control-point-weights": [0.5],
+          // "source-endpoint": "inside-to-node",
+          // "target-endpoint": "inside-to-node",
         },
       },
       {
@@ -202,8 +202,8 @@ export class CytoscapeConfig {
     "circle": {name: "circle", animate: true},
     "concentric": {name: "concentric", animate: true},
     "breadthfirst": {name: "breadthfirst", animate: true},
-    "cose": {name: "cose", animate: false},
-    "cola": {name: "cola", animate: false},
+    // "cose": {name: "cose", animate: false},
+    // "cola": {name: "cola", animate: false},
     "random": {name: "random", animate: false},
   };
   public static defaultLayoutName = "circle";
