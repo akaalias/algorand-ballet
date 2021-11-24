@@ -215,9 +215,7 @@ export class CytoscapeConfig {
     "circle": {name: "circle", animate: true},
     "concentric": {name: "concentric", animate: true},
     "breadthfirst": {name: "breadthfirst", animate: true},
-    // "cose": {name: "cose", animate: false},
-    // "cola": {name: "cola", animate: false},
-    "random": {name: "random", animate: false},
+    "random": {name: "random", animate: true, fit: true},
   };
   public static defaultLayoutName = "circle";
 }

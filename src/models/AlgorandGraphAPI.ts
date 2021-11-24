@@ -4,6 +4,7 @@ export class AlgorandGraphAPI {
   elements: Array<any>;
   capturedIDs: Map<string, string>;
   capturedEdges: Map<string, string>;
+  defaultLimit: number;
 
   constructor(networkDomain: string, apiKey: string) {
     this.apiKey = apiKey;
@@ -11,7 +12,9 @@ export class AlgorandGraphAPI {
     this.elements = [];
     this.capturedIDs = new Map();
     this.capturedEdges = new Map();
+    this.defaultLimit = 1000;
   }
+
   async graphForRootAccountID(rootAccountID: string) {
     const transactions = await this.getTransactions(rootAccountID);
 
@@ -411,7 +414,7 @@ export class AlgorandGraphAPI {
     }
   }
   private async getTransactions(rootAccountID: string) {
-    const requestURL = `https://${this.networkDomain}/idx2/v2/accounts/${rootAccountID}/transactions`;
+    const requestURL = `https://${this.networkDomain}/idx2/v2/accounts/${rootAccountID}/transactions?limit=${this.defaultLimit}`;
 
     const response = await fetch(requestURL, {
       method: "GET",
