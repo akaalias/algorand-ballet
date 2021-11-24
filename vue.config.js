@@ -5,7 +5,6 @@ module.exports = {
   pluginOptions: {
     electronBuilder: {
       chainWebpackRendererProcess(config) {
-
       }
     }
   }
