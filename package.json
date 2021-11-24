@@ -8,6 +8,9 @@
   "author": "Alexis Rondeau",
   "mac": {
     "category": "public.app-category.developer-tools",
+    "hardenedRuntime": true,
+    "entitlements": "build/entitlements.plist",
+    "entitlementsInherit": "build/entitlements.plist"
   },
   "private": true,
   "development": {
