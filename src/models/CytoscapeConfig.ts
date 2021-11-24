@@ -152,7 +152,7 @@ export class CytoscapeConfig {
           width: "mapData(weight, 0, 100, 0, 100)",
           "line-color": "rgba(151,53,0,0.69)",
           "curve-style": "unbundled-bezier",
-          "control-point-distances": [40],
+          "control-point-distances": [50],
           "source-endpoint": "inside-to-node",
           "target-endpoint": "inside-to-node",
           "text-outline-color": "#555",

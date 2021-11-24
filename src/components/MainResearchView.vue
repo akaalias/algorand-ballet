@@ -18,7 +18,16 @@
       />
 
       <v-card id="graphMenuCard" tile v-if="elements.length !== 0">
-        <v-list>
+        <v-btn
+          icon
+          x-small
+          @click.stop="mini = !mini"
+          class="hideMenuButton"
+        >
+          <v-icon>mdi-chevron-down</v-icon>
+        </v-btn>
+
+        <v-list id="menuList" v-if="mini">
           <v-subheader>FOCUS</v-subheader>
           <v-list-item-group color="primary">
             <v-list-item>
@@ -119,19 +128,23 @@
             </v-list-item>
           </v-list-item-group>
 
-          <v-list-item class="exportPNG">
-            <v-btn v-on:click="exportPNG"> Export PNG </v-btn>
-          </v-list-item>
+          <v-subheader>OPTIONS</v-subheader>
 
-          <v-list-item>
+          <v-list-item class="transactionGroupsVisible">
             <v-switch
               v-model="$vuetify.theme.dark"
-              single-line
+              inset
               label="Dark Mode"
               class="pt-5"
             ></v-switch>
-
           </v-list-item>
+
+          <v-list-item class="exportPNG">
+            <v-btn
+              v-on:click="exportPNG"
+            > Export PNG </v-btn>
+          </v-list-item>
+
         </v-list>
       </v-card>
     </div>
@@ -171,6 +184,7 @@ export default {
     deepLinkID: "",
     doubleClickDelayMs: 350,
     previousTapStamp: 0,
+    mini: true
   }),
   methods: {
     async callAPIThenUpdateGraphView() {
@@ -436,12 +450,27 @@ export default {
   border-left: 2px solid #a05195;
 }
 
+#graphMenuCard .toggleTheme {
+  max-height: 30px;
+}
+
+#graphMenuCard .exportPNG {
+  max-height: 20px;
+}
+
 #graphMenuCard .v-list-item {
   max-height: 30px;
 }
 
 #graphMenuCard .v-subheader {
-  max-height: 30px;
+  max-height: 20px;
+}
+
+.hideMenuButton {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  max-height: 10px;
 }
 
 .top-z {

@@ -194,7 +194,7 @@ export class AlgorandGraphAPI {
             source: receiverID,
             weight: 1,
           },
-          classes: "asset-relationship-loop",
+          classes: "asset-relationship-loop asset-relationship",
         });
 
         this.capturedEdges.set(selfEdge, selfEdge);
@@ -334,39 +334,38 @@ export class AlgorandGraphAPI {
   }
 
   private handleGraphPaymentTransaction(tx: any) {
+    const senderID = tx.sender;
     const txDetails = tx["payment-transaction"];
+    const receiverID = txDetails.receiver
 
     // Receiver Node
-    if (!this.capturedIDs.has(txDetails.receiver)) {
+    if (!this.capturedIDs.has(receiverID)) {
       this.elements.push({
         data: {
-          id: txDetails.receiver,
-          label: txDetails.receiver.substring(0, 7),
+          id: receiverID,
+          label: receiverID.substring(0, 7),
           type: "account-node",
         },
         classes: "account",
         type: "account-node",
       });
-      this.capturedIDs.set(txDetails.receiver, txDetails.receiver);
+      this.capturedIDs.set(receiverID, receiverID);
     }
 
-    let senderID = tx.sender;
-    let receiverID = txDetails.receiver;
-    let compoundEdgeID = senderID + "-" + receiverID;
+    let senderReceiverEdge = senderID + "-" + receiverID;
+    const reverseSenderReceiverEdge = receiverID + "-" + senderID
 
     // Avoid adding an extra edge
-    if (this.capturedEdges.has(compoundEdgeID)) {
-      senderID = txDetails.receiver;
-      receiverID = tx.sender;
-      compoundEdgeID = senderID + "-" + receiverID;
+    if (this.capturedEdges.has(reverseSenderReceiverEdge)) {
+      senderReceiverEdge = reverseSenderReceiverEdge
     }
 
-    if (!this.capturedEdges.has(compoundEdgeID)) {
+    if (!this.capturedEdges.has(senderReceiverEdge)) {
       // Looping Edges
       if (senderID === receiverID) {
         this.elements.push({
           data: {
-            id: compoundEdgeID,
+            id: senderReceiverEdge,
             target: senderID,
             source: receiverID,
             weight: 1,
@@ -376,7 +375,7 @@ export class AlgorandGraphAPI {
       } else {
         this.elements.push({
           data: {
-            id: compoundEdgeID,
+            id: senderReceiverEdge,
             target: senderID,
             source: receiverID,
             weight: 1,
@@ -385,10 +384,10 @@ export class AlgorandGraphAPI {
         });
       }
 
-      this.capturedEdges.set(compoundEdgeID, compoundEdgeID);
+      this.capturedEdges.set(senderReceiverEdge, senderReceiverEdge);
     } else {
       const objIndex = this.elements.findIndex(
-        (obj) => obj.data.id === compoundEdgeID
+        (obj) => obj.data.id === senderReceiverEdge
       );
       this.elements[objIndex].data.weight += 1;
     }
