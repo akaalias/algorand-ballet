@@ -25,7 +25,7 @@ A qualitative analysis tool for the Algorand blockchain
 ✔ Tested on Arm64/MacOS 12 (Monterey)
 
 ## Running on other OSes
-As of now, my releases will be Mac-only unless there's a strong call for a Windows or Linux version.
+As of now, my releases will be Mac-only unless there's a strong call for a Windows or Linux version. Let me (see below) and we can work on other platforms together!
 
 ## Questions
 If you have questions the best way to reach me is to talk in person! [Here's my Calendly](https://calendly.com/alexis-rondeau/let-s-chat-about-algorand-ballet) – I truly don't enjoy 'talking' via async, text-based media like Github, Reddit, Discord, Slack or Email.
