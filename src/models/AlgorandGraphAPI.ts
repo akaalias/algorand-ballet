@@ -21,14 +21,12 @@ export class AlgorandGraphAPI {
       for (const tx of transactions) {
         // Add Sender Node regardless of what kind of TX it is
         this.addSenderNode(tx);
-
-        // Handle payment TXs
         if (tx["tx-type"] === "pay") {
-          this.handlePaymentTransaction(tx);
+          this.handleGraphPaymentTransaction(tx);
         } else if (tx["tx-type"] === "axfer") {
-          this.handleAssetTransferTransaction(tx);
+          this.handleGraphAssetTransferTransaction(tx);
         } else if (tx["tx-type"] === "appl") {
-          this.handleApplicationTransaction(tx);
+          this.handleGraphApplicationTransaction(tx);
         }
       }
     }
@@ -48,11 +46,9 @@ export class AlgorandGraphAPI {
         type: "account-node",
       });
       this.capturedIDs.set(tx.sender, tx.sender);
-    } else {
-      console.log();
     }
   }
-  private handleApplicationTransaction(tx: any) {
+  private handleGraphApplicationTransaction(tx: any) {
     const txDetails = tx["application-transaction"];
     const applicationID = txDetails["application-id"];
 
@@ -108,8 +104,6 @@ export class AlgorandGraphAPI {
           classes: "account",
         });
         this.capturedIDs.set(involvedAccountID, involvedAccountID);
-      } else {
-        console.log();
       }
 
       // Add edge between involved account and application
@@ -164,124 +158,180 @@ export class AlgorandGraphAPI {
       }
     }
   }
-  private handleAssetTransferTransaction(tx: any) {
+  private handleGraphAssetTransferTransaction(tx: any) {
     const txDetails = tx["asset-transfer-transaction"];
-    const assetID = txDetails["asset-id"];
     const senderID = tx.sender;
     const receiverID = txDetails.receiver;
+    const assetID = txDetails["asset-id"];
 
-    // Add Asset Node
-    if (!this.capturedIDs.has(assetID)) {
-      this.elements.push({
-        data: {
-          id: assetID,
-          label: "ASA " + assetID,
-          type: "asset-node",
-        },
-        classes: "asset",
-      });
-      this.capturedIDs.set(assetID, assetID);
-    }
+    console.log("ASA TX - " + tx.id.substring(0,7));
 
-    // Add relationship sender -> asset
-    const compoundAccountAssetEdgeID = senderID + "-" + assetID;
+    if(senderID === receiverID) {
 
-    if (!this.capturedEdges.has(compoundAccountAssetEdgeID)) {
-      this.elements.push({
-        data: {
-          id: compoundAccountAssetEdgeID,
-          target: assetID,
-          source: senderID,
-          weight: 1,
-        },
-        classes: "asset-relationship",
-      });
+      // Add Asset Node
+      if (!this.capturedIDs.has(assetID)) {
+        this.elements.push({
+          data: {
+            id: assetID,
+            label: "ASA " + assetID,
+            type: "asset-node",
+          },
+          classes: "asset",
+        });
+        this.capturedIDs.set(assetID, assetID);
+      }
 
-      this.capturedEdges.set(
-        compoundAccountAssetEdgeID,
-        compoundAccountAssetEdgeID
-      );
+      // Self-Loop
+      const selfEdge = senderID + "-" + receiverID;
+      if(!this.capturedEdges.has(selfEdge)) {
+        this.elements.push({
+          data: {
+            id: selfEdge,
+            target: senderID,
+            source: receiverID,
+            weight: 1,
+          },
+          classes: "asset-relationship-loop",
+        });
+
+        this.capturedEdges.set(selfEdge, selfEdge);
+      } else {
+        const objIndex = this.elements.findIndex(
+          (obj) => obj.data.id === selfEdge
+        );
+
+        this.elements[objIndex].data.weight += 1;
+      }
+
+
+      // Add relationship sender -> asset
+      let senderToAssetEdge = senderID + "-" + assetID;
+      if (!this.capturedEdges.has(senderToAssetEdge)) {
+        this.elements.push({
+          data: {
+            id: senderToAssetEdge,
+            target: assetID,
+            source: senderID,
+            weight: 1,
+          },
+          classes: "asset-relationship",
+        });
+
+        this.capturedEdges.set(
+          senderToAssetEdge,
+          senderToAssetEdge
+        );
+      } else {
+        const objIndex = this.elements.findIndex(
+          (obj) => obj.data.id === senderToAssetEdge
+        );
+        this.elements[objIndex].data.weight += 1;
+      }
+
     } else {
-      const objIndex = this.elements.findIndex(
-        (obj) => obj.data.id === compoundAccountAssetEdgeID
-      );
-      this.elements[objIndex].data.weight += 1;
-    }
+      // Add Asset Node
+      if (!this.capturedIDs.has(assetID)) {
+        this.elements.push({
+          data: {
+            id: assetID,
+            label: "ASA " + assetID,
+            type: "asset-node",
+          },
+          classes: "asset",
+        });
+        this.capturedIDs.set(assetID, assetID);
+      }
 
-    // Create Receiver
-    if (!this.capturedIDs.has(receiverID)) {
-      this.elements.push({
-        data: {
-          id: receiverID,
-          label: receiverID.substring(0, 7),
-          type: "account-node",
-        },
-        classes: "account",
-      });
-      this.capturedIDs.set(receiverID, receiverID);
-    }
+      // Add relationship sender -> asset
+      let senderToAssetEdge = senderID + "-" + assetID;
+      if (!this.capturedEdges.has(senderToAssetEdge)) {
+        this.elements.push({
+          data: {
+            id: senderToAssetEdge,
+            target: assetID,
+            source: senderID,
+            weight: 1,
+          },
+          classes: "asset-relationship",
+        });
 
-    // Add relationship receiver -> asset
-    const inverseReceiverEdgeID = assetID + "-" + receiverID;
-    let receiverEdgeID = receiverID + "-" + assetID;
+        this.capturedEdges.set(
+          senderToAssetEdge,
+          senderToAssetEdge
+        );
+      } else {
+        const objIndex = this.elements.findIndex(
+          (obj) => obj.data.id === senderToAssetEdge
+        );
+        this.elements[objIndex].data.weight += 1;
+      }
 
-    if (this.capturedIDs.has(inverseReceiverEdgeID)) {
-      receiverEdgeID = assetID + "-" + receiverID;
-    }
+      // Create Receiver
+      if (!this.capturedIDs.has(receiverID)) {
+        this.elements.push({
+          data: {
+            id: receiverID,
+            label: receiverID.substring(0, 7),
+            type: "account-node",
+          },
+          classes: "account",
+        });
+        this.capturedIDs.set(receiverID, receiverID);
+      }
 
-    if (!this.capturedEdges.has(receiverEdgeID)) {
-      this.elements.push({
-        data: {
-          id: receiverEdgeID,
-          target: assetID,
-          source: receiverID,
-          weight: 1,
-        },
-        classes: "asset-relationship",
-      });
+      // Add relationship receiver -> asset
+      const receiverToAssetEdge = receiverID + "-" + assetID;
+      if (!this.capturedEdges.has(receiverToAssetEdge)) {
+        this.elements.push({
+          data: {
+            id: receiverToAssetEdge,
+            target: assetID,
+            source: receiverID,
+            weight: 1,
+          },
+          classes: "asset-relationship",
+        });
 
-      this.capturedEdges.set(receiverEdgeID, receiverEdgeID);
-    } else {
-      const objIndex = this.elements.findIndex(
-        (obj) => obj.data.id === receiverEdgeID
-      );
-      this.elements[objIndex].data.weight += 1;
-    }
+        this.capturedEdges.set(receiverToAssetEdge, receiverToAssetEdge);
+      } else {
+        const objIndex = this.elements.findIndex(
+          (obj) => obj.data.id === receiverToAssetEdge
+        );
+        this.elements[objIndex].data.weight += 1;
+      }
 
-    // Add Sender -> Receiver Edge
-    let compoundIDSenderReceiver = senderID + "-" + receiverID
-    const inverseCompoundIDSenderReceiver = receiverID + "-" + senderID
+      // Add Sender -> Receiver Edge
+      let senderToReceiverEdge = senderID + "-" + receiverID
+      const inverseSenderToReceiverEdge = receiverID + "-" + senderID
 
-    if(this.capturedEdges.has(inverseCompoundIDSenderReceiver)) {
-      compoundIDSenderReceiver = inverseCompoundIDSenderReceiver
-    }
+      if(this.capturedEdges.has(inverseSenderToReceiverEdge)) {
+        senderToReceiverEdge = inverseSenderToReceiverEdge
+      }
 
-    if(!this.capturedEdges.has(compoundIDSenderReceiver)) {
-      this.elements.push({
-        data: {
-          id: compoundIDSenderReceiver,
-          target: txDetails.receiver,
-          source: senderID,
-          weight: 1,
-        },
-        classes: "asset-relationship",
-      });
+      if(!this.capturedEdges.has(senderToReceiverEdge)) {
+        this.elements.push({
+          data: {
+            id: senderToReceiverEdge,
+            target: receiverID,
+            source: senderID,
+            weight: 1,
+          },
+          classes: "asset-relationship",
+        });
 
-      this.capturedEdges.set(compoundIDSenderReceiver, compoundIDSenderReceiver);
-    } else {
-      const objIndex = this.elements.findIndex(
-        (obj) => obj.data.id === compoundIDSenderReceiver
-      );
-      this.elements[objIndex].data.weight += 1;
+        this.capturedEdges.set(senderToReceiverEdge, senderToReceiverEdge);
+      } else {
+        const objIndex = this.elements.findIndex(
+          (obj) => obj.data.id === senderToReceiverEdge
+        );
+
+        this.elements[objIndex].data.weight += 1;
+      }
     }
   }
-  private handlePaymentTransaction(tx: any) {
-    const txDetails = tx["payment-transaction"];
 
-    console.log("Payment TX")
-    console.log(tx.sender);
-    console.log(txDetails.receiver);
-    console.log("---");
+  private handleGraphPaymentTransaction(tx: any) {
+    const txDetails = tx["payment-transaction"];
 
     // Receiver Node
     if (!this.capturedIDs.has(txDetails.receiver)) {
@@ -295,8 +345,6 @@ export class AlgorandGraphAPI {
         type: "account-node",
       });
       this.capturedIDs.set(txDetails.receiver, txDetails.receiver);
-    } else {
-      console.log();
     }
 
     let senderID = tx.sender;

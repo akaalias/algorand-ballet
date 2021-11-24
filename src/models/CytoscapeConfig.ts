@@ -23,8 +23,8 @@ export class CytoscapeConfig {
       {
         selector: "node.root",
         style: {
-          width: "150",
-          height: "150",
+          width: "100",
+          height: "100",
           "background-color": "#ffa600",
           label: "data(label)",
           "font-size": 20,
@@ -33,8 +33,8 @@ export class CytoscapeConfig {
       {
         selector: "node.account",
         style: {
-          width: "120",
-          height: "120",
+          width: "100",
+          height: "100",
           shape: "ellipse",
           label: "data(label)",
           "background-color": "#ff7c43",
@@ -177,6 +177,23 @@ export class CytoscapeConfig {
         },
       },
       {
+        selector: "edge.asset-relationship-loop",
+        style: {
+          width: "mapData(weight, 0, 100, 0, 100)",
+          "line-color": "#a05195",
+          "source-endpoint": "outside-to-node",
+          "target-endpoint": "outside-to-node",
+          "curve-style": "bezier",
+          "loop-direction": "-45deg",
+          "loop-sweep": "90deg",
+          "control-point-step-size": 80,
+          "text-outline-color": "#555",
+          "text-outline-width": "3px",
+          color: "#fff",
+          "label": "data(weight)",
+        },
+      },
+      {
         selector: "edge.application-relationship",
         style: {
           width: "mapData(weight, 0, 100, 0, 100)",
@@ -190,7 +207,7 @@ export class CytoscapeConfig {
           color: "#fff",
           label: "data(weight)"
         },
-      }
+      },
     ],
   };
   public static layoutConfigurations = {
