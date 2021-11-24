@@ -16,3 +16,17 @@ A qualitative analysis tool for the Algorand blockchain
 
 – Excerpt from "The Death and Life of Great American Cities" (Random House), pages 40-43, by writer, activist, and pioneer of New Urbanism, Jane Jacobs (1916–2006)
 
+## Download and install on MacOS
+
+- Navigate to [Releases](https://github.com/akaalias/algorand-ballet/releases)
+- Download the MacOS installer (.dmg) from the latest release's **Assets**
+- Double-click to mount .dmg
+
+✔ Tested on Arm64/MacOS 12 (Monterey)
+
+## Running on other OSes
+As of now, my releases will be Mac-only unless there's a strong call for a Windows or Linux version.
+
+## Questions
+If you have questions the best way to reach me is to talk in person! [Here's my Calendly](https://calendly.com/alexis-rondeau/let-s-chat-about-algorand-ballet) – I truly don't enjoy 'talking' via async, text-based media like Github, Reddit, Discord, Slack or Email.
+
