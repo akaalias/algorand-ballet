@@ -10,4 +10,4 @@ Algorand Ballet is a qualitative analysis tool for the Algorand blockchain.
 > 
 > The ballet of the good city sidewalk never repeats itself from place to place, and in any one place is always replete with new improvisations.
 
-– By writer, activist, and pioneer of New Urbanism, Jane Jacobs (1916–2006) – From "The Death and Life of Great American Cities" (p. 40). Random House. Kindle Edition. 
+– Excerpt from "The Death and Life of Great American Cities" (Random House), pages 40-43, by writer, activist, and pioneer of New Urbanism, Jane Jacobs (1916–2006)
