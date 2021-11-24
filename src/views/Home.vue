@@ -7,7 +7,7 @@
   import MainResearchView from "@/components/MainResearchView.vue";
 
   document.title = "Algorand Ballet";
-  
+
   export default Vue.extend({
     name: 'Home',
 
