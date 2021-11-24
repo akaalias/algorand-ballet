@@ -1,7 +1,8 @@
 ![CodeQL Security Status](https://github.com/akaalias/algorand-ballet/workflows/CodeQL/badge.svg)
 ![MacOS](https://img.shields.io/badge/MacOS-Ready-brightgreen)
+![Downloads](https://img.shields.io/github/downloads/akaalias/algorand-ballet/total?color=brightgreen&label=Downloads&logo=github)
+![Version](https://img.shields.io/github/package-json/v/akaalias/algorand-ballet?color=brightgreen&label=Version)
 ![License](https://img.shields.io/github/license/akaalias/algorand-ballet?color=blue&label=License)
-![Version](https://img.shields.io/github/package-json/v/akaalias/algorand-ballet?color=blue&label=Version)
 
 # Algorand Ballet
 A qualitative analysis tool for the Algorand blockchain 
