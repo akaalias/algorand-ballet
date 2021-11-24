@@ -3,14 +3,17 @@
   "version": "0.1.0",
   "appId": "com.alexisrondeau.algorand-ballet",
   "productName": "Algorand Ballet",
+  "description": "A qualitative analysis tool for the Algorand blockchain",
   "copyright": "Copyright © 2021 Alexis Rondeau",
   "author": "Alexis Rondeau",
-  "category": "public.app-category.developer-tools",
-  "target": "default",
-  "icon": "src/assets/icon.icns",
+  "mac": {
+    "category": "public.app-category.developer-tools",
+  },
   "private": true,
-  "build": {
-    "appId": "com.alexisrondeau.algorand-ballet"
+  "development": {
+    "build": {
+      "appId": "com.alexisrondeau.algorand-ballet"
+    }
   },
   "scripts": {
     "serve": "vue-cli-service serve",
