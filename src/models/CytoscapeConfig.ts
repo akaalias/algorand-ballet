@@ -18,10 +18,6 @@ export class CytoscapeConfig {
           width: 3,
           "line-color": "#ccc",
           "font-size": 14,
-          // "curve-style": "unbundled-bezier",
-          // "control-point-weights": [0.5],
-          // "source-endpoint": "inside-to-node",
-          // "target-endpoint": "inside-to-node",
         },
       },
       {
@@ -156,22 +152,7 @@ export class CytoscapeConfig {
           width: "mapData(weight, 0, 100, 0, 100)",
           "line-color": "rgba(151,53,0,0.69)",
           "curve-style": "unbundled-bezier",
-          "control-point-weights": [0, 0.5, 1],
-          "source-endpoint": "inside-to-node",
-          "target-endpoint": "inside-to-node",
-          "text-outline-color": "#555",
-          "text-outline-width": "3px",
-          color: "#fff",
-          label: "data(weight)"
-        },
-      },
-      {
-        selector: "edge.application-relationship",
-        style: {
-          width: "mapData(weight, 0, 100, 0, 100)",
-          "line-color": "#2f4b7c",
-          "curve-style": "unbundled-bezier",
-          "control-point-weights": [0.2],
+          "control-point-distances": [40],
           "source-endpoint": "inside-to-node",
           "target-endpoint": "inside-to-node",
           "text-outline-color": "#555",
@@ -186,7 +167,7 @@ export class CytoscapeConfig {
           width: "mapData(weight, 0, 100, 0, 100)",
           "line-color": "#a05195",
           "curve-style": "unbundled-bezier",
-          "control-point-weights": [0.1],
+          "control-point-distances": [-40],
           "source-endpoint": "inside-to-node",
           "target-endpoint": "inside-to-node",
           "text-outline-color": "#555",
@@ -195,6 +176,21 @@ export class CytoscapeConfig {
           label: "data(weight)"
         },
       },
+      {
+        selector: "edge.application-relationship",
+        style: {
+          width: "mapData(weight, 0, 100, 0, 100)",
+          "line-color": "#2f4b7c",
+          "curve-style": "unbundled-bezier",
+          "control-point-distances": [0],
+          "source-endpoint": "inside-to-node",
+          "target-endpoint": "inside-to-node",
+          "text-outline-color": "#555",
+          "text-outline-width": "3px",
+          color: "#fff",
+          label: "data(weight)"
+        },
+      }
     ],
   };
   public static layoutConfigurations = {

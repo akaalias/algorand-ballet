@@ -257,7 +257,6 @@ export class AlgorandGraphAPI {
     }
 
     if(!this.capturedEdges.has(compoundIDSenderReceiver)) {
-      console.log("Let's add edge between " + senderID.substring(0,7) + " and " + receiverID.substring(0,7))
       this.elements.push({
         data: {
           id: compoundIDSenderReceiver,
@@ -278,6 +277,11 @@ export class AlgorandGraphAPI {
   }
   private handlePaymentTransaction(tx: any) {
     const txDetails = tx["payment-transaction"];
+
+    console.log("Payment TX")
+    console.log(tx.sender);
+    console.log(txDetails.receiver);
+    console.log("---");
 
     // Receiver Node
     if (!this.capturedIDs.has(txDetails.receiver)) {
@@ -300,7 +304,7 @@ export class AlgorandGraphAPI {
     let compoundEdgeID = senderID + "-" + receiverID;
 
     // Avoid adding an extra edge
-    if (!this.capturedEdges.has(compoundEdgeID)) {
+    if (this.capturedEdges.has(compoundEdgeID)) {
       senderID = txDetails.receiver;
       receiverID = tx.sender;
       compoundEdgeID = senderID + "-" + receiverID;

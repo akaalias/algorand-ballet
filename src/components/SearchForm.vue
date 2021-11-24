@@ -44,7 +44,7 @@ export default {
   name: "SearchForm",
   props: ["parentAccountID"],
   data:() => ({
-    accountID: "",
+    accountID: "FTRREWATI4Y7RZGN2QVTM4HITMFWGK5NU7VAWXN6FJNZG5FLYREQGI22C4",
     accountIDRules: [
       (v) => !!v || "AccountID is required",
       (v) => v.length === 58 || "AccountID must be exactly 58 characters long",
