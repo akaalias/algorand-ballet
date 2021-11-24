@@ -1,5 +1,6 @@
-# Algorand Ballet
+![CodeQL Security Status](https://github.com/akaalias/algorand-ballet/workflows/CodeQL/badge.svg)
 
+# Algorand Ballet
 A qualitative analysis tool for the Algorand blockchain 
 
 ![Algorand Ballet](sample-screen.png)
@@ -11,3 +12,4 @@ A qualitative analysis tool for the Algorand blockchain
 > The ballet of the good city sidewalk never repeats itself from place to place, and in any one place is always replete with new improvisations.
 
 – Excerpt from "The Death and Life of Great American Cities" (Random House), pages 40-43, by writer, activist, and pioneer of New Urbanism, Jane Jacobs (1916–2006)
+
