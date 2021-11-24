@@ -1,6 +1,6 @@
 # Algorand Ballet
 
-Algorand Ballet is a qualitative analysis tool for the Algorand blockchain. 
+A qualitative analysis tool for the Algorand blockchain 
 
 ![Algorand Ballet](sample-screen.png)
 
