@@ -1,7 +1,17 @@
 {
-  "name": "test-electron-shipment",
+  "name": "algorand-ballet",
   "version": "0.1.0",
+  "appId": "com.alexisrondeau.algorand-ballet",
+  "productName": "Algorand Ballet",
+  "copyright": "Copyright © 2021 Alexis Rondeau",
+  "author": "Alexis Rondeau",
+  "category": "public.app-category.developer-tools",
+  "target": "default",
+  "icon": "src/assets/icon.icns",
   "private": true,
+  "build": {
+    "appId": "com.alexisrondeau.algorand-ballet"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
