@@ -12,6 +12,11 @@ export class AlgorandAPIConfig {
       domain: "testnet-algorand.api.purestake.io",
       algoExplorerDomain: "testnet.algoexplorer.io",
     },
+    {
+      name: "BetaNet",
+      domain: "betanet-algorand.api.purestake.io",
+      algoExplorerDomain: "betanet.algoexplorer.io",
+    },
   ];
 
   public static defaultNetwork = AlgorandAPIConfig.apiNetworks.find(x => x.name === "TestNet");

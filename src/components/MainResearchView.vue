@@ -158,6 +158,7 @@ import { AlgorandAPIConfig } from "@/models/AlgorandAPIConfig";
 import { QualitativeResearchApproach } from "@/models/QualitativeResearchApproach";
 import APIKeyForm from "@/components/APIKeyForm";
 import SearchForm from "@/components/SearchForm";
+import { CacheManager } from "@/models/CacheManager";
 
 export default {
   name: "MainResearchView",
@@ -187,6 +188,12 @@ export default {
     mini: true
   }),
   methods: {
+    async setElementsFromCache() {
+      this.cacheManager = new CacheManager();
+      this.elements = [];
+      this.elements = await this.cacheManager.get(this.selectedNetwork, this.accountID, this.selectedFocus);
+      this.searching = false;
+    },
     async callAPIThenUpdateGraphView() {
       this.algorandAPI = new AlgorandGraphAPI(this.selectedNetwork.domain, this.apiKey);
       if (this.selectedFocus.focus === "network") {
@@ -204,7 +211,7 @@ export default {
       this.searching = false;
     },
     async search() {
-      await this.callAPIThenUpdateGraphView();
+      await this.setElementsFromCache();
     },
     preConfig(cytoscape) {
       console.log('...');
