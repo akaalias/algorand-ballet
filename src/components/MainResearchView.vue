@@ -1,5 +1,11 @@
 <template>
   <v-container id="container" fluid>
+    <v-progress-linear
+      indeterminate
+      color="purple darken-2"
+      v-if="searching"
+      class="searchingProgressIndicator"
+    ></v-progress-linear>
 
     <APIKeyForm
       v-if="apiKey === ''"
@@ -184,17 +190,19 @@ export default {
     deepLinkID: "",
     doubleClickDelayMs: 350,
     previousTapStamp: 0,
-    mini: true
+    mini: true,
+    searching: false,
   }),
   methods: {
     async setElementsFromCache() {
       this.cacheManager = new CacheManager();
       this.elements = [];
       this.elements = await this.cacheManager.get(this.selectedNetwork, this.accountID, this.selectedFocus);
-      this.searching = false;
     },
     async search() {
+      this.searching = true;
       await this.setElementsFromCache();
+      this.searching = false;
     },
     preConfig(cytoscape) {
 
@@ -209,6 +217,7 @@ export default {
           let node = evt.target;
           if (node.data().type === "account-node") {
             this.accountID = node.data().id;
+            this.search();
           } else {
             console.log("Unsure how to handle taphold for this node");
           }
@@ -463,7 +472,12 @@ export default {
   max-height: 10px;
 }
 
-.top-z {
-  z-index: 101;
+.searchingProgressIndicator {
+  width: 100%;
+  height: 4px;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+
 }
 </style>

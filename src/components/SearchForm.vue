@@ -68,20 +68,26 @@ export default {
   }),
   methods: {
     searchReady() {
-      this.accountIDHistory.push(this.accountID);
-      this.$emit('searchReady', {accountID: this.accountID, network: this.selectedNetwork});
+      this.notify();
     },
     goBack() {
-      const currentAccountID = this.accountIDHistory.pop();
+      console.log(this.accountIDHistory);
+      const topAccountID = this.accountIDHistory.pop();
+      console.log("topAccountID: " + topAccountID);
       const previousAccountID = this.accountIDHistory.pop();
-      console.log("Trying to go back to " + previousAccountID);
+      console.log("previousAccountID: " + previousAccountID);
       this.accountID = previousAccountID;
-      this.searchReady();
+      this.notify();
+    },
+    notify() {
+      this.$emit('searchReady', {accountID: this.accountID, network: this.selectedNetwork});
     }
   },
   watch: {
     parentAccountID: function(newVal, oldVal) {
       this.accountID = newVal;
+      this.accountIDHistory.push(newVal);
+      console.log(this.accountIDHistory);
     }
   }
 };
