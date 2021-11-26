@@ -126,21 +126,24 @@
           </v-list-item-group>
           <v-subheader>OPTIONS</v-subheader>
 
-          <v-list-item class="transactionGroupsVisible">
-            <v-switch
-              v-model="$vuetify.theme.dark"
-              inset
-              label="Dark Mode"
-              class="pt-5"
-            ></v-switch>
-          </v-list-item>
+          <v-list-item-group>
 
-          <v-list-item class="exportPNG">
-            <v-btn
-              v-on:click="exportPNG"
-            > Export PNG </v-btn>
-          </v-list-item>
+            <v-list-item class="transactionGroupsVisible">
+              <v-switch
+                v-model="$vuetify.theme.dark"
+                inset
+                label="Dark Mode"
+                class="pt-5"
+                color="indigo"
+              ></v-switch>
+            </v-list-item>
 
+            <v-list-item class="exportPNG pt-2">
+              <v-btn
+                v-on:click="exportPNG"
+              > Export PNG </v-btn>
+            </v-list-item>
+          </v-list-item-group>
         </v-list>
       </v-card>
     </div>
@@ -259,7 +262,7 @@ export default {
       );
 
       this.cy.layout(this.selectedLayout).run();
-      document.getElementById("cytoscape-div").style.minHeight = "800px";
+      document.getElementById("cytoscape-div").style.minHeight = "750px";
 
       this.toggleRootNode();
       this.toggleAccountNodes();
@@ -440,7 +443,6 @@ export default {
 }
 
 #graphMenuCard .exportPNG {
-  max-height: 20px;
 }
 
 #graphMenuCard .v-list-item {
