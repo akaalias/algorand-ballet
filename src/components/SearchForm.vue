@@ -71,11 +71,8 @@ export default {
       this.notify();
     },
     goBack() {
-      console.log(this.accountIDHistory);
       const topAccountID = this.accountIDHistory.pop();
-      console.log("topAccountID: " + topAccountID);
       const previousAccountID = this.accountIDHistory.pop();
-      console.log("previousAccountID: " + previousAccountID);
       this.accountID = previousAccountID;
       this.notify();
     },
