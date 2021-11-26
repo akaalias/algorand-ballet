@@ -1,6 +1,17 @@
 <template>
   <v-form class="pl-4 pr-4" id="searchForm">
     <v-row>
+      <v-col cols="1" class="pt-8" v-if="accountIDHistory.length > 1">
+        <v-btn
+        small
+        @click="goBack"
+        >
+          <v-icon>
+            mdi-chevron-left
+          </v-icon>
+
+        </v-btn>
+      </v-col>
       <v-col cols="2">
         <v-select
           v-model="selectedNetwork"
@@ -13,7 +24,7 @@
           class="top-z"
         ></v-select>
       </v-col>
-      <v-col cols="8">
+      <v-col cols="7">
         <v-text-field
           v-model="accountID"
           :rules="accountIDRules"
@@ -53,10 +64,19 @@ export default {
     selectedNetwork: AlgorandAPIConfig.defaultNetwork,
     buttonText: "Build Graph",
     searching: false,
+    accountIDHistory: [],
   }),
   methods: {
     searchReady() {
+      this.accountIDHistory.push(this.accountID);
       this.$emit('searchReady', {accountID: this.accountID, network: this.selectedNetwork});
+    },
+    goBack() {
+      const currentAccountID = this.accountIDHistory.pop();
+      const previousAccountID = this.accountIDHistory.pop();
+      console.log("Trying to go back to " + previousAccountID);
+      this.accountID = previousAccountID;
+      this.searchReady();
     }
   },
   watch: {
@@ -69,4 +89,7 @@ export default {
 
 <style scoped>
 
+.top-z {
+  z-index: 101;
+}
 </style>
