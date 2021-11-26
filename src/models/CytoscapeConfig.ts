@@ -217,5 +217,5 @@ export class CytoscapeConfig {
     {name: "breadthfirst", animate: true, display: "Breadth-First"},
     {name: "random", animate: true, fit: true, display: "Randomized"},
   ];
-  public static defaultLayoutName = { name: "concentric", animate: true, display: "Concentric"};
+  public static defaultLayoutName = CytoscapeConfig.layoutConfigurations.find(x => x.name === "concentric");
 }
