@@ -151,8 +151,8 @@ export class CytoscapeConfig {
         style: {
           width: "mapData(weight, 0, 100, 0, 100)",
           "line-color": "rgba(151,53,0,0.69)",
-          "curve-style": "unbundled-bezier",
-          "control-point-distances": [50],
+          "curve-style": "haystack",
+          // "control-point-distances": [50],
           "source-endpoint": "inside-to-node",
           "target-endpoint": "inside-to-node",
           "text-outline-color": "#555",
@@ -166,8 +166,8 @@ export class CytoscapeConfig {
         style: {
           width: "mapData(weight, 0, 100, 0, 100)",
           "line-color": "#a05195",
-          "curve-style": "unbundled-bezier",
-          "control-point-distances": [-40],
+          "curve-style": "haystack",
+          // "control-point-distances": [-40],
           "source-endpoint": "inside-to-node",
           "target-endpoint": "inside-to-node",
           "text-outline-color": "#555",
@@ -198,8 +198,8 @@ export class CytoscapeConfig {
         style: {
           width: "mapData(weight, 0, 100, 0, 100)",
           "line-color": "#2f4b7c",
-          "curve-style": "unbundled-bezier",
-          "control-point-distances": [0],
+          "curve-style": "haystack",
+          // "control-point-distances": [0],
           "source-endpoint": "inside-to-node",
           "target-endpoint": "inside-to-node",
           "text-outline-color": "#555",
