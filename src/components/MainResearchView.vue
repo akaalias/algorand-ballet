@@ -114,15 +114,26 @@
                 color="#2f4b7c"
               />
             </v-list-item>
-            <v-list-item class="transactionGroupsVisible">
+            <v-list-item class="transactionGroupsVisible" v-if="selectedFocus.focus === 'network'">
               <v-switch
                 v-model="transactionGroupsVisible"
                 label="Groups"
                 inset
                 v-on:click="toggleTransactionGroups"
-                color="#555"
+                color="#888"
               />
             </v-list-item>
+
+            <v-list-item class="transactionGroupsVisible" v-if="selectedFocus.focus === 'graph'">
+              <v-switch
+                v-model="weightLabelsVisible"
+                label="Weights"
+                inset
+                v-on:click="toggleWeightLabels"
+                color="#888"
+              />
+            </v-list-item>
+
           </v-list-item-group>
           <v-subheader>OPTIONS</v-subheader>
 
@@ -178,6 +189,7 @@ export default {
     applicationNodesVisible: true,
     rootNodeVisible: true,
     assetNodesVisible: true,
+    weightLabelsVisible: true,
     algorandAPI: null,
     transactionGroupsVisible: true,
     deepLinkID: "",
@@ -274,6 +286,8 @@ export default {
       this.toggleApplicationTransactions();
       this.toggleTransactionGroups();
 
+      this.toggleWeightLabels();
+
       this.cy.resize();
       this.cy.fit();
     },
@@ -358,6 +372,13 @@ export default {
         this.cy.$(":parent").style("border-opacity", "0");
       } else {
         this.cy.$(":parent").style("border-opacity", "1");
+      }
+    },
+    toggleWeightLabels() {
+      if (!this.weightLabelsVisible) {
+        this.cy.$(".application-relationship, .asset-relationship, .payment-relationship").style("text-opacity", "0");
+      } else {
+        this.cy.$(".application-relationship, .asset-relationship, .payment-relationship").style("text-opacity", "1");
       }
     },
     changeLayout() {

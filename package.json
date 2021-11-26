@@ -1,23 +1,12 @@
 {
   "name": "algorand-ballet",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "appId": "com.alexisrondeau.algorand-ballet",
   "productName": "Algorand Ballet",
   "description": "A qualitative analysis tool for the Algorand blockchain",
   "copyright": "Copyright © 2021 Alexis Rondeau",
   "author": "Alexis Rondeau",
-  "mac": {
-    "category": "public.app-category.developer-tools",
-    "hardenedRuntime": true,
-    "entitlements": "build/entitlements.plist",
-    "entitlementsInherit": "build/entitlements.plist"
-  },
   "private": true,
-  "development": {
-    "build": {
-      "appId": "com.alexisrondeau.algorand-ballet"
-    }
-  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -30,6 +19,7 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "cytoscape-cola": "^2.5.0",
+    "electron-builder": "^22.14.5",
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
     "vue-cytoscape": "^1.0.8",
@@ -47,6 +37,7 @@
     "@vue/cli-service": "~4.5.0",
     "electron": "^13.0.0",
     "electron-devtools-installer": "^3.1.0",
+    "electron-notarize": "^1.1.1",
     "glob-parent": ">=5.1.2",
     "json-schema": ">=0.4.0",
     "sass": "~1.32.0",
