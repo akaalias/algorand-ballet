@@ -210,12 +210,12 @@ export class CytoscapeConfig {
       },
     ],
   };
-  public static layoutConfigurations = {
-    "grid": {name: "grid", animate: true},
-    "circle": {name: "circle", animate: true},
-    "concentric": {name: "concentric", animate: true},
-    "breadthfirst": {name: "breadthfirst", animate: true},
-    "random": {name: "random", animate: true, fit: true},
-  };
-  public static defaultLayoutName = "circle";
+  public static layoutConfigurations = [
+    {name: "grid", animate: true, display: "Grid"},
+    {name: "circle", animate: true, display: "Circle"},
+    {name: "concentric", animate: true, display: "Concentric"},
+    {name: "breadthfirst", animate: true, display: "Breadth-First"},
+    {name: "random", animate: true, fit: true, display: "Randomized"},
+  ];
+  public static defaultLayoutName = { name: "concentric", animate: true, display: "Concentric"};
 }

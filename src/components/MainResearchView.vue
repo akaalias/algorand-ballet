@@ -55,15 +55,18 @@
             <v-list-item>
               <v-select
                 v-model="selectedLayout"
-                :items="layoutConfigurationKeys"
+                :items="layoutConfigurations"
+                item-text="display"
+                item-value="name"
                 single-line
+                return-object
                 v-on:change="changeLayout"
               >
               </v-select>
             </v-list-item>
           </v-list-item-group>
 
-          <v-subheader>PARTICIPANTS</v-subheader>
+          <v-subheader>VISIBILITY</v-subheader>
           <v-list-item-group>
             <v-list-item class="rootNodeVisible">
               <v-switch
@@ -71,6 +74,7 @@
                 inset
                 label="Target"
                 v-on:click="toggleRootNode"
+                color="#ffa600"
               />
             </v-list-item>
             <v-list-item class="accountNodesVisible">
@@ -79,6 +83,17 @@
                 label="Accounts"
                 inset
                 v-on:click="toggleAccountNodes"
+                color="#ff7c43"
+              />
+            </v-list-item>
+
+            <v-list-item class="paymentTransactionsVisible">
+              <v-switch
+                v-model="paymentTransactionsVisible"
+                label="Payments"
+                inset
+                v-on:click="togglePaymentTransactions"
+                color="#f95d6a"
               />
             </v-list-item>
             <v-list-item class="assetNodesVisible">
@@ -87,6 +102,7 @@
                 label="Assets"
                 inset
                 v-on:click="toggleAssetNodes"
+                color="#a05195"
               />
             </v-list-item>
             <v-list-item class="applicationNodesVisible">
@@ -95,33 +111,7 @@
                 label="Apps"
                 inset
                 v-on:click="toggleApplicationNodes"
-              />
-            </v-list-item>
-          </v-list-item-group>
-          <v-subheader>TRANSACTIONS</v-subheader>
-          <v-list-item-group color="secondary">
-            <v-list-item class="paymentTransactionsVisible">
-              <v-switch
-                v-model="paymentTransactionsVisible"
-                label="Payments"
-                inset
-                v-on:click="togglePaymentTransactions"
-              />
-            </v-list-item>
-            <v-list-item class="assetTransferTransactionsVisible">
-              <v-switch
-                v-model="assetTransferTransactionsVisible"
-                label="Assets"
-                inset
-                v-on:click="toggleAssetTransferTransactions"
-              />
-            </v-list-item>
-            <v-list-item class="applicationTransactionsVisible">
-              <v-switch
-                v-model="applicationTransactionsVisible"
-                label="Apps"
-                inset
-                v-on:click="toggleApplicationTransactions"
+                color="#2f4b7c"
               />
             </v-list-item>
             <v-list-item class="transactionGroupsVisible">
@@ -130,10 +120,10 @@
                 label="Groups"
                 inset
                 v-on:click="toggleTransactionGroups"
+                color="#555"
               />
             </v-list-item>
           </v-list-item-group>
-
           <v-subheader>OPTIONS</v-subheader>
 
           <v-list-item class="transactionGroupsVisible">
@@ -268,7 +258,7 @@ export default {
         }.bind(this)
       );
 
-      this.cy.layout(this.layoutConfigurations[this.selectedLayout]).run();
+      this.cy.layout(this.selectedLayout).run();
       document.getElementById("cytoscape-div").style.minHeight = "800px";
 
       this.toggleRootNode();
@@ -326,9 +316,9 @@ export default {
     },
     toggleApplicationNodes() {
       if (!this.applicationNodesVisible) {
-        this.cy.$(".application").style("display", "none");
+        this.cy.$(".application, .application-transaction, .application-relationship").style("display", "none");
       } else {
-        this.cy.$(".application").style("display", "element");
+        this.cy.$(".application, .application-transaction, .application-relationship").style("display", "element");
       }
     },
     toggleGroupNodes() {
@@ -347,13 +337,12 @@ export default {
     },
     toggleAssetNodes() {
       if (!this.assetNodesVisible) {
-        this.cy.$(".asset").style("display", "none");
+        this.cy.$(".asset, .asset-transfer-transaction, .asset-relationship").style("display", "none");
       } else {
-        this.cy.$(".asset").style("display", "element");
+        this.cy.$(".asset, .asset-transfer-transaction, .asset-relationship").style("display", "element");
       }
     },
     setMyAPIKey(key) {
-      console.log("News from sub-component!");
       this.apiKey = key;
     },
     startSearch(event) {
@@ -369,7 +358,7 @@ export default {
       }
     },
     changeLayout() {
-      this.cy.layout(this.layoutConfigurations[this.selectedLayout]).run();
+      this.cy.layout(this.selectedLayout).run();
       this.cy.resize();
       this.cy.fit();
     },
@@ -385,9 +374,6 @@ export default {
     },
   },
   computed: {
-    layoutConfigurationKeys() {
-      return Object.keys(this.layoutConfigurations);
-    },
   },
   components: {
     SearchForm,
