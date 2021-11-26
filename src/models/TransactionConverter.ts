@@ -140,10 +140,7 @@ export class TransactionConverter {
     const receiverID = txDetails.receiver;
     const assetID = txDetails["asset-id"];
 
-    console.log("ASA TX - " + tx.id.substring(0,7));
-
     if(senderID === receiverID) {
-
       // Add Asset Node
       if (!this.capturedIDs.has(assetID)) {
         this.elements.push({

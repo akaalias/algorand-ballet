@@ -152,7 +152,6 @@
 </template>
 
 <script>
-import { AlgorandGraphAPI } from "@/models/AlgorandGraphAPI";
 import { CytoscapeConfig } from "@/models/CytoscapeConfig";
 import { AlgorandAPIConfig } from "@/models/AlgorandAPIConfig";
 import { QualitativeResearchApproach } from "@/models/QualitativeResearchApproach";
@@ -194,27 +193,11 @@ export default {
       this.elements = await this.cacheManager.get(this.selectedNetwork, this.accountID, this.selectedFocus);
       this.searching = false;
     },
-    async callAPIThenUpdateGraphView() {
-      this.algorandAPI = new AlgorandGraphAPI(this.selectedNetwork.domain, this.apiKey);
-      if (this.selectedFocus.focus === "network") {
-        this.elements = [];
-        this.elements = await this.algorandAPI.networkForRootAccountID(
-          this.accountID
-        );
-      } else if (this.selectedFocus.focus === "graph") {
-        this.elements = [];
-        this.elements = await this.algorandAPI.graphForRootAccountID(
-          this.accountID
-        );
-      }
-
-      this.searching = false;
-    },
     async search() {
       await this.setElementsFromCache();
     },
     preConfig(cytoscape) {
-      console.log('...');
+
     },
     async afterCreated(cy) {
       this.cy = cy;

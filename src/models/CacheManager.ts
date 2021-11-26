@@ -18,13 +18,9 @@ export class CacheManager {
   public async get(network: any, accountID: string, focus: any) {
     // Do we have this account yet?
     if(CacheManager.cache.get(network.name) != null) {
-      console.log("We have a cache for " + network.name);
-
       if(CacheManager.cache.get(network.name).get(accountID) != null) {
-        console.log("We have this account cached.");
         return CacheManager.cache.get(network.name).get(accountID).get(focus.focus);
       } else {
-        console.log("Nothing for " + network.name + " for " + accountID + " yet");
         // Get transactions for this account for this network
         const rawTransactions = await AlgorandJSONAPI.getTransactions(accountID, network);
         // Create focus caches now
