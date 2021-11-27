@@ -20,7 +20,6 @@ A qualitative analysis tool for the Algorand blockchain
 - Double-click to mount .dmg
 - Drag Algorand Ballet to your Application folder
 - Double-click the application to start
-<<<<<<< HEAD
 
 #### _If_ the application does not open right away
 

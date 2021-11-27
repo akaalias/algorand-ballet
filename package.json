@@ -1,6 +1,6 @@
 {
   "name": "algorand-ballet",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "appId": "com.alexisrondeau.algorand-ballet",
   "productName": "Algorand Ballet",
   "description": "A qualitative analysis tool for the Algorand blockchain",
