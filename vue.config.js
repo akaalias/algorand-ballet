@@ -13,6 +13,14 @@ module.exports = {
           "gatekeeperAssess": false,
           "entitlements": "build/entitlements.plist",
           "entitlementsInherit": "build/entitlements.plist"
+          // ,
+          // target: {
+          //   target: 'default',
+          //   arch: [
+          //     'x64',
+          //     'arm64'
+          //   ]
+          // }
         },
         "dmg": {
           "sign": false
