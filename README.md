@@ -6,6 +6,10 @@
 # Algorand Ballet
 Find better questions with this qualitative analysis tool for the Algorand blockchain
 
+## Discover Relationships
+## Understand Transaction Flow
+## Gallery
+
 ![Space](https://user-images.githubusercontent.com/111555/143281871-966f0a10-e7db-4ec9-9405-9745787a1e97.png)
 
 Full demo video coming soon!
