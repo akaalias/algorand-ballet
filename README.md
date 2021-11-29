@@ -5,7 +5,7 @@
 ![License](https://img.shields.io/github/license/akaalias/algorand-ballet?color=blue&label=License)
 
 # Algorand Ballet
-A qualitative analysis tool for the Algorand blockchain 
+## Find better questions with this qualitative analysis tool for the Algorand blockchain
 
 ![Space](https://user-images.githubusercontent.com/111555/143281871-966f0a10-e7db-4ec9-9405-9745787a1e97.png)
 
@@ -21,13 +21,10 @@ A qualitative analysis tool for the Algorand blockchain
 - Drag Algorand Ballet to your Application folder
 - Double-click the application to start
 
-#### _If_ the application does not open right away
-
-- Check under "System Preferences > Security and Privacy > General" if it's blocked.
-- Click on the button "Allow Algorand Ballet to run"
-
 ## Running on other OSes
-As of now, my releases will be Mac-only unless there's a strong call for a Windows or Linux version. Let me (see below) and we can work on other platforms together!
+As of now, my releases will be Mac-only unless there's a strong call for a Windows or Linux version. 
+
+Let me (see below) and we can work on other platforms together!
 
 ## Questions
 If you have questions the best way to reach me is to talk live: 
