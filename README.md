@@ -7,11 +7,15 @@
 Find better questions with this qualitative analysis tool for the Algorand blockchain
 
 ## Discover Relationships
+![Relationships](https://github.com/akaalias/algorand-ballet/blob/main/docs/relationships-ui.png?raw=true)
+
 ## Understand Transaction Flow
+![Transactions](https://github.com/akaalias/algorand-ballet/blob/main/docs/transactions-ui.png?raw=true)
+
 ## Gallery
+More image examples [can be found in the gallery](https://github.com/akaalias/algorand-ballet/tree/main/docs)
 
-![Space](https://user-images.githubusercontent.com/111555/143281871-966f0a10-e7db-4ec9-9405-9745787a1e97.png)
-
+## Demo Video
 Full demo video coming soon!
 
 ## Download and install on MacOS
