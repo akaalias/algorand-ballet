@@ -47,7 +47,7 @@ If you have questions the best way to reach me is to talk live:
 1. In person, let's get a coffee and take a walk! 
 2. or via video/audio call on Zoom 
 
-To make that easy, here's [my Calendly](https://calendly.com/alexis-rondeau/let-s-chat-about-algorand-ballet) where you can book a time for us to talk.
+To make that easy, here's [my Calendly](https://calendly.com/alexis-rondeau) where you can book a time for us to talk.
 
 ### Important
 Please note that I truly don't do well 'talking' to people via text-based group-media like Github, Reddit, Discord, Slack, WhatsApp and even Email. 
