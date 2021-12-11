@@ -6,7 +6,11 @@
 # Algorand Ballet
 Find better questions with this qualitative analysis tool for the Algorand blockchain
 
-## Why "Ballet"
+## Start Exploring
+
+[Open Algorand Ballet](https://akaalias.github.io/algorand-ballet/)
+
+## Why _Ballet_?
 To [Jane Jacobs](https://en.wikipedia.org/wiki/The_Death_and_Life_of_Great_American_Cities), when New York sidewalks were safe, they gave stage for an...
 > "intricate ballet in which the individual dancers and ensembles all have distinctive parts which miraculously reinforce each other and compose an orderly whole."
 
