@@ -157,6 +157,29 @@
           </v-list-item-group>
         </v-list>
       </v-card>
+
+      <v-card id="helpMenuCard" v-if="elements.length !== 0">
+        <v-btn
+          icon
+          x-small
+          @click.stop="miniHelp = !miniHelp"
+          class="hideMenuButton"
+        >
+          <v-icon>mdi-chevron-down</v-icon>
+        </v-btn>
+
+        <v-list v-if="miniHelp">
+          <v-subheader>SHORTCUTS</v-subheader>
+          <v-list-item-group color="primary">
+            <v-list-item>
+              Double-Click on Account nodes triggers a new search
+            </v-list-item>
+            <v-list-item>
+              Click-Hold on any node will open its page on Algoexplorer.io
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-card>
     </div>
   </v-container>
 </template>
@@ -197,6 +220,7 @@ export default {
     previousTapStamp: 0,
     mini: true,
     searching: false,
+    miniHelp: true,
   }),
   methods: {
     async setElementsFromCache() {
@@ -419,6 +443,14 @@ export default {
   width: 180px;
 }
 
+#helpMenuCard {
+  position: absolute;
+  top: 90px;
+  right: 25px;
+  z-index: 100;
+  width: 280px;
+}
+
 #graphMenuCard .rootNodeVisible {
   max-height: 30px;
   border-left: 2px solid #ffa600;
@@ -470,8 +502,12 @@ export default {
   max-height: 30px;
 }
 
-#graphMenuCard .v-subheader {
+#graphMenuCard .v-subheader, #helpMenuCard .v-subheader {
   max-height: 20px;
+}
+
+#helpMenuCard .v-list-item {
+  padding: 10px;
 }
 
 .hideMenuButton {

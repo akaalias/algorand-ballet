@@ -5,8 +5,7 @@
 
 # Algorand Ballet
 Find better questions with this qualitative analysis tool for the Algorand blockchain
-
-![Relationships](https://github.com/akaalias/algorand-ballet/blob/main/images/relationships-ui.png?raw=true)
+[![Relationships](https://github.com/akaalias/algorand-ballet/blob/main/images/relationships-ui.png?raw=true)](https://akaalias.github.io/algorand-ballet/)
 
 ## Start Exploring
 [Open Algorand Ballet](https://akaalias.github.io/algorand-ballet/)
