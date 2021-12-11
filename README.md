@@ -6,18 +6,14 @@
 # Algorand Ballet
 Find better questions with this qualitative analysis tool for the Algorand blockchain
 
+![Relationships](https://github.com/akaalias/algorand-ballet/blob/main/images/relationships-ui.png?raw=true)
+
 ## Start Exploring
 [Open Algorand Ballet](https://akaalias.github.io/algorand-ballet/)
 
 ## Why _Ballet_?
 To [Jane Jacobs](https://en.wikipedia.org/wiki/The_Death_and_Life_of_Great_American_Cities), when New York sidewalks were safe, they gave stage for an...
 > "intricate ballet in which the individual dancers and ensembles all have distinctive parts which miraculously reinforce each other and compose an orderly whole."
-
-## Discover Relationships
-![Relationships](https://github.com/akaalias/algorand-ballet/blob/main/docs/relationships-ui.png?raw=true)
-
-## Understand Transaction Flow
-![Transactions](https://github.com/akaalias/algorand-ballet/blob/main/docs/transactions-ui.png?raw=true)
 
 ## Demo Video
 Full demo video coming soon!
