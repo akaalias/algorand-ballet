@@ -51,13 +51,13 @@
 </template>
 
 <script>
-import { AlgorandAPIConfig } from "../models/AlgorandAPIConfig";
+import { EndpointDomains } from "../models/EndpointDomains";
 
 export default {
   name: "APIKeyForm",
   data:() => ({
-    apiKey: AlgorandAPIConfig.key,
-    userAPIKey: AlgorandAPIConfig.key,
+    apiKey: EndpointDomains.key,
+    userAPIKey: EndpointDomains.key,
     userAPIKeyRules: [
       (v) => !!v || "API Key is required",
       (v) => v.length === 40 || "API Key must be exactly 40 characters",

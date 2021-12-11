@@ -1,4 +1,4 @@
-import { AlgorandAPIConfig } from "@/models/AlgorandAPIConfig";
+import { EndpointDomains } from "@/models/EndpointDomains";
 import { AlgorandJSONAPI } from "@/models/AlgorandJSONAPI";
 import { TransactionConverter } from "@/models/TransactionConverter";
 
@@ -8,8 +8,7 @@ export class CacheManager {
   constructor() {
     if(CacheManager.cache == null) {
       CacheManager.cache = new Map<any, any>();
-      for(const network of AlgorandAPIConfig.apiNetworks) {
-        console.log("Setting up cache for " + network.name);
+      for(const network of EndpointDomains.apiNetworks) {
         CacheManager.cache.set(network.name, new Map<string, any>());
       }
     }

@@ -163,7 +163,7 @@
 
 <script>
 import { CytoscapeConfig } from "@/models/CytoscapeConfig";
-import { AlgorandAPIConfig } from "@/models/AlgorandAPIConfig";
+import { EndpointDomains } from "@/models/EndpointDomains";
 import { QualitativeResearchApproach } from "@/models/QualitativeResearchApproach";
 import APIKeyForm from "@/components/APIKeyForm";
 import SearchForm from "@/components/SearchForm";
@@ -173,8 +173,8 @@ export default {
   name: "MainResearchView",
   data: () => ({
     accountID: "",
-    apiKey: AlgorandAPIConfig.key,
-    selectedNetwork: AlgorandAPIConfig.defaultNetwork,
+    apiKey: EndpointDomains.key,
+    selectedNetwork: EndpointDomains.defaultNetwork,
     focuses: QualitativeResearchApproach.researchApproaches,
     selectedFocus: QualitativeResearchApproach.defaultResearchApproach,
     selectedLayout: CytoscapeConfig.defaultLayoutName,

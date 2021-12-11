@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { AlgorandAPIConfig } from "../models/AlgorandAPIConfig";
+import { EndpointDomains } from "../models/EndpointDomains";
 
 export default {
   name: "SearchForm",
@@ -60,8 +60,8 @@ export default {
       (v) => !!v || "AccountID is required",
       (v) => v.length === 58 || "AccountID must be exactly 58 characters long",
     ],
-    networks: AlgorandAPIConfig.apiNetworks,
-    selectedNetwork: AlgorandAPIConfig.defaultNetwork,
+    networks: EndpointDomains.apiNetworks,
+    selectedNetwork: EndpointDomains.defaultNetwork,
     buttonText: "Build Graph",
     searching: false,
     accountIDHistory: [],
@@ -84,7 +84,6 @@ export default {
     parentAccountID: function(newVal, oldVal) {
       this.accountID = newVal;
       this.accountIDHistory.push(newVal);
-      console.log(this.accountIDHistory);
     }
   }
 };

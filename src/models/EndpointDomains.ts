@@ -1,6 +1,4 @@
-export class AlgorandAPIConfig {
-  public static key = "pksIgccdqX9ADKvMLfVhf3hZqClM949951K9966v";
-
+export class EndpointDomains {
   public static apiNetworks = [
     {
       name: "MainNet",
@@ -19,5 +17,5 @@ export class AlgorandAPIConfig {
     },
   ];
 
-  public static defaultNetwork = AlgorandAPIConfig.apiNetworks.find(x => x.name === "TestNet");
+  public static defaultNetwork = EndpointDomains.apiNetworks.find(x => x.name === "TestNet");
 }
