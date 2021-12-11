@@ -6,10 +6,15 @@
 # Algorand Ballet
 [![Relationships](https://github.com/akaalias/algorand-ballet/blob/main/images/relationships-ui.png?raw=true)](https://akaalias.github.io/algorand-ballet/)
 
-Oh, hi there! Alexis here. I wanted to share a research project I've been working on with you.
+## Oh, hi there!
+
+My name is Alexis, I am a product manager, developer and Algorand enthusiast.
+
+I wanted to share a research project I've been working on with you.
 
 Ballet is an interactive web application that gives you a glimpse into a wallet's "personality" based on their past trackrecord with other wallets, ASAs and Applications.
 
+## Your Benefits
 **Your personal benefit** is that this kind of qualitative "smell-test" gives you an extra data-point to make your best-informed decision _before_ interacting with an untrusted wallet.
 
 **The benefit to the ecosystem** is that it gives us a way to have "more eyes on the sidewalk"[1] in an effort to make Algorand a safe place for its inhabitants and visitors alike. Just like the eyes of neighbors, shop-keepers and even visitors keep a sidewalk safe by simply watching.
@@ -26,12 +31,13 @@ To navigate, you can **double-click** on wallet nodes to dig deeper. You can als
 ## It's fun!
 Again, if anything, it's a lot of fun to explore and discover better questions to ask.
 
-[Click here to open Algorand Ballet in your browser](https://akaalias.github.io/algorand-ballet/)
+[https://akaalias.github.io/algorand-ballet/](https://akaalias.github.io/algorand-ballet/)
+
 
 ## PS
-1. Just to make it clear, this is a personal project of mine. I have no intentions of launching some bullshit coin around it or build a pay-wall somewhere. I believe the benefit that apps like this one create for the ecosystem is far greater than cutting a few bucks here and there. 
-2. Speaking of which, I built this because, after going on an actual adventure and wanting to spend a few Algos on NFTs, I felt deeply unsettled how much overt scamming and how little transparency there was. I did NOT FEEL SAFE while trying to buy a single NFT for fun because I had no way of understanding WHO the person (or group) behind the artwork really is. And I had no way to verify if the story they're telling me (The art-market is a great example of how important *the authenticity of the story* is for its value-creation) is actually true. And I had no way to know the people running the "gallery" itself.
-3. I decided to release the application fully open-source[2] and under a permissive license for you to futz around with it
+1. Just to make it clear, this is a personal project of mine.  I  built it because, after going on an actual adventure and wanting to spend a few Algos on NFTs, I felt deeply unsettled how much overt scamming and how little transparency there was. I did NOT FEEL SAFE while trying to buy a single NFT for fun because I had no way of understanding WHO the person (or group) behind the artwork really is. And I had no way to verify if the story they're telling me (The art-market is a great example of how important *the authenticity of the story* is for its value-creation) is actually true. And I had no way to know the people running the "gallery" itself.
+2. I decided to release the application fully open-source[2] and under a permissive license for you to futz around with it
+
 
 [^1] Jane Jacobs, The Death and Life of Great American Cities, Chapter 1 (edited)
 [^2] https://github.com/akaalias/algorand-ballet
