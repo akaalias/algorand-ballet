@@ -7,7 +7,6 @@
 Find better questions with this qualitative analysis tool for the Algorand blockchain
 
 ## Start Exploring
-
 [Open Algorand Ballet](https://akaalias.github.io/algorand-ballet/)
 
 ## Why _Ballet_?
@@ -19,15 +18,6 @@ To [Jane Jacobs](https://en.wikipedia.org/wiki/The_Death_and_Life_of_Great_Ameri
 
 ## Understand Transaction Flow
 ![Transactions](https://github.com/akaalias/algorand-ballet/blob/main/docs/transactions-ui.png?raw=true)
-
-## Gallery of Examples
-- [Account-Asset Connection](https://raw.githubusercontent.com/akaalias/algorand-ballet/main/docs/relationship-account-asset.png)
-- [Account-Asset-Account Connection](https://raw.githubusercontent.com/akaalias/algorand-ballet/main/docs/asset-relationship.png)
-- [Account-Payment Relationships (Radial)](https://raw.githubusercontent.com/akaalias/algorand-ballet/main/docs/payment-relationships.png)
-- [Account–Payment Relationships (Grid)](https://raw.githubusercontent.com/akaalias/algorand-ballet/main/docs/payments-grid.png)
-- [Account-Application-Account Interplay](https://raw.githubusercontent.com/akaalias/algorand-ballet/main/docs/application-relationships.png)
-- [Account-Transaction Flow Field](https://raw.githubusercontent.com/akaalias/algorand-ballet/main/docs/transaction-flows.png)
-- [Account-Payment Transaction Detail](https://raw.githubusercontent.com/akaalias/algorand-ballet/main/docs/transaction-flow.png)
 
 ## Demo Video
 Full demo video coming soon!
