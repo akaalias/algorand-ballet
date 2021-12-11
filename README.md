@@ -28,7 +28,7 @@ What's good for you is good for the ecosystem. And vice-versa.
 To get a better sense of what a wallet has been up to (and with whom and how often), you can easily switch between looking at their  network of transactions and their graph of relationships. 
 
 ## Rotate Layouts
-While you're looking at a wallet's relationships for example, you can quickly rotate through a number of layouts (grid, circular, random, etc.) to get a kind of "three-dimensional image" just the same way you would look at different parts of a person (Eyes, clothing, shoes, body-language.)
+While you're looking at a wallet's relationships for example, you can quickly rotate through a number of layouts (grid, circular, random, etc.) to get a kind of 360° view, just the same way you would look at different parts of a person (Eyes, clothing, shoes, body-language.)
 
 ## Dig Deeper
 - To navigate, you can **double-click** on wallet nodes to dig deeper. 
@@ -40,7 +40,7 @@ Again, if anything, it's a lot of fun to explore and discover better questions t
  [⭐️ Click here to open Algorand Ballet in your browser ⭐️](https://akaalias.github.io/algorand-ballet/) 
 
 ## PS
-1. Just to make it clear, this is a personal project of mine.  I  built it because, after going on an actual adventure and wanting to spend a few Algos on NFTs, I felt deeply unsettled how much overt scamming and how little transparency there was. I did NOT FEEL SAFE while trying to buy a single NFT for fun because I had no way of understanding WHO the person (or group) behind the artwork really is. And I had no way to verify if the story they're telling me (The art-market is a great example of how important *the authenticity of the story* is for its value-creation) is actually true. And I had no way to know the people running the "gallery" itself.
+1. Just to make it clear, this is a personal project of mine.  I  built it because, after going on an actual adventure and wanting to spend a few Algos on NFTs, I felt deeply unsettled how much overt scamming and how little transparency there was. I did NOT FEEL SAFE while trying to buy a single NFT for fun because I had no way of understanding WHO the person (or group) behind the artwork really is. And I had no way to verify if the story they're telling me (The art-market is a great example of how important *the authenticity of the story* is for its value-creation[^3]) is actually true. And I had no way to know the people running the "gallery" itself.
 2. I decided to release the application fully open-source[2] and under a permissive license for you to futz around with it and to allow for any ad-hoc security review in case you are unsure if you can trust the website or app.
 
 ## Questions
@@ -87,5 +87,6 @@ As of now, my releases will be Mac-only unless there's a strong call for a Windo
 Let me (see below) and we can work on other platforms together!
 
 ## Footnotes
-- [^1] Jane Jacobs, The Death and Life of Great American Cities, Chapter 1
+- [^1] Jane Jacobs, "The Death and Life of Great American Cities", Chapter 1
 - [^2] https://github.com/akaalias/algorand-ballet
+- [^3] Don Thompson, "The $12 Million Stuffed Shark: The Curious Economics of Contemporary Art"
