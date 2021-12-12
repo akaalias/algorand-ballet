@@ -38,7 +38,7 @@
           color="primary"
           elevation="2"
           v-on:click="searchReady"
-          :disabled="searching"
+          :disabled="isDisabled ? false : true"
           block
         >
           {{ buttonText }}
@@ -55,7 +55,7 @@ export default {
   name: "SearchForm",
   props: ["parentAccountID"],
   data:() => ({
-    accountID: "447PZSSFA4R6FRMGCHCJ3PTYQAYTR4REHVQSUWZERGIFOSLDYS4OI3ZC34",
+    accountID: "",
     accountIDRules: [
       (v) => !!v || "AccountID is required",
       (v) => v.length === 58 || "AccountID must be exactly 58 characters long",
@@ -63,7 +63,6 @@ export default {
     networks: EndpointDomains.apiNetworks,
     selectedNetwork: EndpointDomains.defaultNetwork,
     buttonText: "Build Graph",
-    searching: false,
     accountIDHistory: [],
   }),
   methods: {
@@ -84,6 +83,12 @@ export default {
     parentAccountID: function(newVal, oldVal) {
       this.accountID = newVal;
       this.accountIDHistory.push(newVal);
+    }
+  },
+  computed: {
+    isDisabled() {
+      // evaluate whatever you need to determine disabled here...
+      return this.accountID.length === 58;
     }
   }
 };
