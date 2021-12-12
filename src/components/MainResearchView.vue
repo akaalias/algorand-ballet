@@ -170,13 +170,24 @@
 
         <v-card-title v-if="miniHelp">SHORTCUTS</v-card-title>
         <v-card-text v-if="miniHelp">
-          <b>Double-Click</b> on <span class="accountColor">Accounts</span> to trigger a new search
-        </v-card-text>
-        <v-card-text v-if="miniHelp">
-          <b>Click-Hold</b> on any Node will to open its information on Algoexplorer.io
-        </v-card-text>
-        <v-card-text v-if="miniHelp">
-          <b>After clicking and selecting</b> a new layout, use your arrow-up and arrow-down keys for fast, animated switching between layouts
+          <p>
+            <b>To move any node</b>, simply <i>click-drag</i> it to your desired spot
+          </p>
+          <p>
+            <b>To move several nodes</b> use <i>shift-click-drag</i> to create your selection
+          </p>
+          <p>
+            <b>To zoom in and out</b> use your trackpad or mouse wheel
+          </p>
+          <p>
+            <b>Trigger a new search</b> for an <span class="accountColor">Account</span> by <i>double-clicking</i> on it
+          </p>
+          <p>
+            <b>View details on AlgoExplorer</b> on any <span class="accountColor">Account</span>, <span class="assetColor">Asset</span>, <span class="applicationColor">Application</span>, <span class="groupColor">Group</span> and <b>Transaction</b> by <i>click-holding</i>
+          </p>
+          <p>
+            <b>For fast and animated switching between layouts</b> use your arrow-up and arrow-down keys <i>after selecting a new layout with your mouse</i>
+          </p>
         </v-card-text>
       </v-card>
     </div>
@@ -528,4 +539,17 @@ export default {
 .accountColor {
   color: #ff7c43;
 }
+
+.assetColor {
+  color: #a05195;
+}
+
+.applicationColor {
+  color: #565589;
+}
+
+.groupColor {
+  color: #666;
+}
+
 </style>
