@@ -168,17 +168,16 @@
           <v-icon>mdi-chevron-down</v-icon>
         </v-btn>
 
-        <v-list v-if="miniHelp">
-          <v-subheader>SHORTCUTS</v-subheader>
-          <v-list-item-group color="primary">
-            <v-list-item>
-              Double-Click on Account nodes triggers a new search
-            </v-list-item>
-            <v-list-item>
-              Click-Hold on any node will open its page on Algoexplorer.io
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
+        <v-card-title v-if="miniHelp">SHORTCUTS</v-card-title>
+        <v-card-text v-if="miniHelp">
+          <b>Double-Click</b> on <span class="accountColor">Accounts</span> to trigger a new search
+        </v-card-text>
+        <v-card-text v-if="miniHelp">
+          <b>Click-Hold</b> on any Node will to open its information on Algoexplorer.io
+        </v-card-text>
+        <v-card-text v-if="miniHelp">
+          <b>After clicking and selecting</b> a new layout, use your arrow-up and arrow-down keys for fast, animated switching between layouts
+        </v-card-text>
       </v-card>
     </div>
   </v-container>
@@ -524,5 +523,9 @@ export default {
   top: 0px;
   left: 0px;
 
+}
+
+.accountColor {
+  color: #ff7c43;
 }
 </style>
