@@ -50,7 +50,7 @@ _That's why you should care_ about the safety of the ecosystem.
 
 _Because only then_ will the true heir to Andy Warhol settle in and grow his work. 
 
-_And only then will you be there_, on June 16th 1952, at Hugo Gallery, on East 55th Street and Madison Avenue, at Andy's first show, to buy the first drawings for a penny and a dime. 
+_And only then will you be there_, on June 16th 1952, at Hugo Gallery, on East 55th Street and Madison Avenue, at Andy's first show. To build meaningful relationships, to witness history and, yes, to buy the first Warhols for a penny and a dime. 
 
 ### Yes, AND...
 I believe, all benefits stated above re-inforce each other: What's good for you personally is also good for the ecosystem. And vice-versa.
