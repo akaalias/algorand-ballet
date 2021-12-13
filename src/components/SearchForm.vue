@@ -50,6 +50,7 @@
 
 <script>
 import { EndpointDomains } from "../models/EndpointDomains";
+import { QualitativeResearchApproach } from "@/models/QualitativeResearchApproach";
 
 export default {
   name: "SearchForm",
@@ -89,6 +90,21 @@ export default {
     isDisabled() {
       // evaluate whatever you need to determine disabled here...
       return this.accountID.length === 58;
+    }
+  },
+  mounted: function() {
+    const networkParam = this.$route.query.network;
+    if(!!networkParam) {
+      const network = EndpointDomains.getNetworkForKey(networkParam)
+      if(!!network) {
+        this.selectedNetwork = network;
+      }
+    }
+
+    const accountIDParam = this.$route.query.accountid;
+    if(!!accountIDParam && accountIDParam.length === 58) {
+      this.accountID = accountIDParam;
+      this.searchReady();
     }
   }
 };

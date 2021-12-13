@@ -144,16 +144,28 @@
                 v-model="$vuetify.theme.dark"
                 inset
                 label="Dark Mode"
-                class="pt-5"
                 color="indigo"
               ></v-switch>
             </v-list-item>
+          </v-list-item-group>
+          <v-list-item-group>
 
-            <v-list-item class="exportPNG pt-2">
+            <v-subheader>DISTRIBUTE</v-subheader>
+
+            <v-list-item class="exportPNG">
               <v-btn
                 v-on:click="exportPNG"
+                block
               > Export PNG </v-btn>
             </v-list-item>
+
+            <v-list-item class="Share">
+              <v-btn
+                v-on:click="copyURLtoClipboard"
+                block
+              > {{ shareButtonLabel }} </v-btn>
+            </v-list-item>
+
           </v-list-item-group>
         </v-list>
       </v-card>
@@ -231,6 +243,7 @@ export default {
     mini: true,
     searching: false,
     miniHelp: true,
+    shareButtonLabel: "Share URL"
   }),
   methods: {
     async setElementsFromCache() {
@@ -240,6 +253,7 @@ export default {
     },
     async search() {
       this.searching = true;
+      this.shareButtonLabel = "Share URL";
       await this.setElementsFromCache();
       this.searching = false;
     },
@@ -396,9 +410,30 @@ export default {
     setMyAPIKey(key) {
       this.apiKey = key;
     },
+    setupFromURLParams() {
+      const focusParam = this.$route.query.focus;
+      if(!!focusParam) {
+        const focus = QualitativeResearchApproach.getResearchApproachForKey(focusParam);
+        if(!!focus) {
+          this.selectedFocus = focus;
+        }
+      }
+
+      const layoutParam = this.$route.query.layout;
+      if(!!layoutParam) {
+        console.log(layoutParam);
+        const layout = CytoscapeConfig.getLayoutForKey(layoutParam);
+        if(!!layout) {
+            this.selectedLayout = layout;
+        }
+      }
+
+      this.$router.replace({'query': null});
+    },
     startSearch(event) {
       this.accountID = event.accountID;
       this.selectedNetwork = event.network;
+      this.setupFromURLParams();
       this.search();
     },
     toggleTransactionGroups() {
@@ -430,8 +465,23 @@ export default {
         }
       );
     },
-  },
-  computed: {
+    copyURLtoClipboard() {
+      const deeplink = this.assembleDeepLinkURL();
+      this.$clipboard(deeplink);
+      this.shareButtonLabel = "URL Copied";
+    },
+    assembleDeepLinkURL() {
+      var deeplinkString = "";
+
+      deeplinkString = window.location.href;
+      deeplinkString += "?deeplink=true";
+      deeplinkString += ("&network=" + this.selectedNetwork.key);
+      deeplinkString += ("&accountid=" + this.accountID);
+      deeplinkString += ("&focus=" + this.selectedFocus.key);
+      deeplinkString += ("&layout=" + this.selectedLayout.key);
+
+      return deeplinkString
+    },
   },
   components: {
     SearchForm,

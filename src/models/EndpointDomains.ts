@@ -21,4 +21,5 @@ export class EndpointDomains {
   ];
 
   public static defaultNetwork = EndpointDomains.apiNetworks.find(x => x.key === "main");
+  public static getNetworkForKey(key: string) { return EndpointDomains.apiNetworks.find(x => x.key === key); }
 }

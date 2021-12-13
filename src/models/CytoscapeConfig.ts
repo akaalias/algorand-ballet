@@ -211,11 +211,14 @@ export class CytoscapeConfig {
     ],
   };
   public static layoutConfigurations = [
-    {name: "grid", animate: true, display: "Grid"},
-    {name: "circle", animate: true, display: "Circle"},
-    {name: "concentric", animate: true, display: "Concentric"},
-    {name: "breadthfirst", animate: true, display: "Breadth-First"},
-    {name: "random", animate: true, fit: true, display: "Randomized"},
+    {key: "grid", name: "grid", animate: true, display: "Grid"},
+    {key: "circle", name: "circle", animate: true, display: "Circle"},
+    {key: "concentric", name: "concentric", animate: true, display: "Concentric"},
+    {key: "breadthfirst", name: "breadthfirst", animate: true, display: "Breadth-First"},
+    {key: "random", name: "random", animate: true, fit: true, display: "Randomized"},
   ];
-  public static defaultLayoutName = CytoscapeConfig.layoutConfigurations.find(x => x.name === "concentric");
+  public static defaultLayoutName = CytoscapeConfig.getLayoutForKey("concentric");
+  public static getLayoutForKey(key: string) {
+    return CytoscapeConfig.layoutConfigurations.find(x => x.key === key);
+  }
 }

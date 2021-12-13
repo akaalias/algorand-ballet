@@ -21,6 +21,7 @@
     "cytoscape-cola": "^2.5.0",
     "electron-builder": "^22.14.5",
     "register-service-worker": "^1.7.1",
+    "v-clipboard": "^2.2.3",
     "vue": "^2.6.11",
     "vue-cytoscape": "^1.0.8",
     "vue-router": "^3.2.0",
