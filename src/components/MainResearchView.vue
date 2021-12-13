@@ -133,25 +133,10 @@
                 color="#888"
               />
             </v-list-item>
-
           </v-list-item-group>
-          <v-subheader>OPTIONS</v-subheader>
 
+          <v-subheader>DISTRIBUTE</v-subheader>
           <v-list-item-group>
-
-            <v-list-item class="transactionGroupsVisible">
-              <v-switch
-                v-model="$vuetify.theme.dark"
-                inset
-                label="Dark Mode"
-                color="indigo"
-              ></v-switch>
-            </v-list-item>
-          </v-list-item-group>
-          <v-list-item-group>
-
-            <v-subheader>DISTRIBUTE</v-subheader>
-
             <v-list-item class="exportPNG">
               <v-btn
                 v-on:click="exportPNG"
@@ -165,43 +150,129 @@
                 block
               > {{ shareButtonLabel }} </v-btn>
             </v-list-item>
-
           </v-list-item-group>
         </v-list>
       </v-card>
 
-      <v-card id="helpMenuCard" v-if="elements.length !== 0">
-        <v-btn
-          icon
-          x-small
-          @click.stop="miniHelp = !miniHelp"
-          class="hideMenuButton"
-        >
-          <v-icon>mdi-chevron-down</v-icon>
-        </v-btn>
+      <v-dialog
+        v-model="dialog"
+        fullscreen
+        hide-overlay
+        transition="dialog-bottom-transition"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            color="secondary"
+            dark
+            v-bind="attrs"
+            v-on="on"
+            id="dialogButton"
+            fab
+            small
+          >
+            <v-icon dark>
+              mdi-information
+            </v-icon>
+          </v-btn>
+        </template>
+        <v-card>
+          <v-toolbar
+            dark
+            color="primary"
+          >
+            <v-btn
+              icon
+              dark
+              @click="dialog = false"
+            >
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+            <v-toolbar-title>Information</v-toolbar-title>
+            <v-spacer></v-spacer>
+          </v-toolbar>
 
-        <v-card-title v-if="miniHelp">SHORTCUTS</v-card-title>
-        <v-card-text v-if="miniHelp">
-          <p>
-            <b>To move any node</b>, simply <i>click-drag</i> it to your desired spot
-          </p>
-          <p>
-            <b>To move several nodes</b> use <i>shift-click-drag</i> to create your selection
-          </p>
-          <p>
-            <b>To zoom in and out</b> use your trackpad or mouse wheel
-          </p>
-          <p>
-            <b>Trigger a new search</b> for an <span class="accountColor">Account</span> by <i>double-clicking</i> on it
-          </p>
-          <p>
-            <b>View details on AlgoExplorer</b> on any <span class="accountColor">Account</span>, <span class="assetColor">Asset</span>, <span class="applicationColor">Application</span>, <span class="groupColor">Group</span> and <b>Transaction</b> by <i>click-holding</i>
-          </p>
-          <p>
-            <b>For fast and animated switching between layouts</b> use your arrow-up and arrow-down keys <i>after selecting a new layout with your mouse</i>
-          </p>
-        </v-card-text>
-      </v-card>
+          <v-list
+            three-line
+            subheader
+          >
+            <v-list-item>
+              Questions? &nbsp; <a href="https://calendly.com/alexis-rondeau">Book a time here and let's talk!</a>
+            </v-list-item>
+          </v-list>
+
+          <v-divider></v-divider>
+
+          <v-list
+            three-line
+            subheader
+          >
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>Moving Around</v-list-item-title>
+                <v-list-item-subtitle>
+                  To move a single node, click-drag it to your desired spot.
+                  To move several nodes use shift-click-drag to create your selection.
+                  To zoom in and out use your trackpad or mouse wheel.
+                </v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>View details on AlgoExplorer</v-list-item-title>
+                <v-list-item-subtitle>
+                  View details on AlgoExplorer on any Account, Asset, Application, any Group and any Transaction by click-holding.
+                </v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>Trigger Search</v-list-item-title>
+                <v-list-item-subtitle>
+                  Trigger a new search for an Account by double-clicking on it
+                </v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>Fast Layout Rotation</v-list-item-title>
+                <v-list-item-subtitle>
+                  For fast and animated switching between layouts use your arrow-up and arrow-down keys after selecting a new layout with your mouse.
+                </v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+
+          <v-divider></v-divider>
+
+          <v-list
+            three-line
+            subheader
+          >
+            <v-subheader>APPEARANCE</v-subheader>
+            <v-list-item>
+                <v-switch
+                  v-model="$vuetify.theme.dark"
+                  inset
+                  label="Dark Mode"
+                  color="indigo"
+                ></v-switch>
+            </v-list-item>
+
+            <v-subheader>GRAPH HEIGHT</v-subheader>
+            <v-list-item>
+              <v-slider
+                v-model="graphHeight"
+                :label="GraphHeight"
+                :thumb-color="red"
+                thumb-label="always"
+                max="1280"
+                min="500"
+                v-on:change="search"
+              ></v-slider>
+            </v-list-item>
+          </v-list>
+        </v-card>
+      </v-dialog>
     </div>
   </v-container>
 </template>
@@ -243,7 +314,9 @@ export default {
     mini: true,
     searching: false,
     miniHelp: true,
-    shareButtonLabel: "Share URL"
+    shareButtonLabel: "Share URL",
+    graphHeight: 750,
+    dialog: false,
   }),
   methods: {
     async setElementsFromCache() {
@@ -322,7 +395,9 @@ export default {
       );
 
       this.cy.layout(this.selectedLayout).run();
-      document.getElementById("cytoscape-div").style.minHeight = "750px";
+
+      // The big cahuna – Setting this size...
+      document.getElementById("cytoscape-div").style.minHeight = this.graphHeight + "px";
 
       this.toggleRootNode();
       this.toggleAccountNodes();
@@ -600,6 +675,12 @@ export default {
 
 .groupColor {
   color: #666;
+}
+
+#dialogButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
 }
 
 </style>
