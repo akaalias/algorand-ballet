@@ -196,7 +196,8 @@
             subheader
           >
             <v-list-item>
-              Questions? &nbsp; <a href="https://calendly.com/alexis-rondeau">Book a time here and let's talk!</a>
+              You can find the project's overview and full source-code &nbsp; <a href="https://github.com/akaalias/algorand-ballet">on Github</a>
+              &nbsp; For questions, please &nbsp; <a href="https://calendly.com/alexis-rondeau">book a time here and let's talk!</a>
             </v-list-item>
           </v-list>
 
@@ -271,6 +272,7 @@
               ></v-slider>
             </v-list-item>
           </v-list>
+
         </v-card>
       </v-dialog>
     </div>
