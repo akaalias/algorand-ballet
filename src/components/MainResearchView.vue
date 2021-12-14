@@ -7,12 +7,12 @@
       class="searchingProgressIndicator"
     ></v-progress-linear>
 
-    <APIKeyForm
-      v-if="apiKey === ''"
-      @apiKeySet="setMyAPIKey($event)"
-    />
-
     <div class="cyHolder" v-if="apiKey !== ''">
+      <div id="demoBackground"
+           v-if="elements.length !== 0"
+      >
+
+      </div>
 
       <SearchForm :parentAccountID="accountID" @searchReady="startSearch($event)"/>
 
@@ -683,6 +683,10 @@ export default {
   position: fixed;
   bottom: 20px;
   right: 20px;
+}
+
+#demoBackground {
+  background-image: url("https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/psychedelic-spiderweb.png");
 }
 
 </style>

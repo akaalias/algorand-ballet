@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/algorand-ballet/precache-manifest.b654c91b1454999ab5d65eec897c23ee.js"
+  "/algorand-ballet/precache-manifest.e05c87fe884b6a30f544381fc6f345c6.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "algorand-ballet"});
