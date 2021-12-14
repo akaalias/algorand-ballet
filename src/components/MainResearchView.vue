@@ -8,13 +8,12 @@
     ></v-progress-linear>
 
     <div class="cyHolder" v-if="apiKey !== ''">
-      <div id="demoBackground"
-           v-if="elements.length !== 0"
-      >
-
-      </div>
 
       <SearchForm :parentAccountID="accountID" @searchReady="startSearch($event)"/>
+
+      <div id="demoBackground"
+           v-if="elements.length == 0"
+      ></div>
 
       <cytoscape
         :config="cyConfig"
@@ -686,7 +685,12 @@ export default {
 }
 
 #demoBackground {
-  background-image: url("https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/psychedelic-spiderweb.png");
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-image: url("https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/psychedlic-spiderweb.png");
 }
 
 </style>

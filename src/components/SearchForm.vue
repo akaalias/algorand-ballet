@@ -31,6 +31,7 @@
           label="Algorand Target Account ID"
           required
           single-line
+          class="top-z"
         ></v-text-field>
       </v-col>
       <v-col cols="2" class="pt-5">
@@ -40,6 +41,7 @@
           v-on:click="searchReady"
           :disabled="isDisabled ? false : true"
           block
+          class="top-z"
         >
           {{ buttonText }}
         </v-btn>
@@ -114,5 +116,8 @@ export default {
 
 .top-z {
   z-index: 101;
+}
+
+#searchForm {
 }
 </style>
