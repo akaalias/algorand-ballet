@@ -579,14 +579,6 @@ export default {
   width: 180px;
 }
 
-#helpMenuCard {
-  position: absolute;
-  top: 90px;
-  right: 25px;
-  z-index: 100;
-  width: 280px;
-}
-
 #graphMenuCard .rootNodeVisible {
   max-height: 30px;
   border-left: 2px solid #ffa600;
@@ -682,6 +674,7 @@ export default {
   position: fixed;
   bottom: 20px;
   right: 20px;
+  z-index: 10000;
 }
 
 #demoBackground {
