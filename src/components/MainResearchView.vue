@@ -12,7 +12,7 @@
       <SearchForm :parentAccountID="accountID" @searchReady="startSearch($event)"/>
 
       <div id="demoBackground"
-           v-if="elements.length == 0"
+           v-if="elements.length == 0 && searching != true"
       ></div>
 
       <cytoscape
