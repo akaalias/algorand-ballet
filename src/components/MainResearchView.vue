@@ -688,6 +688,7 @@ export default {
   width: 100%;
   height: 100%;
   background-position: bottom;
+  background-size: 100%;
 }
 
 .homepageSearchFormClass {
