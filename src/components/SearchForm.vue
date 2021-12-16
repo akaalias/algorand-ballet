@@ -1,17 +1,29 @@
 <template>
   <v-form class="pl-4 pr-4" id="searchForm">
     <v-row>
-      <v-col cols="1" class="pt-8" v-if="accountIDHistory.length > 1">
+      <v-col cols="1" class="pt-8">
+
         <v-btn
         small
         @click="goBack"
+        v-if="accountIDHistory.length > 1"
         >
           <v-icon>
             mdi-chevron-left
           </v-icon>
-
         </v-btn>
       </v-col>
+      <v-col cols="7">
+        <v-text-field
+          v-model="accountID"
+          :rules="accountIDRules"
+          label="Enter an Algorand Account ID"
+          required
+          single-line
+          class="top-z"
+        ></v-text-field>
+      </v-col>
+
       <v-col cols="2">
         <v-select
           v-model="selectedNetwork"
@@ -24,25 +36,19 @@
           class="top-z"
         ></v-select>
       </v-col>
-      <v-col cols="7">
-        <v-text-field
-          v-model="accountID"
-          :rules="accountIDRules"
-          label="Algorand Target Account ID"
-          required
-          single-line
-          class="top-z"
-        ></v-text-field>
-      </v-col>
-      <v-col cols="2" class="pt-5">
+      <v-col class="pt-7"
+             cols="2"
+      >
         <v-btn
           color="primary"
           elevation="2"
           v-on:click="searchReady"
           :disabled="isDisabled ? false : true"
-          block
           class="top-z"
+          block
         >
+          <v-icon>mdi-search-web</v-icon>
+
           {{ buttonText }}
         </v-btn>
       </v-col>
@@ -65,7 +71,7 @@ export default {
     ],
     networks: EndpointDomains.apiNetworks,
     selectedNetwork: EndpointDomains.defaultNetwork,
-    buttonText: "Build Graph",
+    buttonText: "Search",
     accountIDHistory: [],
   }),
   methods: {
@@ -80,6 +86,13 @@ export default {
     },
     notify() {
       this.$emit('searchReady', {accountID: this.accountID, network: this.selectedNetwork});
+    },
+    calculateColumnsForSearchButton() {
+      if(accountIDHistory.length > 1) {
+        return 2
+      } else {
+        return 3
+      }
     }
   },
   watch: {

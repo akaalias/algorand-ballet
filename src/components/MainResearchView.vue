@@ -9,7 +9,10 @@
 
     <div class="cyHolder" v-if="apiKey !== ''">
 
-      <SearchForm :parentAccountID="accountID" @searchReady="startSearch($event)"/>
+      <SearchForm :parentAccountID="accountID"
+                  @searchReady="startSearch($event)"
+                  v-bind:class="getSearchFormClass()"
+      />
 
       <div id="demoBackground"
            v-if="elements.length == 0 && searching != true"
@@ -558,11 +561,24 @@ export default {
 
       return deeplinkString
     },
+    getSearchFormClass() {
+      if(this.elements.length == 0 && this.searching != true) {
+        return "homepageSearchFormClass"
+      } else {
+        return ""
+      }
+    }
+
   },
   components: {
     SearchForm,
     APIKeyForm,
   },
+  computed: {
+    bgColor() {
+      return "red";
+    }
+  }
 };
 </script>
 
@@ -654,22 +670,6 @@ export default {
 
 }
 
-.accountColor {
-  color: #ff7c43;
-}
-
-.assetColor {
-  color: #a05195;
-}
-
-.applicationColor {
-  color: #565589;
-}
-
-.groupColor {
-  color: #666;
-}
-
 #dialogButton {
   position: fixed;
   bottom: 20px;
@@ -684,6 +684,18 @@ export default {
   height: 100%;
   background-position: center;
   background-image: url("https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/psychedlic-spiderweb.png");
+}
+
+.homepageSearchFormClass {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  background-color: var(--v-accent-darken3);
+  width: 1028px;
+  padding: 30px !important;
+  padding-left: 0px !important;
 }
 
 </style>
