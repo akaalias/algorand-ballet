@@ -579,7 +579,7 @@ export default {
   computed: {
     randomDemoBackgroundImageURL() {
       const min = Math.ceil(1);
-      const max = Math.floor(8);
+      const max = Math.floor(7);
       const idx = Math.floor(Math.random() * (max - min) + min);
       return "https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/" + String(idx) + ".png";
     }
