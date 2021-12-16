@@ -1,7 +1,7 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "1aa11b346dd5317255a0",
-    "url": "/algorand-ballet/css/app.860269a1.css"
+    "revision": "668d99a916b6ea2d8f98",
+    "url": "/algorand-ballet/css/app.3484265b.css"
   },
   {
     "revision": "1482b42ee002d8fa1338",
@@ -12,7 +12,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/algorand-ballet/img/psychedlic-spiderweb.png"
   },
   {
-    "revision": "315e8fd5b909270e7fe010b26084b3ba",
+    "revision": "f88ec1e4bfd93260fed2f0ceccde57d6",
     "url": "/algorand-ballet/index.html"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/algorand-ballet/js/about.eef3a7dd.js"
   },
   {
-    "revision": "1aa11b346dd5317255a0",
-    "url": "/algorand-ballet/js/app.2cc14231.js"
+    "revision": "668d99a916b6ea2d8f98",
+    "url": "/algorand-ballet/js/app.038cf6ba.js"
   },
   {
     "revision": "1482b42ee002d8fa1338",

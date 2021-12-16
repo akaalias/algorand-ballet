@@ -563,7 +563,7 @@ export default {
     },
     getSearchFormClass() {
       if(this.elements.length == 0 && this.searching != true) {
-        return "homepageSearchFormClass"
+        return "homepageSearchFormClass elevation-21"
       } else {
         return ""
       }
@@ -692,8 +692,8 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 3;
-  background-color: var(--v-accent-darken3);
-  width: 1028px;
+  background-color: var(--v-primary-base);
+  width: 100%;
   padding: 30px !important;
   padding-left: 0px !important;
 }

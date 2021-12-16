@@ -2,7 +2,15 @@
   <v-form class="pl-4 pr-4" id="searchForm">
     <v-row>
       <v-col cols="1" class="pt-8">
+        <div class="align-right"
+             v-if="accountIDHistory.length < 1"
+        >
+          Start
+          <v-icon>
+            mdi-chevron-right
+          </v-icon>
 
+        </div>
         <v-btn
         small
         @click="goBack"
@@ -132,5 +140,8 @@ export default {
 }
 
 #searchForm {
+}
+.align-right {
+  text-align: right;
 }
 </style>
