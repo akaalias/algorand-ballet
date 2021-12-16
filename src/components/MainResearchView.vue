@@ -16,7 +16,9 @@
 
       <div id="demoBackground"
            v-if="elements.length == 0 && searching != true"
-      ></div>
+           v-bind:style='{ backgroundImage: "url(" + this.randomDemoBackgroundImageURL + ")", }'
+      >
+      </div>
 
       <cytoscape
         :config="cyConfig"
@@ -575,8 +577,11 @@ export default {
     APIKeyForm,
   },
   computed: {
-    bgColor() {
-      return "red";
+    randomDemoBackgroundImageURL() {
+      const min = Math.ceil(1);
+      const max = Math.floor(8);
+      const idx = Math.floor(Math.random() * (max - min) + min);
+      return "https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/" + String(idx) + ".png";
     }
   }
 };
@@ -683,7 +688,6 @@ export default {
   width: 100%;
   height: 100%;
   background-position: center;
-  background-image: url("https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/psychedlic-spiderweb.png");
 }
 
 .homepageSearchFormClass {
