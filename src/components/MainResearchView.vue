@@ -697,7 +697,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 3;
-  background-color: var(--v-primary-base);
+  background-color: var(--v-primary-darken3);
   width: 100%;
   padding: 30px !important;
   padding-left: 0px !important;

@@ -28,6 +28,7 @@
           label="Enter an Algorand Account ID"
           required
           single-line
+          clearable
           class="top-z"
         ></v-text-field>
       </v-col>
