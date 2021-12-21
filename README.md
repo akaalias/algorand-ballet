@@ -4,7 +4,7 @@
 ![License](https://img.shields.io/github/license/akaalias/algorand-ballet?color=brightgreen&label=License)
 
 # Algorand Ballet
-[![Relationships](https://github.com/akaalias/algorand-ballet/blob/main/images/relationships-ui.png?raw=true)](https://akaalias.github.io/algorand-ballet/)
+[![Relationships](https://github.com/akaalias/algorand-ballet/blob/main/demo-ui.png?raw=true)](https://akaalias.github.io/algorand-ballet/)
 
 ## Oh, hi there! 
 
