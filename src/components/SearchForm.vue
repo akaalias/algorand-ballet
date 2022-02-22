@@ -8,9 +8,13 @@
         </h1>
 
         <p>
-          <b>Make your best-informed decision before interacting with an untrusted wallet</b> using a "smell-test" into their "personality" based on their past track-record with other wallets, ASAs and Applications.
+          <b>Make your best-informed decision before interacting with an untrusted wallet.</b>
+          <br>
+          Get a sense of a wallet's "personality" based on their track-record of past transactions and relationships
+          with other wallets, ASAs and applications.
         </p>
 
+        <br>
         <v-btn class="cta"
                v-bind:href="currentDeepLink.url"
                color="primary"
@@ -208,6 +212,7 @@ export default {
 }
 
 .hero h1 {
+  padding-top: 20px;
   font-size: 36pt;
   letter-spacing: -1.5pt;
 }
@@ -224,13 +229,6 @@ export default {
 }
 
 #landingpage {
-  padding-bottom: 50px;
-}
-
-.centered {
-  padding-top: 20px;
-  text-align: center;
-  font-weight: normal;
-  font-size: 16pt;
+  padding-bottom: 120px;
 }
 </style>

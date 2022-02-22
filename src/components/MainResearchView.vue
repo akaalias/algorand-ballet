@@ -211,7 +211,7 @@
                   <h1 class="heading">Oh, hi there!</h1>
                   <p>
                     Great to meet you.
-                    My name is <a href="https://publish.obsidian.md/alexisrondeau">Alexis</a> and I am a researcher, product manager, developer and Algorand enthusiast. I wanted to share a research project I've been working on with you.
+                    My name is <a href="https://publish.obsidian.md/alexisrondeau" target="_blank">Alexis</a> and I am a researcher, product manager, developer and Algorand enthusiast. I wanted to share a research project I've been working on with you.
                   </p>
 
                   <h2>
