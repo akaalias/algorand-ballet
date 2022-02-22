@@ -1,7 +1,7 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "9ab9016fc005679121cc",
-    "url": "/algorand-ballet/css/app.378f2fb3.css"
+    "revision": "03e686c4df4bdf93a3c8",
+    "url": "/algorand-ballet/css/app.23fa9843.css"
   },
   {
     "revision": "ea1df7426efe841651f4",
@@ -36,7 +36,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/algorand-ballet/img/7.png"
   },
   {
-    "revision": "2065988555149ce755b940be4ae9f5cf",
+    "revision": "3c1509a4928628feec64ac6426e7f3ec",
     "url": "/algorand-ballet/index.html"
   },
   {
@@ -44,8 +44,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/algorand-ballet/js/about.817146d5.js"
   },
   {
-    "revision": "9ab9016fc005679121cc",
-    "url": "/algorand-ballet/js/app.52399f21.js"
+    "revision": "03e686c4df4bdf93a3c8",
+    "url": "/algorand-ballet/js/app.e0c97d42.js"
   },
   {
     "revision": "ea1df7426efe841651f4",
