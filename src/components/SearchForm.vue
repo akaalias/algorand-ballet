@@ -96,11 +96,9 @@
 
 <script>
 import { EndpointDomains } from "../models/EndpointDomains";
-import { QualitativeResearchApproach } from "@/models/QualitativeResearchApproach";
 
 export default {
   name: "SearchForm",
-  components: { VLabel },
   props: ["parentAccountID"],
   data:() => ({
     accountID: "",
