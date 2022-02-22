@@ -97,7 +97,6 @@
 <script>
 import { EndpointDomains } from "../models/EndpointDomains";
 import { QualitativeResearchApproach } from "@/models/QualitativeResearchApproach";
-import VLabel from "../../docs/js/chunk-vendors.6789c5c8";
 
 export default {
   name: "SearchForm",

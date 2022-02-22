@@ -191,7 +191,9 @@
             >
               <v-icon>mdi-close</v-icon>
             </v-btn>
-            <v-toolbar-title>Information</v-toolbar-title>
+            <v-toolbar-title>
+              Algorand Ballet: Qualitative Blockchain Analysis for Algorand Investors
+              </v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>
 
@@ -217,6 +219,8 @@
                   </h2>
                   <p>
                     Ballet is an interactive qualitative analysis tool for the Algorand blockchain. "Qualitative" in that it gives you a glimpse into a wallet's "personality" based on their past track-record with other wallets, ASAs and Applications.
+                  </p>
+                  <p>
                     Ideally, Ballet is a qualitative extension to your existing quantitative blockchain wallet analysis, auditing and diligence workflow.
                   </p>
 
@@ -693,9 +697,10 @@ export default {
   },
   computed: {
     randomDemoBackgroundImageURL() {
-      const min = Math.ceil(1);
-      const max = Math.floor(7);
-      const idx = Math.floor(Math.random() * (max - min) + min);
+      // const min = Math.ceil(1);
+      // const max = Math.floor(7);
+      // const idx = Math.floor(Math.random() * (max - min) + min);
+      const idx = "5"
       return "https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/" + String(idx) + ".png";
     }
   }
