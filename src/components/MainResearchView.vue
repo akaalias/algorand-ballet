@@ -6,10 +6,9 @@
       v-if="searching"
       class="searchingProgressIndicator"
     ></v-progress-linear>
-
     <div id="home" v-if="elements.length == 0 && searching != true">
       <v-row id="landingpage">
-        <v-col cols="12">
+        <v-col cols="12" class="hero">
           <h1>
             Qualitative Blockchain Analysis for Algorand Investors
           </h1>
@@ -46,13 +45,11 @@
           </v-row>
         </v-col>
       </v-row>
-      <div id="demoBackground"
-           v-bind:style='{ backgroundImage: "url(" + this.randomDemoBackgroundImageURL + ")", }'
-      >
+      <div class="demo">
+        <img src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/5.png"/>
       </div>
     </div>
-
-    <div class="cyHolder" v-if="apiKey !== ''">
+    <div class="cyHolder">
       <SearchForm :parentAccountID="accountID"
                   @searchReady="startSearch($event)"
                   @showInformationOverlay="popupDialog($event)"
@@ -239,6 +236,7 @@
           <v-tabs
           >
             <v-tab>About Algorand Ballet</v-tab>
+            <v-tab>Thank you</v-tab>
             <v-tab>How To Navigate</v-tab>
             <v-tab>Appearance Settings</v-tab>
 
@@ -353,9 +351,29 @@
                 </v-col>
               </v-row>
             </v-tab-item>
+            <v-tab-item :key="2">
+              <v-row>
+                <v-col cols="3">
+                </v-col>
+                <v-col cols="6">
+                  <h1 class="heading">Many thanks go out to</h1>
 
+                  <h2>PureStake</h2>
+                  <p>
+                    PureStake have enabled me to iterate incredibly fast by <a href="https://www.purestake.com/technology/algorand-api/">providing their API to the Algorand blockchain</a>.
+                    It's been a bliss to work with it and I couldn't have done it without them. And I would immediately use their API again for any new project and recommend you try it out as well.
+                    (Please note that I am not affiliated with PureStake.)
+                  </p>
 
-
+                  <h2>Algorand Foundation</h2>
+                  <p>
+                    Thank you <a href="https://algorand.foundation/about-us/who-we-are">Addie at the Algorand Foundation</a> for your review and positive feedback!
+                  </p>
+                </v-col>
+              </v-row>
+              <v-col cols="3">
+              </v-col>
+            </v-tab-item>
             <v-tab-item :key="2">
               <v-list
                 three-line
@@ -397,8 +415,7 @@
                 </v-list-item>
               </v-list>
             </v-tab-item>
-
-            <v-tab-item :key="3">
+            <v-tab-item :key="4">
 
             <v-list
               three-line
@@ -426,8 +443,6 @@
               </v-list-item>
             </v-list>
             </v-tab-item>
-
-
           </v-tabs>
         </v-card>
       </v-dialog>
@@ -743,7 +758,6 @@ export default {
   }
 };
 </script>
-
 <style scoped>
 .cyHolder {
   min-height: 700px;
@@ -839,18 +853,8 @@ export default {
   z-index: 10000;
 }
 
-#demoBackground {
-  position: fixed;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  background-position: bottom;
-  background-size: 100%;
-}
-
 #landingpage h1 {
   margin-top: 100px;
-
   font-size: 36pt;
   text-align: center;
 }
@@ -862,4 +866,9 @@ export default {
   text-align: center;
 }
 
+h1.heading {
+  font-size: 36pt;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
 </style>
