@@ -7,18 +7,57 @@
       class="searchingProgressIndicator"
     ></v-progress-linear>
 
+    <div id="home" v-if="elements.length == 0 && searching != true">
+      <v-row id="landingpage">
+        <v-col cols="12">
+          <h1>
+            Qualitative Blockchain Analysis for Algorand Investors
+          </h1>
+
+          <v-row>
+            <v-col cols="2"></v-col>
+            <v-col cols="8">
+              <p>
+                Make your best-informed decision before interacting with an untrusted wallet.
+                Get a sense of a wallet's "personality" based on their track-record of past transactions and relationships
+                with other wallets, ASAs and applications.
+              </p>
+
+              <p>
+                <v-btn class="cta"
+                       href="?deeplink=true&network=main&accountid=YHFIMNQB2HSDWPH3LKMGZK7TTSVWPS44RBLKFBO5JAUD52EXPGTQGICWZY&focus=graph&layout=concentric"
+                       color="primary"
+                       elevation="5"
+                >
+                  Jump right in with this example!
+                </v-btn>
+                &nbsp; or &nbsp;
+                <v-btn
+                  @click="dialog = true"
+                  outlined
+                  plain
+                >
+                  Learn more about Ballet
+                </v-btn>
+
+              </p>
+            </v-col>
+            <v-col cols="2"></v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+      <div id="demoBackground"
+           v-bind:style='{ backgroundImage: "url(" + this.randomDemoBackgroundImageURL + ")", }'
+      >
+      </div>
+    </div>
+
     <div class="cyHolder" v-if="apiKey !== ''">
       <SearchForm :parentAccountID="accountID"
                   @searchReady="startSearch($event)"
                   @showInformationOverlay="popupDialog($event)"
                   v-bind:class="getSearchFormClass()"
       />
-
-      <div id="demoBackground"
-           v-if="elements.length == 0 && searching != true"
-           v-bind:style='{ backgroundImage: "url(" + this.randomDemoBackgroundImageURL + ")", }'
-      >
-      </div>
 
       <cytoscape
         :config="cyConfig"
@@ -379,8 +418,6 @@
               <v-list-item>
                 <v-slider
                   v-model="graphHeight"
-                  :label="GraphHeight"
-                  :thumb-color="red"
                   thumb-label="always"
                   max="1280"
                   min="500"
@@ -811,16 +848,18 @@ export default {
   background-size: 100%;
 }
 
-.homepageSearchFormClass {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
-  background-color: var(--v-primary-darken3);
-  width: 100%;
-  padding: 30px !important;
-  padding-left: 0px !important;
+#landingpage h1 {
+  margin-top: 100px;
+
+  font-size: 36pt;
+  text-align: center;
+}
+
+#landingpage p {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  font-size: 20pt;
+  text-align: center;
 }
 
 </style>

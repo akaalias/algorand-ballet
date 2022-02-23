@@ -1,37 +1,5 @@
 <template>
   <v-form id="searchForm">
-    <v-row  v-if="accountIDHistory.length < 1" id="landingpage">
-      <v-col cols="11" class="hero">
-        <h1>
-          Qualitative Blockchain Analysis
-          for Algorand Investors
-        </h1>
-
-        <p>
-          <b>Make your best-informed decision before interacting with an untrusted wallet.</b>
-          <br>
-          Get a sense of a wallet's "personality" based on their track-record of past transactions and relationships
-          with other wallets, ASAs and applications.
-        </p>
-        <br>
-        <v-btn class="cta"
-               v-bind:href="currentDeepLink.url"
-               color="primary"
-               elevation="5"
-        >
-          Jump right in with this example!
-        </v-btn>
-         &nbsp; or &nbsp;
-        <v-btn
-               @click="notifyToShowInformationOverlay"
-               outlined
-               plain
-               >
-          Learn more about Ballet
-        </v-btn>
-      </v-col>
-    </v-row>
-
     <v-row  v-if="accountIDHistory.length >= 1">
       <v-col cols="1" class="pt-8">
         <div class="align-right"
@@ -187,31 +155,5 @@ export default {
 
 .align-right {
   text-align: right;
-}
-
-.hero {
-  text-align: center;
-  height: 200px;
-}
-
-.hero h1 {
-  padding-top: 20px;
-  font-size: 36pt;
-  letter-spacing: -1.5pt;
-}
-
-.hero p {
-  font-size: 18pt;
-  padding-left: 100px;
-  padding-right: 100px;
-}
-
-.hero b {
-  font-weight: normal;
-  text-decoration: underline;
-}
-
-#landingpage {
-  padding-bottom: 120px;
 }
 </style>
