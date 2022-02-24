@@ -46,7 +46,7 @@
         </v-col>
       </v-row>
       <div class="demo">
-        <img src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/5.png"/>
+        <img src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/algorand-ballet-example-account-concentric-layout.png"/>
       </div>
     </div>
     <SearchForm :parentAccountID="accountID"
