@@ -10,7 +10,7 @@
       <v-row id="landingpage">
         <v-col cols="12" class="hero">
           <h1>
-            Qualitative Blockchain Analysis for Algorand Investors
+            Qualitative Blockchain Analysis <br>for Algorand Ecosystem Investors
           </h1>
 
           <v-row>
@@ -47,6 +47,26 @@
       </v-row>
       <div class="demo">
         <img src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/algorand-ballet-example-account-concentric-layout.png"/>
+      </div>
+
+      <div class="contact">
+        <h1 class="">Questions? Let's talk!</h1>
+        <p>
+          Hello there, Alexis here. Great to meet you.
+          <br>
+          If you want to learn more about Ballet, how to integrate qualitative analysis into your existing auditing and diligence workflow or if you just want to chat, I've found <em>the best way by far</em> is to talk personally.
+          <br>
+          I've opened up consulting office hours this week so use the button below to book a time.
+        </p>
+        <p>
+          <v-btn class="cta"
+                 href="https://calendly.com/alexis-rondeau"
+                 color="secondary"
+                 elevation="5"
+          >
+            Reserve a Free Consultation
+          </v-btn>
+        </p>
       </div>
     </div>
     <SearchForm :parentAccountID="accountID"
@@ -850,13 +870,13 @@ export default {
   z-index: 10000;
 }
 
-#landingpage h1 {
+#landingpage h1, .contact h1 {
   margin-top: 100px;
-  font-size: 36pt;
+  font-size: 48pt;
   text-align: center;
 }
 
-#landingpage p {
+#landingpage p, .contact p {
   margin-top: 20px;
   margin-bottom: 40px;
   font-size: 20pt;
@@ -867,5 +887,19 @@ h1.heading {
   font-size: 36pt;
   margin-top: 50px;
   margin-bottom: 50px;
+}
+
+.demo {
+  text-align: center;
+  width: 100%;
+}
+
+.demo img {
+  width: 100%;
+}
+
+.contact {
+  padding: 100px;
+  text-align: center;
 }
 </style>
