@@ -477,6 +477,7 @@ import { QualitativeResearchApproach } from "@/models/QualitativeResearchApproac
 import APIKeyForm from "@/components/APIKeyForm";
 import SearchForm from "@/components/SearchForm";
 import { CacheManager } from "@/models/CacheManager";
+import cola from 'cytoscape-cola';
 
 export default {
   name: "MainResearchView",
@@ -524,7 +525,7 @@ export default {
       this.searching = false;
     },
     preConfig(cytoscape) {
-
+      cytoscape.use( cola );
     },
     async afterCreated(cy) {
       this.cy = cy;
