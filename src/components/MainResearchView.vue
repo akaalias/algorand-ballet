@@ -7,19 +7,23 @@
       class="searchingProgressIndicator"
     ></v-progress-linear>
     <div id="home" v-if="elements.length == 0 && searching != true">
+      <p class="banner">
+        New and Exclusive For Algorand Investors
+      </p>
+
       <v-row id="landingpage">
         <v-col cols="12" class="hero">
           <h1>
-            Qualitative Blockchain Analysis <br>for Algorand Ecosystem Investors
+            Background-Checks for Wallets and ASAs
           </h1>
 
           <v-row>
             <v-col cols="2"></v-col>
             <v-col cols="8">
               <p>
-                Make your best-informed decision before interacting with an untrusted wallet.
-                Get a sense of a wallet's "personality" based on their track-record of past transactions and relationships
-                with other wallets, ASAs and applications.
+                <u>Make your best-informed decision before interacting with untrusted wallets or ASAs</u> with qualitative blockchain analysis.
+                Get a sense of a wallets or ASAs "personality" using its track-record of past transactions and close relationships
+                to other wallets, ASAs and applications.
               </p>
 
               <p>
@@ -466,7 +470,6 @@
     </v-dialog>
   </v-container>
 </template>
-
 <script>
 import { CytoscapeConfig } from "@/models/CytoscapeConfig";
 import { EndpointDomains } from "@/models/EndpointDomains";
@@ -871,7 +874,7 @@ export default {
 }
 
 #landingpage h1, .contact h1 {
-  margin-top: 100px;
+  margin-top: 140px;
   font-size: 48pt;
   text-align: center;
 }
@@ -879,7 +882,7 @@ export default {
 #landingpage p, .contact p {
   margin-top: 20px;
   margin-bottom: 40px;
-  font-size: 20pt;
+  font-size: 18pt;
   text-align: center;
 }
 
@@ -901,5 +904,16 @@ h1.heading {
 .contact {
   padding: 100px;
   text-align: center;
+}
+
+.banner {
+  text-align: center;
+  background-color: #ff6e40;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  padding: 5px;
+  font-weight: bold;
 }
 </style>

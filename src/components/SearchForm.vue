@@ -25,7 +25,7 @@
         <v-text-field
           v-model="accountID"
           :rules="accountIDRules"
-          label="Enter an Algorand Account ID"
+          label="Enter an Algorand Account or Asset ID"
           required
           single-line
           clearable
@@ -74,8 +74,8 @@ export default {
   data:() => ({
     accountID: "",
     accountIDRules: [
-      (v) => !!v || "AccountID is required",
-      (v) => v.length === 58 || "AccountID must be exactly 58 characters long",
+      (v) => !!v || "AccountID or AssetID is required",
+      (v) => (v.length === 58 || v.length >= 6) || "Must be an account or asset ID",
     ],
     networks: EndpointDomains.apiNetworks,
     selectedNetwork: EndpointDomains.defaultNetwork,
@@ -124,7 +124,7 @@ export default {
   computed: {
     isDisabled() {
       // evaluate whatever you need to determine disabled here...
-      return this.accountID.length === 58;
+      return (this.accountID.length === 58 || this.accountID.length >= 6);
     }
   },
   mounted: function() {

@@ -4,8 +4,17 @@ export class AlgorandJSONAPI {
 
   private static defaultLimit: number = 1000;
 
-  public static async getTransactions(rootAccountID: string, network: any) {
-    const requestURL = `https://${network.domain}/idx2/v2/accounts/${rootAccountID}/transactions?limit=${this.defaultLimit}`;
+  public static async getTransactions(identifier: string, network: any) {
+
+    if (identifier.length == 58) {
+      return AlgorandJSONAPI.getTransactionsForAccountID(identifier, network);
+    } else if (identifier.length >= 6) {
+      return AlgorandJSONAPI.getTransactionsForAssetID(identifier, network);
+    }
+  }
+
+  public static async getTransactionsForAccountID(accountID: string, network: any) {
+    const requestURL = `https://${network.domain}/idx2/v2/accounts/${accountID}/transactions?limit=${this.defaultLimit}`;
 
     const response = await fetch(requestURL, {
       method: "GET",
@@ -16,6 +25,23 @@ export class AlgorandJSONAPI {
     const transactions = jsonData.transactions;
     return transactions;
   }
+
+
+  public static async getTransactionsForAssetID(assetID: string, network: any) {
+    const requestURL = `https://${network.domain}/idx2/v2/assets/${assetID}/transactions?limit=${this.defaultLimit}`;
+
+    const response = await fetch(requestURL, {
+      method: "GET",
+      headers: { accept: "application/json", "x-api-key": AlgorandJSONAPI.prototypeName()},
+    });
+
+    const jsonData = await response.json();
+    console.log()
+    console.log(jsonData);
+    const transactions = jsonData.transactions;
+    return transactions;
+  }
+
 
   public static prototypeName() {
     // @ts-ignore
