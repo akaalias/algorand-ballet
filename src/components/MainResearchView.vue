@@ -534,11 +534,9 @@ export default {
         "node",
         function (evt) {
           let node = evt.target;
-          if (node.data().type === "account-node") {
+          if (node.data().type === "account-node" || node.data().type === "asset-node") {
             this.accountID = node.data().id;
             this.search();
-          } else {
-            console.log("Unsure how to handle taphold for this node");
           }
         }.bind(this)
       );
