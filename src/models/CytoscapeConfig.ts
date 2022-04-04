@@ -107,6 +107,12 @@ export class CytoscapeConfig {
         },
       },
       {
+        selector: "edge.algorand-payment",
+        style: {
+          "line-color": "#094aab",
+        },
+      },
+      {
         selector: "edge.outgoing-asset",
         style: {
           "line-color": "#800000",
@@ -208,6 +214,19 @@ export class CytoscapeConfig {
           "label": "data(weight)",
         },
       },
+      {
+        "selector": "edge.haystack",
+        "style": {
+          "curve-style": "haystack",
+          "haystack-radius": "0.5"
+        }
+      },
+      {
+        "selector": "edge.unbundled-bezier",
+        "style": {
+          "curve-style": "unbundled-bezier",
+        }
+      }
     ],
   };
   public static layoutConfigurations = [
@@ -216,8 +235,8 @@ export class CytoscapeConfig {
     {key: "concentric", name: "concentric", animate: true, display: "Concentric"},
     {key: "breadthfirst", name: "breadthfirst", animate: true, display: "Breadth-First"},
     {key: "random", name: "random", animate: true, fit: true, display: "Randomized"},
-    {key: "cose", name: "cose", animate: true, fit: true, display: "COSE", randomize: false},
-    {key: "cola", name: "cola", animate: true, fit: true, display: "Cola"},
+    // {key: "cose", name: "cose", animate: false, fit: true, display: "COSE", randomize: false},
+    // {key: "cola", name: "cola", animate: false, fit: true, display: "Cola"},
   ];
   public static defaultLayoutName = CytoscapeConfig.getLayoutForKey("concentric");
   public static getLayoutForKey(key: string) {

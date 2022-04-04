@@ -25,10 +25,12 @@ export class CacheManager {
         // Create focus caches now
         const relationships = new TransactionConverter().generateGraphRelationships(accountID, rawTransactions);
         const transactions = new TransactionConverter().generateNetworkTransactions(accountID, rawTransactions);
+        const diversities = new TransactionConverter().generateNetworkDiversities(accountID, rawTransactions);
         // Save focus caches
         CacheManager.cache.get(network.name).set(accountID, new Map<string, any>());
         CacheManager.cache.get(network.name).get(accountID).set("graph", relationships);
         CacheManager.cache.get(network.name).get(accountID).set("network", transactions);
+        CacheManager.cache.get(network.name).get(accountID).set("diversity", diversities);
       }
     }
 

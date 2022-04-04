@@ -1,12 +1,16 @@
+import { ColorHelper } from "@/models/ColorHelper";
+
 export class TransactionConverter {
   private elements: Array<any>;
   private capturedIDs: Map<string, string>;
   private capturedEdges: Map<string, string>;
+  private assetColors: Map<string, string>;
 
   constructor() {
     this.elements = [];
     this.capturedIDs = new Map();
     this.capturedEdges = new Map();
+    this.assetColors = new Map();
   }
 
   public generateGraphRelationships(rootAccountID: string, transactions: Array<any>) {
@@ -46,15 +50,152 @@ export class TransactionConverter {
       return this.elements;
     }
   }
+  public generateNetworkDiversities(rootAccountID: string, transactions: Array<any>) {
+    this.setRootNodeInElements(rootAccountID);
+    const rootNode = this.capturedIDs.get(rootAccountID);
+
+    // What I want is...
+    // make a line between two wallets for each transaction
+    // each asset has its own color
+    if (transactions != null) {
+      for (const tx of transactions) {
+        if (tx["payment-transaction"] != null) {
+          const txDetails = tx["payment-transaction"];
+
+          // Add sender node
+          if (!this.capturedIDs.has(tx.sender)) {
+            this.elements.push({
+              data: {
+                id: tx.sender,
+                label: tx.sender.substring(0, 7),
+                distanceFromCenter: 0,
+                type: "account-node",
+              },
+              classes: "account",
+            });
+            this.capturedIDs.set(tx.sender, tx.sender);
+          }
+
+          // Add receiver node
+          if (!this.capturedIDs.has(txDetails.receiver)) {
+            this.elements.push({
+              data: {
+                id: txDetails.receiver,
+                label: txDetails.receiver.substring(0, 7),
+                distanceFromCenter: 0,
+                type: "account-node",
+              },
+              classes: "account",
+            });
+            this.capturedIDs.set(txDetails.receiver, txDetails.receiver);
+          }
+
+          // Directly connect Algorand sender and receiver
+          this.elements.push({
+            data: {
+              id: tx.sender + txDetails.receiver +  Math.floor(Math.random() * 10000),
+              target: tx.sender,
+              source: txDetails.receiver
+            },
+            classes: "unbundled-bezier algorand-payment payment-transaction",
+            type: "payment-transaction-edge",
+          });
+
+        } else if (tx["asset-transfer-transaction"] != null) {
+          const txDetails = tx["asset-transfer-transaction"];
+          const assetID = txDetails["asset-id"];
+
+          // Add sender Node
+          if (!this.capturedIDs.has(tx.sender)) {
+            this.elements.push({
+              data: {
+                id: tx.sender,
+                label: tx.sender.substring(0, 7),
+                distanceFromCenter: 0,
+                type: "account-node",
+              },
+              classes: "account",
+              type: "account-node",
+            });
+            this.capturedIDs.set(tx.sender, tx.sender);
+          }
+
+          // Add receiver node
+          if (!this.capturedIDs.has(txDetails.receiver)) {
+            this.elements.push({
+              data: {
+                id: txDetails.receiver,
+                label: txDetails.receiver.substring(0, 7),
+                distanceFromCenter: 0,
+                type: "account-node",
+              },
+              classes: "account",
+            });
+            this.capturedIDs.set(txDetails.receiver, txDetails.receiver);
+          }
+
+          // Directly connect Algorand sender and receiver
+          this.elements.push({
+            data: {
+              id: tx.sender + txDetails.receiver +  Math.floor(Math.random() * 10000),
+              target: tx.sender,
+              source: txDetails.receiver,
+            },
+            classes: "unbundled-bezier",
+            style: {
+              "line-color": this.getLineColorForAssetID(assetID),
+            }
+          });
+
+
+          // if otherwise we'd have a dangling asset node
+          if(rootAccountID.length < 58) {
+            this.elements.push({
+              data: {
+                id: tx.sender + rootAccountID +  Math.floor(Math.random() * 10000),
+                target: tx.sender,
+                source: rootAccountID,
+              },
+              classes: "unbundled-bezier",
+              style: {
+                "line-color": this.getLineColorForAssetID(rootAccountID),
+              }
+            });
+          }
+
+        } else {
+          continue;
+        }
+      }
+    }
+    return this.elements;
+  }
+
+  private getLineColorForAssetID(assetID: string){
+    // return ColorHelper.generateRandomHexColor();
+    if(!this.assetColors.has(assetID)) {
+      const randomAssetColor = ColorHelper.generateRandomHexColor();
+      this.assetColors.set(assetID, randomAssetColor);
+      return randomAssetColor;
+    } else {
+      return this.assetColors.get(assetID);
+    }
+  }
 
   private setRootNodeInElements(rootAccountID: string) {
+
+    let typeString = "account-node"
+    if(rootAccountID.length < 58) {
+      typeString = "asset"
+    }
+
     // Root Node
     this.elements.push({
       data: {
         id: rootAccountID,
         label: rootAccountID.substring(0, 7),
         distanceFromCenter: 300,
-        type: "account-node",
+        type: typeString,
       },
       classes: "root",
     });
@@ -412,7 +553,6 @@ export class TransactionConverter {
       }
     }
   }
-
   private handleNetworkPaymentTransaction(tx: any) {
     const txDetails = tx["payment-transaction"];
     const txClass = "payment-transaction";
