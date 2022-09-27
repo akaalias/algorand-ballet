@@ -11,7 +11,7 @@
         New and Exclusive For Algorand Investors
       </p>
 
-      <v-row id="landingpage">
+      <v-row class="landingpage">
         <v-col cols="12" class="hero">
           <h1>
             Background-Checks for Wallets and ASAs
@@ -49,29 +49,47 @@
           </v-row>
         </v-col>
       </v-row>
-      <div class="demo">
-        <img src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/algorand-ballet-example-account-concentric-layout.png"/>
-      </div>
 
-      <div class="contact">
-        <h1 class="">Questions? Let's talk!</h1>
-        <p>
-          Hello there, Alexis here. Great to meet you.
-          <br>
-          If you want to learn more about Ballet, how to integrate qualitative analysis into your existing auditing and diligence workflow or if you just want to chat, I've found <em>the best way by far</em> is to talk personally.
-          <br>
-          I've opened up consulting office hours this week so use the button below to book a time.
-        </p>
-        <p>
-          <v-btn class="cta"
-                 href="https://calendly.com/alexis-rondeau"
-                 color="secondary"
-                 elevation="5"
-          >
-            Reserve a Free Consultation
-          </v-btn>
-        </p>
-      </div>
+      <v-row class="landingpage demo hero">
+        <v-col cols="12">
+            <img src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/algorand-ballet-example-account-concentric-layout.png"/>
+        </v-col>
+      </v-row>
+
+      <v-row class="landingpage demo hero">
+        <v-col cols="4" v-for="image in galleryImageFilenames">
+          <img :src="cdnURLForGalleryImage(image)"/>
+        </v-col>
+      </v-row>
+
+      <v-row class="landingpage">
+        <v-col cols="2">
+        </v-col>
+
+        <v-col cols="8">
+          <h1 class="">Questions? Let's talk!</h1>
+          <p>
+            Hello there, Alexis here. Great to meet you!
+          </p>
+
+          <p>
+            If you want to learn more about Ballet, how to integrate qualitative analysis into your existing auditing and diligence workflow. Even if you just want to chat, I've found <em>the best way by far</em> is to talk personally.
+          </p>
+
+          <p>
+            I've opened up consulting office hours this week so use the button below to book a time.
+          </p>
+          <p>
+            <v-btn class="cta"
+                   href="https://calendly.com/alexis-rondeau"
+                   color="secondary"
+                   elevation="5"
+            >
+              Reserve a Free Consultation
+            </v-btn>
+          </p>
+        </v-col>
+      </v-row>
     </div>
     <SearchForm :parentAccountID="accountID"
                 @searchReady="startSearch($event)"
@@ -511,6 +529,11 @@ export default {
     shareButtonLabel: "Share URL",
     graphHeight: 750,
     dialog: false,
+    galleryImageFilenames: [
+      "app-asset-family", "app-cross", "application-relationships", "balanced-transactions", "centered", "complexity",
+      "cross", "detail", "extraction", "grid-red", "inner-circle", "network", "strong-relationships",
+      "transaction-details", "trickle-down", "weighted-asset-transactions"
+    ]
   }),
   methods: {
     async setElementsFromCache() {
@@ -759,8 +782,10 @@ export default {
       } else {
         return ""
       }
-    }
-
+    },
+    cdnURLForGalleryImage(filename) {
+      return "https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/gallery/" + filename + ".png"
+    },
   },
   components: {
     SearchForm,
@@ -872,13 +897,13 @@ export default {
   z-index: 10000;
 }
 
-#landingpage h1, .contact h1 {
+.landingpage h1, .contact h1 {
   margin-top: 140px;
   font-size: 48pt;
   text-align: center;
 }
 
-#landingpage p, .contact p {
+.landingpage p, .contact p {
   margin-top: 20px;
   margin-bottom: 40px;
   font-size: 18pt;
@@ -901,7 +926,6 @@ h1.heading {
 }
 
 .contact {
-  padding: 100px;
   text-align: center;
 }
 
