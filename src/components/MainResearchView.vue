@@ -70,7 +70,7 @@
           <h1 class="">Got questions? Let's talk!</h1>
 
           <p>
-            <img src="/img/alexis-portrait.jpg" class="portrait"/>
+            <img src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/alexis-portrait.jpg" class="portrait"/>
           </p>
           <p>
             Hello there, Alexis here. Great to meet you.
@@ -798,7 +798,7 @@ export default {
       }
     },
     cdnURLForGalleryImage(filename) {
-      return "/gallery/" + filename + ".png"
+      return "https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/gallery/" + filename + ".png"
     },
   },
   components: {
