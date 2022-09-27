@@ -56,8 +56,8 @@
         </v-col>
       </v-row>
 
-      <v-row class="landingpage demo hero">
-        <v-col cols="3" v-for="image in galleryImageFilenames">
+      <v-row class="landingpage demo">
+        <v-col cols="2" v-for="image in galleryImageFilenames">
           <img :src="cdnURLForGalleryImage(image)"/>
         </v-col>
       </v-row>
@@ -531,8 +531,9 @@ export default {
     dialog: false,
     galleryImageFilenames: [
       "app-asset-family", "app-cross", "application-relationships", "balanced-transactions", "centered", "complexity",
-      "cross", "detail", "extraction", "grid-red", "inner-circle", "network", "strong-relationships",
-      "transaction-details", "trickle-down", "weighted-asset-transactions"
+      "cross", "extraction", "grid-red", "inner-circle", "network", "strong-relationships",
+      "transaction-details", "trickle-down", "weighted-asset-transactions", "web-relationships", "asset-relationship-connection",
+      "incoming-outgoing-txs"
     ]
   }),
   methods: {
