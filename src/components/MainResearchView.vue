@@ -67,7 +67,11 @@
         </v-col>
 
         <v-col cols="8">
-          <h1 class="">Questions? Let's talk!</h1>
+          <h1 class="">Got questions? Let's talk!</h1>
+
+          <p>
+            <img src="/img/alexis-portrait.jpg" class="portrait"/>
+          </p>
           <p>
             Hello there, Alexis here. Great to meet you.
           </p>
@@ -794,7 +798,7 @@ export default {
       }
     },
     cdnURLForGalleryImage(filename) {
-      return "https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/gallery/" + filename + ".png"
+      return "/gallery/" + filename + ".png"
     },
   },
   components: {
@@ -961,5 +965,13 @@ footer {
 
 footer:hover {
   opacity: 1;
+}
+
+.portrait {
+  width: 200px;
+  height: 200px;
+  border-radius: 100px;
+  padding: 10px;
+  background: #fff;
 }
 </style>
