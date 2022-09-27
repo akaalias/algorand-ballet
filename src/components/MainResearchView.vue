@@ -57,7 +57,7 @@
       </v-row>
 
       <v-row class="landingpage demo hero">
-        <v-col cols="4" v-for="image in galleryImageFilenames">
+        <v-col cols="3" v-for="image in galleryImageFilenames">
           <img :src="cdnURLForGalleryImage(image)"/>
         </v-col>
       </v-row>
