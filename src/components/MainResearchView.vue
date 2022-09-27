@@ -14,16 +14,16 @@
       <v-row class="landingpage">
         <v-col cols="12" class="hero">
           <h1>
-            Background-Checks for Wallets and ASAs
+            Background-Checks for Wallets and Assets
           </h1>
 
           <v-row>
             <v-col cols="2"></v-col>
             <v-col cols="8">
               <p>
-                <u>Make your best-informed decision before interacting with untrusted wallets or ASAs</u> with qualitative blockchain analysis.
-                Get a sense of a wallets or ASAs "personality" using its track-record of past transactions and close relationships
-                to other wallets, ASAs and applications.
+                <u>Make your best-informed decision before interacting on the Algorand Blockchain.</u>
+                <br>
+                Use qualitative analysis to get a sense of a wallet or assets "personality" using its track-record of past transactions and close relationships within the ecosystem.
               </p>
 
               <p>
@@ -69,7 +69,7 @@
         <v-col cols="8">
           <h1 class="">Questions? Let's talk!</h1>
           <p>
-            Hello there, Alexis here. Great to meet you!
+            Hello there, Alexis here. Great to meet you.
           </p>
 
           <p>
