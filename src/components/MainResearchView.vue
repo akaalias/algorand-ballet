@@ -82,7 +82,7 @@
           <p>
             <v-btn class="cta"
                    href="https://calendly.com/alexis-rondeau"
-                   color="secondary"
+                   color="primary"
                    elevation="5"
             >
               Reserve a Free Consultation
@@ -90,6 +90,15 @@
           </p>
         </v-col>
       </v-row>
+
+      <footer>
+        <p>
+          Copyright 2022 –
+          Made with love by <a href="https://alexisrondeau.me" target="_blank">Alexis Rondeau</a> –
+          <a href="https://github.com/akaalias/algorand-ballet" target="_blank">Open Source on Github</a>
+
+        </p>
+      </footer>
     </div>
     <SearchForm :parentAccountID="accountID"
                 @searchReady="startSearch($event)"
@@ -939,5 +948,18 @@ h1.heading {
   width: 100%;
   padding: 5px;
   font-weight: bold;
+}
+
+footer {
+  border-top: 2px dotted #1e1e1e;
+  padding: 40px;
+  margin-top: 100px;
+  font-size: 10pt;
+  text-align: center;
+  opacity: 0.3;
+}
+
+footer:hover {
+  opacity: 1;
 }
 </style>
