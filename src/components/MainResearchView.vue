@@ -67,17 +67,23 @@
         </v-col>
 
         <v-col cols="8">
-          <h1 class="">Got questions? Let's talk!</h1>
+          <h1 class="">Got questions? Let's talk.</h1>
 
           <p>
             <img src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/alexis-portrait.jpg" class="portrait"/>
           </p>
           <p>
-            Hello there, Alexis here. Great to meet you.
+            Oh, hi there!
+          </p>
+          <p>
+            Alexis here, great to meet you.
           </p>
 
           <p>
-            If you want to learn more about Ballet, how to integrate qualitative analysis into your existing auditing and diligence workflow. Even if you just want to chat, I've found <em>the best way by far</em> is to talk personally.
+            If you want to learn more about Ballet, how to integrate qualitative analysis into your existing auditing and diligence workflow.
+          </p>
+          <p>
+            Even if you just want to chat, I've found <em>the best way by far</em> is to talk personally.
           </p>
 
           <p>
