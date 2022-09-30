@@ -63,8 +63,8 @@
 
       <section class="gallery">
         <v-row class="landingpage demo">
-          <v-col cols="2" v-for="image in galleryImageFilenames">
-            <img :src="cdnURLForGalleryImage(image)" />
+          <v-col cols="2" v-for="image in galleryImageFilenames" class="gallery-image">
+            <img :src="cdnURLForGalleryImage(image)"/>
           </v-col>
         </v-row>
       </section>
@@ -1034,15 +1034,6 @@ footer:hover {
   border-radius: 100px;
   padding: 10px;
   background: #fff;
-}
-
-.heading-centered {
-  text-align: center;
-}
-
-h2.heading-centered {
-  font-size: 24pt;
-  font-weight: normal;
 }
 
 </style>
