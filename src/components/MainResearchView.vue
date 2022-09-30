@@ -7,100 +7,109 @@
       class="searchingProgressIndicator"
     ></v-progress-linear>
     <div id="home" v-if="elements.length == 0 && searching != true">
-      <p class="banner">
-        New and Exclusive For Algorand Investors
-      </p>
+      <section class="banner">
+        <p class="banner">
+          New and Exclusive For Algorand Investors
+        </p>
+      </section>
+      <section class="main">
+        <v-row class="landingpage">
+          <v-col cols="12" class="hero">
+            <h1>
+              Background-Checks for Wallets and Assets
+            </h1>
 
-      <v-row class="landingpage">
-        <v-col cols="12" class="hero">
-          <h1>
-            Background-Checks for Wallets and Assets
-          </h1>
+            <v-row>
+              <v-col cols="2"></v-col>
+              <v-col cols="8">
+                <p>
+                  <u>Make your best-informed decision before interacting on the Algorand Blockchain.</u>
+                  <br>
+                  Use qualitative analysis to get a sense of a wallet or assets "personality" using its track-record of
+                  past transactions and close relationships within the ecosystem.
+                </p>
 
-          <v-row>
-            <v-col cols="2"></v-col>
-            <v-col cols="8">
-              <p>
-                <u>Make your best-informed decision before interacting on the Algorand Blockchain.</u>
-                <br>
-                Use qualitative analysis to get a sense of a wallet or assets "personality" using its track-record of past transactions and close relationships within the ecosystem.
-              </p>
+                <p>
+                  <v-btn class="cta"
+                         href="?deeplink=true&network=main&accountid=YHFIMNQB2HSDWPH3LKMGZK7TTSVWPS44RBLKFBO5JAUD52EXPGTQGICWZY&focus=graph&layout=concentric"
+                         color="primary"
+                         elevation="5"
+                  >
+                    Jump right in with this example!
+                  </v-btn>
+                  &nbsp; or &nbsp;
+                  <v-btn
+                    @click="dialog = true"
+                    outlined
+                    plain
+                  >
+                    Learn more about Ballet
+                  </v-btn>
+                </p>
+              </v-col>
+              <v-col cols="2"></v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </section>
 
-              <p>
-                <v-btn class="cta"
-                       href="?deeplink=true&network=main&accountid=YHFIMNQB2HSDWPH3LKMGZK7TTSVWPS44RBLKFBO5JAUD52EXPGTQGICWZY&focus=graph&layout=concentric"
-                       color="primary"
-                       elevation="5"
-                >
-                  Jump right in with this example!
-                </v-btn>
-                &nbsp; or &nbsp;
-                <v-btn
-                  @click="dialog = true"
-                  outlined
-                  plain
-                >
-                  Learn more about Ballet
-                </v-btn>
+      <section>
+        <v-row class="landingpage demo hero">
+          <v-col cols="12">
+            <img src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/ballet-ui.png" />
+          </v-col>
+        </v-row>
+      </section>
 
-              </p>
-            </v-col>
-            <v-col cols="2"></v-col>
-          </v-row>
-        </v-col>
-      </v-row>
+      <section class="gallery">
+        <h2 class="heading-centered">Gallery</h2>
+        <v-row class="landingpage demo">
+          <v-col cols="2" v-for="image in galleryImageFilenames">
+            <img :src="cdnURLForGalleryImage(image)" />
+          </v-col>
+        </v-row>
+      </section>
 
-      <v-row class="landingpage demo hero">
-        <v-col cols="12">
-            <img src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/algorand-ballet-example-account-concentric-layout.png"/>
-        </v-col>
-      </v-row>
+      <section class="gallery">
+        <v-row class="landingpage">
+          <v-col cols="2">
+          </v-col>
+          <v-col cols="8">
+            <h1 class="">Got questions? Let's talk.</h1>
+            <p>
+              <img src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/alexis-portrait.jpg"
+                   class="portrait" />
+            </p>
+            <p>
+              Oh, hi there!
+            </p>
+            <p>
+              Alexis here, great to meet you.
+            </p>
 
-      <v-row class="landingpage demo">
-        <v-col cols="2" v-for="image in galleryImageFilenames">
-          <img :src="cdnURLForGalleryImage(image)"/>
-        </v-col>
-      </v-row>
+            <p>
+              If you want to learn more about Ballet, how to integrate qualitative analysis into your existing auditing
+              and diligence workflow.
+            </p>
+            <p>
+              Even if you just want to chat, I've found <em>the best way by far</em> is to talk personally.
+            </p>
 
-      <v-row class="landingpage">
-        <v-col cols="2">
-        </v-col>
-
-        <v-col cols="8">
-          <h1 class="">Got questions? Let's talk.</h1>
-
-          <p>
-            <img src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/alexis-portrait.jpg" class="portrait"/>
-          </p>
-          <p>
-            Oh, hi there!
-          </p>
-          <p>
-            Alexis here, great to meet you.
-          </p>
-
-          <p>
-            If you want to learn more about Ballet, how to integrate qualitative analysis into your existing auditing and diligence workflow.
-          </p>
-          <p>
-            Even if you just want to chat, I've found <em>the best way by far</em> is to talk personally.
-          </p>
-
-          <p>
-            I've opened up consulting office hours this week so use the button below to book a time.
-          </p>
-          <p>
-            <v-btn class="cta"
-                   href="https://calendly.com/alexis-rondeau"
-                   color="primary"
-                   elevation="5"
-            >
-              Reserve a Free Consultation
-            </v-btn>
-          </p>
-        </v-col>
-      </v-row>
-
+            <p>
+              I've opened up consulting office hours this week so use the button below to book a time.
+            </p>
+            <p>
+              <v-btn class="cta"
+                     href="https://calendly.com/alexis-rondeau"
+                     color="primary"
+                     elevation="5"
+              >
+                Reserve a Free Consultation
+              </v-btn>
+            </p>
+          </v-col>
+        </v-row>
+      </section>
       <footer>
         <p>
           Copyright 2022 –
@@ -240,14 +249,16 @@
               <v-btn
                 v-on:click="exportPNG"
                 block
-              > Export PNG </v-btn>
+              > Export PNG
+              </v-btn>
             </v-list-item>
 
             <v-list-item class="Share">
               <v-btn
                 v-on:click="copyURLtoClipboard"
                 block
-              > {{ shareButtonLabel }} </v-btn>
+              > {{ shareButtonLabel }}
+              </v-btn>
             </v-list-item>
           </v-list-item-group>
         </v-list>
@@ -307,57 +318,79 @@
                 <h1 class="heading">Oh, hi there!</h1>
                 <p>
                   Great to meet you.
-                  My name is <a href="https://publish.obsidian.md/alexisrondeau" target="_blank">Alexis</a> and I am a researcher, product manager, developer and Algorand enthusiast. I wanted to share a research project I've been working on with you.
+                  My name is <a href="https://publish.obsidian.md/alexisrondeau" target="_blank">Alexis</a> and I am a
+                  researcher, product manager, developer and Algorand enthusiast. I wanted to share a research project
+                  I've been working on with you.
                 </p>
 
                 <h2>
                   Qualitative Blockchain Analysis
                 </h2>
                 <p>
-                  Ballet is an interactive qualitative analysis tool for the Algorand blockchain. "Qualitative" in that it gives you a glimpse into a wallet's "personality" based on their past track-record with other wallets, ASAs and Applications.
+                  Ballet is an interactive qualitative analysis tool for the Algorand blockchain. "Qualitative" in that
+                  it gives you a glimpse into a wallet's "personality" based on their past track-record with other
+                  wallets, ASAs and Applications.
                 </p>
                 <p>
-                  Ideally, Ballet is a qualitative extension to your existing quantitative blockchain wallet analysis, auditing and diligence workflow.
+                  Ideally, Ballet is a qualitative extension to your existing quantitative blockchain wallet analysis,
+                  auditing and diligence workflow.
                 </p>
 
                 <h2>Your Benefits</h2>
                 <h3>1. Get Decision Support</h3>
                 <p>
-                  For when you have an Account ID (also often called Wallet address) and you want to get a better picture of who they are, what they do, with whom and how often.
+                  For when you have an Account ID (also often called Wallet address) and you want to get a better
+                  picture of who they are, what they do, with whom and how often.
                 </p>
                 <p>
-                  Ballet gives you a qualitative "smell-test", an extra data-point to make your best-informed decision before interacting with an untrusted wallet. By looking at their qualitative track-record, there is no need for "official identity" to get that sense of "personality" in the same way I can get a first impression of a person by looking at them without the need to know their name or see their passport. I think that's really cool.
+                  Ballet gives you a qualitative "smell-test", an extra data-point to make your best-informed decision
+                  before interacting with an untrusted wallet. By looking at their qualitative track-record, there is no
+                  need for "official identity" to get that sense of "personality" in the same way I can get a first
+                  impression of a person by looking at them without the need to know their name or see their passport. I
+                  think that's really cool.
                 </p>
 
                 <h3>2. Find Better Questions</h3>
                 <p>
-                  This is when you don't yet know what you're looking for or you just want to get to better understand how Algorand works (technically) and how it's going (ecologically) by taking a stroll down main street.
+                  This is when you don't yet know what you're looking for or you just want to get to better understand
+                  how Algorand works (technically) and how it's going (ecologically) by taking a stroll down main
+                  street.
                 </p>
                 <p>
-                  Ballet supports this kind of inductive observation and experimentation by simply diving in with a random Account ID, even your own, switching between focuses and layouts, untangling some knots and clicking on other nodes.
+                  Ballet supports this kind of inductive observation and experimentation by simply diving in with a
+                  random Account ID, even your own, switching between focuses and layouts, untangling some knots and
+                  clicking on other nodes.
                 </p>
                 <p>
-                  By just futzing around I've had several moments of "Heh!?" that piqued my curiosity and led me to asking much more specific, and frankly, more interesting questions
+                  By just futzing around I've had several moments of "Heh!?" that piqued my curiosity and led me to
+                  asking much more specific, and frankly, more interesting questions
                 </p>
 
                 <h2>The benefit to the ecosystem</h2>
                 <p>
-                  Ballet gives us an additional, more qualitative, window to have "more eyes on the sidewalk"[1] in an effort to make Algorand a safe place for its inhabitants and visitors alike. Just like the eyes of neighbors, shop-keepers and even visitors keep a sidewalk safe by simply being there.
+                  Ballet gives us an additional, more qualitative, window to have "more eyes on the sidewalk"[1] in an
+                  effort to make Algorand a safe place for its inhabitants and visitors alike. Just like the eyes of
+                  neighbors, shop-keepers and even visitors keep a sidewalk safe by simply being there.
                 </p>
                 <p>
                   But why should you personally care about the safety of the ecosystem?
                 </p>
                 <p>
-                  Let's say you want to invest into the biggest ROI artistic NFT collection today, and if we imagine Algorand (eventually) being like a big city very much like New York City:
+                  Let's say you want to invest into the biggest ROI artistic NFT collection today, and if we imagine
+                  Algorand (eventually) being like a big city very much like New York City:
                 </p>
                 <p>
-                  I believe you shouldn't be looking for NFTs at all. You should be looking to meet Andy Warhol in 1951, when he was designing shoes for Miller, and a year before his first solo-show.
+                  I believe you shouldn't be looking for NFTs at all. You should be looking to meet Andy Warhol in 1951,
+                  when he was designing shoes for Miller, and a year before his first solo-show.
                 </p>
                 <p>
-                  Now, for Andy Warhol's print-work (and anything else he touched really, including payments slips, scribbles and letters) to eventually become "A Warhol", it required New York City to be in its best shape, flush with post-war cash and rock-and-roll hitting the airwaves.
+                  Now, for Andy Warhol's print-work (and anything else he touched really, including payments slips,
+                  scribbles and letters) to eventually become "A Warhol", it required New York City to be in its best
+                  shape, flush with post-war cash and rock-and-roll hitting the airwaves.
                 </p>
                 <p>
-                  You needed a (relatively) safe city for artists like Andy Warhol to settle and take liberty to produce their best work.
+                  You needed a (relatively) safe city for artists like Andy Warhol to settle and take liberty to produce
+                  their best work.
                 </p>
                 <p>
                   That's why you should care about the safety of the ecosystem.
@@ -366,31 +399,48 @@
                   Because only then will the true heir to Andy Warhol settle in and grow his work.
                 </p>
                 <p>
-                  And only then will you be there, on June 16th 1952, at Hugo Gallery, on East 55th Street and Madison Avenue, at Andy's first show. To build meaningful relationships, to witness history and, yes, to buy the first Warhols for a penny and a dime.
+                  And only then will you be there, on June 16th 1952, at Hugo Gallery, on East 55th Street and Madison
+                  Avenue, at Andy's first show. To build meaningful relationships, to witness history and, yes, to buy
+                  the first Warhols for a penny and a dime.
                 </p>
 
                 <h2>Yes, AND...</h2>
 
                 <p>
-                  I believe, all benefits stated above re-inforce each other: What's good for you personally is also good for the ecosystem. And vice-versa.
+                  I believe, all benefits stated above re-inforce each other: What's good for you personally is also
+                  good for the ecosystem. And vice-versa.
                 </p>
                 <p>
-                  I also believe it's using "qualitative AND quantitative" methods equally to have your "eyes on the sidewalk" and "your ears to the ground". That's why you can click-hold on any Account, Asset, Application, Group and Transaction inside Ballet to open its information on AlgoExplorer in a new window.
+                  I also believe it's using "qualitative AND quantitative" methods equally to have your "eyes on the
+                  sidewalk" and "your ears to the ground". That's why you can click-hold on any Account, Asset,
+                  Application, Group and Transaction inside Ballet to open its information on AlgoExplorer in a new
+                  window.
                 </p>
 
                 <h2>PS</h2>
                 <p>
-                  1. Just to make it clear, this is a personal project of mine. I built it because, after going on an actual adventure and wanting to spend a few Algos on NFTs, I felt deeply unsettled how much overt scamming and how little transparency there was. I did NOT FEEL SAFE while trying to buy a single NFT for fun because I had no way of understanding WHO the person (or group) behind the artwork really is. And I had no way to verify if the story they're telling me (The art-market is a great example of how important the authenticity of the story is for its value-creation[^3]) is actually true. And I had no way to know the people running the "gallery" itself.
+                  1. Just to make it clear, this is a personal project of mine. I built it because, after going on an
+                  actual adventure and wanting to spend a few Algos on NFTs, I felt deeply unsettled how much overt
+                  scamming and how little transparency there was. I did NOT FEEL SAFE while trying to buy a single NFT
+                  for fun because I had no way of understanding WHO the person (or group) behind the artwork really is.
+                  And I had no way to verify if the story they're telling me (The art-market is a great example of how
+                  important the authenticity of the story is for its value-creation[^3]) is actually true. And I had no
+                  way to know the people running the "gallery" itself.
                 </p>
                 <p>
-                  2. I decided to release the application <a href="https://github.com/akaalias/algorand-ballet" target="_blank">fully open-source and under a permissive license</a> for you to futz around with it and to allow for any ad-hoc security review in case you are unsure if you can trust the website or app.
+                  2. I decided to release the application <a href="https://github.com/akaalias/algorand-ballet"
+                                                             target="_blank">fully open-source and under a permissive
+                  license</a> for you to futz around with it and to allow for any ad-hoc security review in case you are
+                  unsure if you can trust the website or app.
                 </p>
 
                 <h2>Why "Ballet"?</h2>
                 <p>
-                  The inspiration came from Jane Jacobs, who keenly observed that when New York sidewalks were safe, they gave stage for an...
+                  The inspiration came from Jane Jacobs, who keenly observed that when New York sidewalks were safe,
+                  they gave stage for an...
                   <em>
-                    "intricate ballet in which the individual dancers and ensembles all have distinctive parts which miraculously reinforce each other and compose an orderly whole."
+                    "intricate ballet in which the individual dancers and ensembles all have distinctive parts which
+                    miraculously reinforce each other and compose an orderly whole."
                   </em>
                 </p>
 
@@ -401,7 +451,8 @@
 
                   In person, let's get a coffee and take a walk!
                   or via video/audio call on Zoom
-                  To make that easy, <a href="https://calendly.com/alexis-rondeau" target="_blank">here's my Calendly where you can book a time for us to talk</a>.
+                  To make that easy, <a href="https://calendly.com/alexis-rondeau" target="_blank">here's my Calendly
+                  where you can book a time for us to talk</a>.
                 </p>
 
               </v-col>
@@ -419,14 +470,18 @@
 
                 <h2>PureStake</h2>
                 <p>
-                  PureStake have enabled me to iterate incredibly fast by <a href="https://www.purestake.com/technology/algorand-api/">providing their API to the Algorand blockchain</a>.
-                  It's been a bliss to work with it and I couldn't have done it without them. And I would immediately use their API again for any new project and recommend you try it out as well.
+                  PureStake have enabled me to iterate incredibly fast by <a
+                  href="https://www.purestake.com/technology/algorand-api/">providing their API to the Algorand
+                  blockchain</a>.
+                  It's been a bliss to work with it and I couldn't have done it without them. And I would immediately
+                  use their API again for any new project and recommend you try it out as well.
                   (Please note that I am not affiliated with PureStake.)
                 </p>
 
                 <h2>Algorand Foundation</h2>
                 <p>
-                  Thank you <a href="https://algorand.foundation/about-us/who-we-are">Addie at the Algorand Foundation</a> for your review and positive feedback!
+                  Thank you <a href="https://algorand.foundation/about-us/who-we-are">Addie at the Algorand
+                  Foundation</a> for your review and positive feedback!
                 </p>
               </v-col>
             </v-row>
@@ -452,7 +507,8 @@
                 <v-list-item-content>
                   <v-list-item-title>View details on AlgoExplorer</v-list-item-title>
                   <v-list-item-subtitle>
-                    View details on AlgoExplorer on any Account, Asset, Application, any Group and any Transaction by click-holding.
+                    View details on AlgoExplorer on any Account, Asset, Application, any Group and any Transaction by
+                    click-holding.
                   </v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
@@ -468,7 +524,8 @@
                 <v-list-item-content>
                   <v-list-item-title>Fast Layout Rotation</v-list-item-title>
                   <v-list-item-subtitle>
-                    For fast and animated switching between layouts use your arrow-up and arrow-down keys after selecting a new layout with your mouse.
+                    For fast and animated switching between layouts use your arrow-up and arrow-down keys after
+                    selecting a new layout with your mouse.
                   </v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
@@ -514,7 +571,7 @@ import { QualitativeResearchApproach } from "@/models/QualitativeResearchApproac
 import APIKeyForm from "@/components/APIKeyForm";
 import SearchForm from "@/components/SearchForm";
 import { CacheManager } from "@/models/CacheManager";
-import cola from 'cytoscape-cola';
+import cola from "cytoscape-cola";
 
 export default {
   name: "MainResearchView",
@@ -568,7 +625,7 @@ export default {
       this.searching = false;
     },
     preConfig(cytoscape) {
-      cytoscape.use( cola );
+      cytoscape.use(cola);
     },
     async afterCreated(cy) {
       this.cy = cy;
@@ -576,7 +633,7 @@ export default {
       this.cy.on(
         "doubleTap",
         "node",
-        function (evt) {
+        function(evt) {
           let node = evt.target;
           if (node.data().type === "account-node" || node.data().type === "asset-node") {
             this.accountID = node.data().id;
@@ -589,7 +646,7 @@ export default {
       this.cy.on(
         "tap",
         "node",
-        function (evt) {
+        function(evt) {
           const currentTapStamp = evt.timeStamp;
           const msFromLastTap = currentTapStamp - this.previousTapStamp;
           if (msFromLastTap < this.doubleClickDelayMs) {
@@ -602,7 +659,7 @@ export default {
       this.cy.on(
         "taphold",
         "node",
-        function (event, orignalEvent) {
+        function(event, orignalEvent) {
           let node = event.target;
           let url = "https://" + this.selectedNetwork.algoExplorerDomain;
 
@@ -620,7 +677,7 @@ export default {
             type === "application-transaction-node"
           ) {
             url = url + "/tx/" + node.data().id;
-          } else if(type === "group-node") {
+          } else if (type === "group-node") {
             url = url + "/tx/group/" + encodeURI(node.data().id);
           } else {
             console.log("Unsure how to handle this node");
@@ -722,23 +779,23 @@ export default {
     },
     setupFromURLParams() {
       const focusParam = this.$route.query.focus;
-      if(!!focusParam) {
+      if (!!focusParam) {
         const focus = QualitativeResearchApproach.getResearchApproachForKey(focusParam);
-        if(!!focus) {
+        if (!!focus) {
           this.selectedFocus = focus;
         }
       }
 
       const layoutParam = this.$route.query.layout;
-      if(!!layoutParam) {
+      if (!!layoutParam) {
         console.log(layoutParam);
         const layout = CytoscapeConfig.getLayoutForKey(layoutParam);
-        if(!!layout) {
-            this.selectedLayout = layout;
+        if (!!layout) {
+          this.selectedLayout = layout;
         }
       }
 
-      this.$router.replace({'query': null});
+      this.$router.replace({ "query": null });
     },
     startSearch(event) {
       this.accountID = event.accountID;
@@ -794,29 +851,29 @@ export default {
       deeplinkString += ("&focus=" + this.selectedFocus.key);
       deeplinkString += ("&layout=" + this.selectedLayout.key);
 
-      return deeplinkString
+      return deeplinkString;
     },
     getSearchFormClass() {
-      if(this.elements.length == 0 && this.searching != true) {
-        return "homepageSearchFormClass elevation-21"
+      if (this.elements.length == 0 && this.searching != true) {
+        return "homepageSearchFormClass elevation-21";
       } else {
-        return ""
+        return "";
       }
     },
     cdnURLForGalleryImage(filename) {
-      return "https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/gallery/" + filename + ".png"
-    },
+      return "https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/gallery/" + filename + ".png";
+    }
   },
   components: {
     SearchForm,
-    APIKeyForm,
+    APIKeyForm
   },
   computed: {
     randomDemoBackgroundImageURL() {
       // const min = Math.ceil(1);
       // const max = Math.floor(7);
       // const idx = Math.floor(Math.random() * (max - min) + min);
-      const idx = "5"
+      const idx = "5";
       return "https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/" + String(idx) + ".png";
     }
   }
@@ -951,7 +1008,7 @@ h1.heading {
 
 .banner {
   text-align: center;
-  background-color: #ff6e40;
+  background-color: #8D3A83;
   position: absolute;
   top: 0px;
   left: 0px;
@@ -980,4 +1037,18 @@ footer:hover {
   padding: 10px;
   background: #fff;
 }
+
+.heading-centered {
+  text-align: center;
+}
+
+h2.heading-centered {
+  font-size: 24pt;
+  font-weight: normal;
+}
+
+section.gallery {
+  margin-top: 100px;
+}
+
 </style>
