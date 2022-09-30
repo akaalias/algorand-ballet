@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "84067f115ea61ec0c6bd",
+    "revision": "d36c6c34e6159e7ff21e",
     "url": "/algorand-ballet/css/app.bbd0ecd8.css"
   },
   {
-    "revision": "045a03335281cf7f7700",
-    "url": "/algorand-ballet/css/chunk-vendors.2b84dae6.css"
+    "revision": "e9ec5760e17022e28826",
+    "url": "/algorand-ballet/css/chunk-vendors.83febfc0.css"
   },
   {
     "revision": "ea79c2844fdb8b44e2641ba987bf20cb",
@@ -112,20 +112,20 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/algorand-ballet/img/ballet-ui.png"
   },
   {
-    "revision": "9c0aa4c9ead26b5050fe50cab3ae42f2",
+    "revision": "a6e6cc0d573b5e5e2f5b2bc318a31f89",
     "url": "/algorand-ballet/index.html"
   },
   {
-    "revision": "893cf104d677e2db9edf",
-    "url": "/algorand-ballet/js/about.e95ad5b0.js"
+    "revision": "bd79618cb29ec60f40a0",
+    "url": "/algorand-ballet/js/about.a50d93e6.js"
   },
   {
-    "revision": "84067f115ea61ec0c6bd",
-    "url": "/algorand-ballet/js/app.5f496f75.js"
+    "revision": "d36c6c34e6159e7ff21e",
+    "url": "/algorand-ballet/js/app.eb551609.js"
   },
   {
-    "revision": "045a03335281cf7f7700",
-    "url": "/algorand-ballet/js/chunk-vendors.425958e7.js"
+    "revision": "e9ec5760e17022e28826",
+    "url": "/algorand-ballet/js/chunk-vendors.93fff69a.js"
   },
   {
     "revision": "3e85cc028a491b5c2bdf9a1695aeb666",
