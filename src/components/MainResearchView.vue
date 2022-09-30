@@ -88,14 +88,13 @@
 
             <p>
               If you want to learn more about Ballet, how to integrate qualitative analysis into your existing auditing
-              and diligence workflow.
+              and diligence workflow, or just chat in general: I want to hear from you!
             </p>
             <p>
-              Even if you just want to chat, I've found <em>the best way by far</em> is to talk personally.
+              I've found <em>the best way by far</em> is to talk personally so I've opened up office hours this week.
             </p>
-
             <p>
-              I've opened up consulting office hours this week so use the button below to book a time.
+              Click on the button below and book a time right away.
             </p>
             <p>
               <v-btn class="cta"
@@ -103,7 +102,7 @@
                      color="primary"
                      elevation="5"
               >
-                Reserve a Free Consultation
+                Let's talk about your questions!
               </v-btn>
             </p>
           </v-col>
