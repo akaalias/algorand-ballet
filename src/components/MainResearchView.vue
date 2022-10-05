@@ -56,7 +56,7 @@
       <section>
         <v-row class="landingpage demo hero">
           <v-col cols="12">
-            <img src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/ballet-ui.png" />
+            <img src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/ballet-ui.png" class="ui-demo"/>
           </v-col>
         </v-row>
       </section>
@@ -64,7 +64,7 @@
       <section class="gallery">
         <v-row class="landingpage demo">
           <v-col cols="2" v-for="image in galleryImageFilenames" class="gallery-image">
-            <img :src="cdnURLForGalleryImage(image)"/>
+            <img :src="cdnURLForGalleryImage(image)" class="gallery-img"/>
           </v-col>
         </v-row>
       </section>
@@ -1034,6 +1034,29 @@ footer:hover {
   border-radius: 100px;
   padding: 10px;
   background: #fff;
+}
+
+.ui-demo {
+  border-radius: 10px;
+  border: 10px solid #333;
+  transition: border 2s ease-out 100ms;
+}
+
+.ui-demo:hover {
+  border: 10px solid #fff;
+  padding: 0px;
+}
+
+.gallery-img {
+  border-radius: 2px;
+  border: 5px solid #333;
+  transition: border 2s ease-out 100ms;
+  background-color: #1e1e1e;
+}
+
+.gallery-img:hover {
+  border: 5px solid #fff;
+  padding: 0px;
 }
 
 </style>
