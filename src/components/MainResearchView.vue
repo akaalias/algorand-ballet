@@ -73,9 +73,7 @@
 
       <section>
         <v-row class="landingpage">
-          <v-col cols="2">
-          </v-col>
-          <v-col cols="8">
+          <v-col cols="12">
             <h1 class="">Got questions? Let's talk.</h1>
             <p>
               <img src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/alexis-portrait.jpg"
@@ -608,11 +606,10 @@ export default {
     galleryImageFilenames: [
       "app-asset-family", "app-cross", "application-relationships",
       "trickle-down", "weighted-asset-transactions", "web-relationships", "asset-relationship-connection",
-      "complexity", "grid-red", "strong-relationships",
-
+      "complexity", "grid-red", "strong-relationships","network",
       "incoming-outgoing-txs","cross", "inner-circle","balanced-transactions",
       "extraction", "transaction-details","centered",
-      "network",
+
     ]
   }),
   methods: {
@@ -1044,23 +1041,23 @@ footer:hover {
 .ui-demo {
   border-radius: 10px;
   border: 10px solid #333;
-  transition: border 2s ease-out 100ms;
+  transition: border 1s ease-out 100ms;
 }
 
 .ui-demo:hover {
-  border: 10px solid #fff;
+  border: 5px solid #fff;
   padding: 0px;
 }
 
 .gallery-img {
   border-radius: 2px;
   border: 5px solid #333;
-  transition: border 2s ease-out 100ms;
+  transition: border 0.5s ease-out 100ms;
   background-color: #1e1e1e;
 }
 
 .gallery-img:hover {
-  border: 2px solid #fff;
+  border: 1px solid #fff;
   padding: 0px;
 }
 
