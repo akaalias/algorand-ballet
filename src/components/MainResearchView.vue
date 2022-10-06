@@ -6,117 +6,7 @@
       v-if="searching"
       class="searchingProgressIndicator"
     ></v-progress-linear>
-    <div id="home" v-if="elements.length == 0 && searching != true">
-      <section class="banner">
-        <p class="banner">
-          New and Exclusive For Algorand Investors
-        </p>
-      </section>
-      <section class="main">
-        <v-row class="landingpage">
-          <v-col cols="12" class="hero">
-            <h1>
-              Background-Checks <br>for Crypto Wallets and Assets
-            </h1>
-
-            <v-row>
-              <v-col cols="12">
-                <p>
-                  <u>Make your best-informed decision before interacting on the Algorand Blockchain.</u>
-                </p>
-                <p>
-                  Use qualitative analysis to get a sense of a wallet or assets "personality" using its track-record of
-                  past transactions and close relationships within the ecosystem.
-                </p>
-
-                <p>
-                  <v-btn class="cta"
-                         href="?deeplink=true&network=main&accountid=YHFIMNQB2HSDWPH3LKMGZK7TTSVWPS44RBLKFBO5JAUD52EXPGTQGICWZY&focus=graph&layout=concentric"
-                         color="primary"
-                         elevation="5"
-                  >
-                    Jump right in with this example!
-                  </v-btn>
-                  <br>
-                  &nbsp; or
-                  <br>&nbsp;
-                  <v-btn
-                    @click="dialog = true"
-                    outlined
-                    plain
-                  >
-                    Learn more about Ballet
-                  </v-btn>
-                </p>
-              </v-col>
-              <v-col cols="2"></v-col>
-            </v-row>
-          </v-col>
-        </v-row>
-      </section>
-
-      <section>
-        <v-row class="landingpage demo hero">
-          <v-col cols="12">
-            <img src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/ballet-ui.png" class="ui-demo"/>
-          </v-col>
-        </v-row>
-      </section>
-
-      <section class="gallery">
-        <v-row class="landingpage demo">
-          <v-col cols="4" v-for="image in galleryImageFilenames" class="gallery-image">
-            <img :src="cdnURLForGalleryImage(image)" class="gallery-img"/>
-          </v-col>
-        </v-row>
-      </section>
-
-      <section>
-        <v-row class="landingpage">
-          <v-col cols="12">
-            <h1 class="">Got questions? Let's talk.</h1>
-            <p>
-              <img src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/alexis-portrait.jpg"
-                   class="portrait" />
-            </p>
-            <p>
-              Oh, hi there!
-            </p>
-            <p>
-              Alexis here, great to meet you.
-            </p>
-
-            <p>
-              If you want to learn more about Ballet, how to integrate qualitative analysis into your existing auditing
-              and diligence workflow, or just chat in general: I want to hear from you!
-            </p>
-            <p>
-              I've found <em>the best way by far</em> is to talk personally so I've opened up office hours this week.
-            </p>
-            <p>
-              Click on the button below and book a time right away.
-            </p>
-            <p>
-              <v-btn class="cta"
-                     href="https://calendly.com/alexis-rondeau"
-                     color="primary"
-                     elevation="5"
-              >
-                Let's talk about your questions!
-              </v-btn>
-            </p>
-          </v-col>
-        </v-row>
-      </section>
-      <footer>
-        <p>
-          Copyright 2022 –
-          Made with love by <a href="https://alexisrondeau.me" target="_blank">Alexis Rondeau</a> –
-          <a href="https://github.com/akaalias/algorand-ballet" target="_blank">Open Source on Github</a>
-
-        </p>
-      </footer>
-    </div>
+    <Landingpage @popupDialog="popupDialog($event)" v-if="elements.length == 0 && searching != true"></Landingpage>
     <SearchForm :parentAccountID="accountID"
                 @searchReady="startSearch($event)"
                 @showInformationOverlay="popupDialog($event)"
@@ -301,8 +191,7 @@
           <v-spacer></v-spacer>
         </v-toolbar>
 
-        <v-tabs
-        >
+        <v-tabs>
           <v-tab>About Algorand Ballet</v-tab>
           <v-tab>Thank you</v-tab>
           <v-tab>How To Navigate</v-tab>
@@ -329,19 +218,37 @@
                   it gives you a glimpse into a wallet's "personality" based on their past track-record with other
                   wallets, ASAs and Applications.
                 </p>
+
                 <p>
-                  Ideally, Ballet is a qualitative extension to your existing quantitative blockchain wallet analysis,
+                  Ballet is heavily inspired by <a href="https://en.wikipedia.org/wiki/Jane_Jacobs" target="_blank">Jane Jacob's</a>
+                  pivotal book <a href="https://en.wikipedia.org/wiki/The_Death_and_Life_of_Great_American_Cities" target="_blank">The Death and Life of Great American Cities</a>.
+                  The book explores and helps understand what makes great ecosystems like cities safe.
+                  I believe that many of her findings apply to digital ecosystems as well.
+                </p>
+                <p>
+                  Ideally, Ballet is <i>a qualitative extension</i> to your existing quantitative blockchain wallet analysis,
                   auditing and diligence workflow.
                 </p>
 
                 <h2>Your Benefits</h2>
-                <h3>1. Get Decision Support</h3>
+                <h3>1. Get Decision Support In an Unsafe Environment</h3>
                 <p>
-                  For when you have an Account ID (also often called Wallet address) and you want to get a better
-                  picture of who they are, what they do, with whom and how often.
+                  After going on an actual adventure and wanting to spend a few Algos on NFTs, <b>I felt deeply unsettled how much overt
+                  scamming and how little transparency there was</b>.
+                  </p>
+                <p>
+                  I did NOT FEEL SAFE while trying to buy a single NFT
+                  for fun because I had no way of understanding WHO the person (or group) behind the artwork really is.
+                  And I had no way to verify if the story they're telling me is actually true. And I had no
+                  way to know the people running the "gallery" itself.
                 </p>
+
                 <p>
-                  Ballet gives you a qualitative "smell-test", an extra data-point to make your best-informed decision
+                  To me, it felt like the Middle Ages.
+                </p>
+
+                <p>
+                  Ballet gives us a qualitative "smell-test", an extra data-point to make your best-informed decision
                   before interacting with an untrusted wallet. By looking at their qualitative track-record, there is no
                   need for "official identity" to get that sense of "personality" in the same way I can get a first
                   impression of a person by looking at them without the need to know their name or see their passport. I
@@ -417,16 +324,7 @@
 
                 <h2>PS</h2>
                 <p>
-                  1. Just to make it clear, this is a personal project of mine. I built it because, after going on an
-                  actual adventure and wanting to spend a few Algos on NFTs, I felt deeply unsettled how much overt
-                  scamming and how little transparency there was. I did NOT FEEL SAFE while trying to buy a single NFT
-                  for fun because I had no way of understanding WHO the person (or group) behind the artwork really is.
-                  And I had no way to verify if the story they're telling me (The art-market is a great example of how
-                  important the authenticity of the story is for its value-creation[^3]) is actually true. And I had no
-                  way to know the people running the "gallery" itself.
-                </p>
-                <p>
-                  2. I decided to release the application <a href="https://github.com/akaalias/algorand-ballet"
+                  I decided to release the application <a href="https://github.com/akaalias/algorand-ballet"
                                                              target="_blank">fully open-source and under a permissive
                   license</a> for you to futz around with it and to allow for any ad-hoc security review in case you are
                   unsure if you can trust the website or app.
@@ -568,6 +466,7 @@ import { EndpointDomains } from "@/models/EndpointDomains";
 import { QualitativeResearchApproach } from "@/models/QualitativeResearchApproach";
 import APIKeyForm from "@/components/APIKeyForm";
 import SearchForm from "@/components/SearchForm";
+import Landingpage from "@/components/Landingpage"
 import { CacheManager } from "@/models/CacheManager";
 import cola from "cytoscape-cola";
 
@@ -602,15 +501,7 @@ export default {
     miniHelp: true,
     shareButtonLabel: "Share URL",
     graphHeight: 750,
-    dialog: false,
-    galleryImageFilenames: [
-      "app-asset-family", "app-cross", "application-relationships",
-      "trickle-down", "weighted-asset-transactions", "web-relationships", "asset-relationship-connection",
-      "complexity", "grid-red", "strong-relationships","network",
-      "incoming-outgoing-txs","cross", "inner-circle","balanced-transactions",
-      "extraction", "transaction-details","centered",
-
-    ]
+    dialog: false
   }),
   methods: {
     async setElementsFromCache() {
@@ -804,7 +695,6 @@ export default {
       this.search();
     },
     popupDialog(event) {
-      console.log("In main...");
       this.dialog = true;
     },
     toggleTransactionGroups() {
@@ -859,23 +749,12 @@ export default {
       } else {
         return "";
       }
-    },
-    cdnURLForGalleryImage(filename) {
-      return "https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/gallery/" + filename + ".png";
     }
   },
   components: {
     SearchForm,
-    APIKeyForm
-  },
-  computed: {
-    randomDemoBackgroundImageURL() {
-      // const min = Math.ceil(1);
-      // const max = Math.floor(7);
-      // const idx = Math.floor(Math.random() * (max - min) + min);
-      const idx = "5";
-      return "https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/" + String(idx) + ".png";
-    }
+    APIKeyForm,
+    Landingpage
   }
 };
 </script>
@@ -972,93 +851,6 @@ export default {
   bottom: 20px;
   right: 20px;
   z-index: 10000;
-}
-
-.landingpage h1, .contact h1 {
-  margin-top: 140px;
-  font-size: 48pt;
-  text-align: center;
-}
-
-.landingpage p, .contact p {
-  margin-top: 20px;
-  margin-bottom: 40px;
-  font-size: 18pt;
-  text-align: center;
-}
-
-h1.heading {
-  font-size: 36pt;
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
-
-.demo {
-  text-align: center;
-  width: 100%;
-}
-
-.demo img {
-  width: 100%;
-}
-
-.contact {
-  text-align: center;
-}
-
-.banner {
-  text-align: center;
-  background-color: #8D3A83;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  padding: 5px;
-  font-weight: bold;
-}
-
-footer {
-  border-top: 2px dotted #1e1e1e;
-  padding: 40px;
-  margin-top: 100px;
-  font-size: 10pt;
-  text-align: center;
-  opacity: 0.3;
-}
-
-footer:hover {
-  opacity: 1;
-}
-
-.portrait {
-  width: 200px;
-  height: 200px;
-  border-radius: 100px;
-  padding: 10px;
-  background: #fff;
-}
-
-.ui-demo {
-  border-radius: 10px;
-  border: 10px solid #333;
-  transition: border 1s ease-out 100ms;
-}
-
-.ui-demo:hover {
-  border: 5px solid #fff;
-  padding: 0px;
-}
-
-.gallery-img {
-  border-radius: 2px;
-  border: 5px solid #333;
-  transition: border 0.5s ease-out 100ms;
-  background-color: #1e1e1e;
-}
-
-.gallery-img:hover {
-  border: 1px solid #fff;
-  padding: 0px;
 }
 
 </style>
