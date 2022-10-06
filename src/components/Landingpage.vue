@@ -202,20 +202,19 @@ footer:hover {
 
 .ui-demo {
   border-radius: 10px;
-  border: 10px solid #333;
+  border: 15px solid #333;
   transition: border 1s ease-out 100ms;
 }
 
 .ui-demo:hover {
-  border: 5px solid #fff;
+  border: 10px solid #fff;
   padding: 0px;
 }
 
 .gallery-img {
-  border-radius: 2px;
-  border: 5px solid #333;
+  border-radius: 5px;
   transition: border 0.5s ease-out 100ms;
-  background-color: #1e1e1e;
+  border: 5px solid #0F0F0F;
 }
 
 .gallery-img:hover {
