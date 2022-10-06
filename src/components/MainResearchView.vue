@@ -16,15 +16,15 @@
         <v-row class="landingpage">
           <v-col cols="12" class="hero">
             <h1>
-              Background-Checks for Wallets and Assets
+              Background-Checks <br>for Crypto Wallets and Assets
             </h1>
 
             <v-row>
-              <v-col cols="2"></v-col>
-              <v-col cols="8">
+              <v-col cols="12">
                 <p>
                   <u>Make your best-informed decision before interacting on the Algorand Blockchain.</u>
-                  <br>
+                </p>
+                <p>
                   Use qualitative analysis to get a sense of a wallet or assets "personality" using its track-record of
                   past transactions and close relationships within the ecosystem.
                 </p>
@@ -37,7 +37,9 @@
                   >
                     Jump right in with this example!
                   </v-btn>
-                  &nbsp; or &nbsp;
+                  <br>
+                  &nbsp; or
+                  <br>&nbsp;
                   <v-btn
                     @click="dialog = true"
                     outlined
@@ -63,7 +65,7 @@
 
       <section class="gallery">
         <v-row class="landingpage demo">
-          <v-col cols="2" v-for="image in galleryImageFilenames" class="gallery-image">
+          <v-col cols="4" v-for="image in galleryImageFilenames" class="gallery-image">
             <img :src="cdnURLForGalleryImage(image)" class="gallery-img"/>
           </v-col>
         </v-row>
@@ -604,10 +606,13 @@ export default {
     graphHeight: 750,
     dialog: false,
     galleryImageFilenames: [
-      "app-asset-family", "app-cross", "application-relationships", "balanced-transactions", "centered", "complexity",
-      "cross", "extraction", "grid-red", "inner-circle", "network", "strong-relationships",
-      "transaction-details", "trickle-down", "weighted-asset-transactions", "web-relationships", "asset-relationship-connection",
-      "incoming-outgoing-txs"
+      "app-asset-family", "app-cross", "application-relationships",
+      "trickle-down", "weighted-asset-transactions", "web-relationships", "asset-relationship-connection",
+      "complexity", "grid-red", "strong-relationships",
+
+      "incoming-outgoing-txs","cross", "inner-circle","balanced-transactions",
+      "extraction", "transaction-details","centered",
+      "network",
     ]
   }),
   methods: {
@@ -1055,7 +1060,7 @@ footer:hover {
 }
 
 .gallery-img:hover {
-  border: 5px solid #fff;
+  border: 2px solid #fff;
   padding: 0px;
 }
 
