@@ -205,10 +205,29 @@
                 <h1 class="heading">Oh, hi there!</h1>
                 <p>
                   Great to meet you.
-                  My name is <a href="https://publish.obsidian.md/alexisrondeau" target="_blank">Alexis</a> and I am a
+                  My name is <a href="https://alexisrondeau.me" target="_blank">Alexis Rondeau</a>.
+                  </p>
+                <p>
+                  I am a
                   researcher, product manager, developer and Algorand enthusiast. I wanted to share a research project
                   I've been working on with you.
                 </p>
+
+                <p>
+                  I built Ballet after going on an actual adventure and wanting to spend a few Algos on NFTs, <b>I felt deeply unsettled how much overt
+                  scamming and how little transparency there was</b>.
+                </p>
+                <p>
+                  In short, I did NOT FEEL SAFE while trying to buy a single NFT
+                  for fun because I had no way of understanding WHO the person (or group) behind the artwork really is.
+                  And I had no way to verify if the story they're telling me is actually true. And I had no
+                  way to know the people running the "gallery" itself.
+                </p>
+
+                <p>
+                  To me, it felt like the Middle Ages.
+                </p>
+
 
                 <h2>
                   Qualitative Blockchain Analysis
@@ -220,7 +239,7 @@
                 </p>
 
                 <p>
-                  Ballet is heavily inspired by <a href="https://en.wikipedia.org/wiki/Jane_Jacobs" target="_blank">Jane Jacob's</a>
+                  This qualitative analysis approach is heavily inspired by <a href="https://en.wikipedia.org/wiki/Jane_Jacobs" target="_blank">Jane Jacob's</a>
                   pivotal book <a href="https://en.wikipedia.org/wiki/The_Death_and_Life_of_Great_American_Cities" target="_blank">The Death and Life of Great American Cities</a>.
                   The book explores and helps understand what makes great ecosystems like cities safe.
                   I believe that many of her findings apply to digital ecosystems as well.
@@ -232,21 +251,6 @@
 
                 <h2>Your Benefits</h2>
                 <h3>1. Get Decision Support In an Unsafe Environment</h3>
-                <p>
-                  After going on an actual adventure and wanting to spend a few Algos on NFTs, <b>I felt deeply unsettled how much overt
-                  scamming and how little transparency there was</b>.
-                  </p>
-                <p>
-                  I did NOT FEEL SAFE while trying to buy a single NFT
-                  for fun because I had no way of understanding WHO the person (or group) behind the artwork really is.
-                  And I had no way to verify if the story they're telling me is actually true. And I had no
-                  way to know the people running the "gallery" itself.
-                </p>
-
-                <p>
-                  To me, it felt like the Middle Ages.
-                </p>
-
                 <p>
                   Ballet gives us a qualitative "smell-test", an extra data-point to make your best-informed decision
                   before interacting with an untrusted wallet. By looking at their qualitative track-record, there is no
