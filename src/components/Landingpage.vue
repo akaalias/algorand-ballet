@@ -2,7 +2,7 @@
   <div id="">
     <section class="banner">
       <p class="banner">
-        New and Exclusive For Algorand Investors
+        Hello and welcome to Ballet!
       </p>
     </section>
     <section class="main">
