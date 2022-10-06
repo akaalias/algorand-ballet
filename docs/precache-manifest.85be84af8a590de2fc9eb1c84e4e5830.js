@@ -1,82 +1,82 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "00a5ce268e9c75933a7b",
-    "url": "/algorand-ballet/css/app.a8cef0c3.css"
+    "revision": "c8ae2d53faf540e27726",
+    "url": "/algorand-ballet/css/app.b80ac7e2.css"
   },
   {
     "revision": "e9ec5760e17022e28826",
     "url": "/algorand-ballet/css/chunk-vendors.83febfc0.css"
   },
   {
-    "revision": "ea79c2844fdb8b44e2641ba987bf20cb",
+    "revision": "13d36e07caa52db2e198350256208216",
     "url": "/algorand-ballet/gallery/app-asset-family.png"
   },
   {
-    "revision": "f2cc754c5f104bff08004deb4524aad8",
+    "revision": "f2378f8d18686cb33d6763d5aa94fadc",
     "url": "/algorand-ballet/gallery/app-cross.png"
   },
   {
-    "revision": "459580d22c12ffe66641a3364db338af",
+    "revision": "72480b0daa6851df920f452872256617",
     "url": "/algorand-ballet/gallery/application-relationships.png"
   },
   {
-    "revision": "32c634f993dc0cad26671c70accc22f1",
+    "revision": "7c9c4201e61d92be76c0590bfcde0100",
     "url": "/algorand-ballet/gallery/asset-relationship-connection.png"
   },
   {
-    "revision": "5af6c67af1da94069e92816cce69530e",
+    "revision": "0eb7095cc38eb287a32d35181e65765d",
     "url": "/algorand-ballet/gallery/balanced-transactions.png"
   },
   {
-    "revision": "de0444e0c0b025a5d991855889116370",
+    "revision": "c8f4ef204a368a852a10815a737461d7",
     "url": "/algorand-ballet/gallery/centered.png"
   },
   {
-    "revision": "356fe67b15e4ea83437c83398ba3d2e7",
+    "revision": "28438213121e36529853a0ef5344c501",
     "url": "/algorand-ballet/gallery/complexity.png"
   },
   {
-    "revision": "7b2adacb0f1740ed59a79b9f88e88115",
+    "revision": "388174d814ce870391ba1ac0e11e14f0",
     "url": "/algorand-ballet/gallery/cross.png"
   },
   {
-    "revision": "af613ca5c36b89ca957cb00b0f44e276",
+    "revision": "b97607bbbf9380141f8fdf01ea9417cb",
     "url": "/algorand-ballet/gallery/extraction.png"
   },
   {
-    "revision": "f6dfce409c79e6212b7e4b4c4f26400d",
+    "revision": "5b0652ee849f8b02b822b68bff329e89",
     "url": "/algorand-ballet/gallery/grid-red.png"
   },
   {
-    "revision": "b41548b512ff0c7eeae50f76e064a657",
+    "revision": "47fa0df97cb1c54ea615764626c81c95",
     "url": "/algorand-ballet/gallery/incoming-outgoing-txs.png"
   },
   {
-    "revision": "bbe4a78212bce618041edcd92b778c63",
+    "revision": "662f2f19b350f48f88bf0a274620498c",
     "url": "/algorand-ballet/gallery/inner-circle.png"
   },
   {
-    "revision": "f31de3c5295fc9f56588b36e21d1284d",
+    "revision": "cd47d09b87a01fc4433f1b60451bd418",
     "url": "/algorand-ballet/gallery/network.png"
   },
   {
-    "revision": "9bc9dd08cd3bf0374788c33a33bceb44",
+    "revision": "2d2f300649b380d2aac5d54808f028ac",
     "url": "/algorand-ballet/gallery/strong-relationships.png"
   },
   {
-    "revision": "642c25e8306f2277a34c620eda795d59",
+    "revision": "9057a6c61fbec93c80ea612d002f57c5",
     "url": "/algorand-ballet/gallery/transaction-details.png"
   },
   {
-    "revision": "8e24c00111ad3e27eec374af80dbabc7",
+    "revision": "353e1c6a95b6a5522c40e145ecb4784d",
     "url": "/algorand-ballet/gallery/trickle-down.png"
   },
   {
-    "revision": "9b20f23d831a77929b88e18ca5118745",
+    "revision": "484a818ec0a201cb14f8cb7e85a14697",
     "url": "/algorand-ballet/gallery/web-relationships.png"
   },
   {
-    "revision": "0007e7f3223757d559f4246f07253a30",
+    "revision": "dbac7440de5db50a7edf4ef02fec3516",
     "url": "/algorand-ballet/gallery/weighted-asset-transactions.png"
   },
   {
@@ -112,7 +112,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/algorand-ballet/img/ballet-ui.png"
   },
   {
-    "revision": "bab2b87f6440efabd050f61cbfb260cf",
+    "revision": "9e20a8ce3ea282c603093d16317f2085",
     "url": "/algorand-ballet/index.html"
   },
   {
@@ -120,8 +120,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/algorand-ballet/js/about.a50d93e6.js"
   },
   {
-    "revision": "00a5ce268e9c75933a7b",
-    "url": "/algorand-ballet/js/app.3a4f5df4.js"
+    "revision": "c8ae2d53faf540e27726",
+    "url": "/algorand-ballet/js/app.d486d937.js"
   },
   {
     "revision": "e9ec5760e17022e28826",
