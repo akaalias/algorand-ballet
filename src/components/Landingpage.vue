@@ -1,12 +1,5 @@
 <template>
-  <div id="">
-    <!--
-    <section class="banner">
-      <p class="banner">
-        Hello and welcome to Ballet!
-      </p>
-    </section>
-    -->
+  <div id="page">
     <section class="pudding">
       <h2 class="headline">
         <b>New!</b> Pudding Research – Qualitative Analysis for <u>Ethereum Token Ecosystems</u>
@@ -258,15 +251,16 @@ img {
   width: 100%;
 }
 
-
 .pudding-demo {
   border-radius: 20px;
-  box-shadow: 0px 0px 100px #000;
+  box-shadow: 0px 0px 300px #c22fff;
   border: 2px solid #ccc;
-  padding: 5px;
+  padding: 10px;
+  background-color: #333;
 }
 
 .pudding {
+  border-radius: 20px;
   background-color: #420f57;
   padding: 20px;
   padding-bottom: 50px;
