@@ -9,7 +9,7 @@
       <v-row class="landingpage">
         <v-col cols="12" class="hero">
           <h1>
-            Background-Checks <br>for Crypto Wallets and Assets
+            Background-Checks <br>for Algorand Wallets and Assets
           </h1>
 
           <v-row>
@@ -47,7 +47,6 @@
         </v-col>
       </v-row>
     </section>
-
     <section>
       <v-row class="landingpage demo hero">
         <v-col cols="12">
@@ -55,15 +54,23 @@
         </v-col>
       </v-row>
     </section>
-
     <section class="gallery">
+      <h2 class="headline">Relationships Between Wallets, Assets and Applications</h2>
+      <p></p>
       <v-row class="landingpage demo">
         <v-col cols="4" v-for="image in galleryImageFilenames" class="gallery-image">
           <img :src="cdnURLForGalleryImage(image)" class="gallery-img"/>
         </v-col>
       </v-row>
     </section>
-
+    <section class="pudding">
+      <h2 class="headline">
+        New: Pudding for Ethereum
+      </h2>
+      <a href="https://alexisrondeau.me/pudding/" target="_blank">
+        <img src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/gallery/pudding.png"/>
+      </a>
+    </section>
     <section>
       <v-row class="landingpage">
         <v-col cols="12">
@@ -149,12 +156,6 @@ export default {
   text-align: center;
 }
 
-h1.heading {
-  font-size: 36pt;
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
-
 .demo {
   text-align: center;
   width: 100%;
@@ -170,7 +171,7 @@ h1.heading {
 
 .banner {
   text-align: center;
-  background-color: #8D3A83;
+  background-color: #09439a;
   position: absolute;
   top: 0px;
   left: 0px;
@@ -207,8 +208,22 @@ footer:hover {
 }
 
 .ui-demo:hover {
-  border: 10px solid #fff;
+  border: 15px solid #fff;
   padding: 0px;
+}
+
+.gallery {
+  margin-top: 50px;
+  padding-bottom: 50px;
+  background-color: #0F0F0F;
+}
+
+.headline {
+  padding: 24pt;
+  font-size: 24pt !important;
+  text-align: center;
+  line-height: 28pt;
+  color: #eee;
 }
 
 .gallery-img {
@@ -218,7 +233,7 @@ footer:hover {
 }
 
 .gallery-img:hover {
-  border: 1px solid #fff;
+  border: 5px solid #fff;
   padding: 0px;
 }
 </style>
