@@ -39,7 +39,7 @@
           <v-row>
             <v-col cols="12">
               <p>
-                <u>Ballet helps you nake your best-informed decision before interacting on the Algorand Blockchain.</u>
+                <u>Ballet helps you make your best-informed decision before interacting on the Algorand Blockchain.</u>
               </p>
               <p>
                 Use qualitative analysis to get a sense of a wallet or assets "personality" using its track-record of
