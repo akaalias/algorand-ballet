@@ -1,21 +1,45 @@
 <template>
   <div id="">
+    <!--
     <section class="banner">
       <p class="banner">
         Hello and welcome to Ballet!
       </p>
     </section>
+    -->
+    <section class="pudding">
+      <h2 class="headline">
+        <b>New!</b> Pudding Research – Qualitative Analysis for <u>Ethereum Token Ecosystems</u>
+      </h2>
+      <v-row>
+        <v-col cols="2" class="">
+        </v-col>
+        <v-col cols="8" class="gallery-image">
+          <a href="https://alexisrondeau.me/pudding/" target="_blank">
+            <img class="pudding-demo" src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/gallery/pudding.png"/>
+            <br>
+            <br>
+            <br>
+            <p>
+              <v-btn large light color="primary">
+                Visit Pudding Research
+              </v-btn>
+            </p>
+          </a>
+        </v-col>
+      </v-row>
+    </section>
     <section class="main">
       <v-row class="landingpage">
         <v-col cols="12" class="hero">
           <h1>
-            Background-Checks <br>for Algorand Wallets and Assets
+            Algorand Ballet: <br>Background-Checks <br>for Wallets and Assets
           </h1>
 
           <v-row>
             <v-col cols="12">
               <p>
-                <u>Make your best-informed decision before interacting on the Algorand Blockchain.</u>
+                <u>Ballet helps you nake your best-informed decision before interacting on the Algorand Blockchain.</u>
               </p>
               <p>
                 Use qualitative analysis to get a sense of a wallet or assets "personality" using its track-record of
@@ -62,14 +86,6 @@
           <img :src="cdnURLForGalleryImage(image)" class="gallery-img"/>
         </v-col>
       </v-row>
-    </section>
-    <section class="pudding">
-      <h2 class="headline">
-        New: Pudding for Ethereum
-      </h2>
-      <a href="https://alexisrondeau.me/pudding/" target="_blank">
-        <img src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/gallery/pudding.png"/>
-      </a>
     </section>
     <section>
       <v-row class="landingpage">
@@ -230,10 +246,38 @@ footer:hover {
   border-radius: 5px;
   transition: border 0.5s ease-out 100ms;
   border: 5px solid #0F0F0F;
+  width: 100%;
 }
 
 .gallery-img:hover {
   border: 5px solid #fff;
   padding: 0px;
+}
+
+img {
+  width: 100%;
+}
+
+
+.pudding-demo {
+  border-radius: 20px;
+  box-shadow: 0px 0px 100px #000;
+  border: 2px solid #ccc;
+  padding: 5px;
+}
+
+.pudding {
+  background-color: #420f57;
+  padding: 20px;
+  padding-bottom: 50px;
+}
+
+.pudding .headline {
+  color: white;
+  padding: 50px;
+}
+
+.pudding .gallery-image {
+  text-align: center;
 }
 </style>
