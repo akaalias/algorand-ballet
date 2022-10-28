@@ -4,23 +4,18 @@
       <h2 class="headline">
         <b>New!</b> Pudding Research – Qualitative Analysis for <u>Ethereum Token Ecosystems</u>
       </h2>
-      <v-row>
-        <v-col cols="md-2" class="">
-        </v-col>
-        <v-col cols="md-8" class="gallery-image">
-          <a href="https://alexisrondeau.me/pudding/" target="_blank">
-            <img class="pudding-demo" src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/gallery/pudding.png"/>
-            <br>
-            <br>
-            <br>
-            <p>
-              <v-btn large light color="primary">
-                Visit Pudding Research
-              </v-btn>
-            </p>
-          </a>
-        </v-col>
-      </v-row>
+
+      <a href="https://alexisrondeau.me/pudding/" target="_blank">
+        <img class="pudding-demo" src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/gallery/pudding.png"/>
+        <br>
+        <br>
+        <br>
+        <p>
+          <v-btn large light color="primary">
+            Visit Pudding Research
+          </v-btn>
+        </p>
+      </a>
     </section>
     <section id="main" class="main">
       <v-row class="landingpage">
@@ -252,6 +247,7 @@ img {
 }
 
 .pudding-demo {
+  width: 80%;
   border-radius: 20px;
   box-shadow: 0px 0px 300px #c22fff;
   border: 2px solid #ccc;
@@ -264,6 +260,7 @@ img {
   background-color: #420f57;
   padding: 20px;
   padding-bottom: 50px;
+  text-align: center;
 }
 
 .pudding .headline {
@@ -271,7 +268,4 @@ img {
   padding: 50px;
 }
 
-.pudding .gallery-image {
-  text-align: center;
-}
 </style>
