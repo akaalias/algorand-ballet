@@ -250,7 +250,7 @@ img {
   width: 80%;
   border-radius: 20px;
   box-shadow: 0px 0px 300px #c22fff;
-  border: 2px solid #ccc;
+  border: 1px solid #dd90ff;
   padding: 10px;
   background-color: #333;
 }
