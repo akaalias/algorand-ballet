@@ -5,9 +5,9 @@
         <b>New!</b> Pudding Research – Qualitative Analysis for <u>Ethereum Token Ecosystems</u>
       </h2>
       <v-row>
-        <v-col cols="2" class="">
+        <v-col cols="md-2" class="">
         </v-col>
-        <v-col cols="8" class="gallery-image">
+        <v-col cols="md-8" class="gallery-image">
           <a href="https://alexisrondeau.me/pudding/" target="_blank">
             <img class="pudding-demo" src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/gallery/pudding.png"/>
             <br>
@@ -22,7 +22,7 @@
         </v-col>
       </v-row>
     </section>
-    <section class="main">
+    <section id="main" class="main">
       <v-row class="landingpage">
         <v-col cols="12" class="hero">
           <h1>
