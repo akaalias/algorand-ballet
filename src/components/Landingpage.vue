@@ -1,22 +1,5 @@
 <template>
   <div id="page">
-    <section class="pudding">
-      <h2 class="headline">
-        <b>New!</b> Pudding Research – Qualitative Analysis for <u>Ethereum Token Ecosystems</u>
-      </h2>
-
-      <a href="https://alexisrondeau.me/pudding/" target="_blank">
-        <img class="pudding-demo" src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/gallery/pudding.png"/>
-        <br>
-        <br>
-        <br>
-        <p>
-          <v-btn large light color="primary">
-            Visit Pudding Research
-          </v-btn>
-        </p>
-      </a>
-    </section>
     <section id="main" class="main">
       <v-row class="landingpage">
         <v-col cols="12" class="hero">
@@ -112,6 +95,23 @@
         </v-col>
       </v-row>
     </section>
+    <section class="pudding">
+      <h2 class="headline">
+        <b>New!</b> Pudding Research – Qualitative Analysis for <u>Ethereum Token Ecosystems</u>
+      </h2>
+
+      <a href="https://alexisrondeau.me/pudding/" target="_blank">
+        <img class="pudding-demo" src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/gallery/pudding.png"/>
+        <br>
+        <br>
+        <br>
+        <p>
+          <v-btn large light color="primary">
+            Visit Pudding Research
+          </v-btn>
+        </p>
+      </a>
+    </section>
     <footer>
       <p>
         Copyright 2022 –
@@ -169,21 +169,6 @@ export default {
   width: 100%;
 }
 
-.contact {
-  text-align: center;
-}
-
-.banner {
-  text-align: center;
-  background-color: #09439a;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  padding: 5px;
-  font-weight: bold;
-}
-
 footer {
   border-top: 2px dotted #1e1e1e;
   padding: 40px;
@@ -207,12 +192,12 @@ footer:hover {
 
 .ui-demo {
   border-radius: 10px;
-  border: 15px solid #333;
+  border: 10px solid #333;
   transition: border 1s ease-out 100ms;
 }
 
 .ui-demo:hover {
-  border: 15px solid #fff;
+  border: 10px solid #fff;
   padding: 0px;
 }
 
@@ -250,13 +235,13 @@ img {
   width: 80%;
   border-radius: 20px;
   box-shadow: 0px 0px 300px #c22fff;
-  border: 1px solid #dd90ff;
+  border: 2px solid #c22fff;
   padding: 10px;
   background-color: #333;
 }
 
 .pudding {
-  border-radius: 20px;
+  border-radius: 5px;
   background-color: #420f57;
   padding: 20px;
   padding-bottom: 50px;
