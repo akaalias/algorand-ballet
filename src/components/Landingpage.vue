@@ -1,10 +1,13 @@
 <template>
   <div id="page">
+    <div id="new-banner">
+      Hello and welcome to Algorand Ballet!
+    </div>
     <section id="main" class="main">
       <v-row class="landingpage">
         <v-col cols="12" class="hero">
           <h1>
-            Algorand Ballet: <br>Background-Checks <br>for Wallets and Assets
+            OSINT Background-Checks <br>for Wallets and Assets
           </h1>
 
           <v-row>
@@ -50,17 +53,19 @@
       </v-row>
     </section>
     <section class="gallery">
-      <h2 class="headline">Relationships Between Wallets, Assets and Applications</h2>
-      <p></p>
+      <h1 class="headline">Gallery</h1>
+      <h2 class="headline">Example Relationships Between Wallets, Assets and Applications</h2>
       <v-row class="landingpage demo">
         <v-col cols="4" v-for="image in galleryImageFilenames" class="gallery-image">
           <img :src="cdnURLForGalleryImage(image)" class="gallery-img"/>
         </v-col>
       </v-row>
     </section>
-    <section>
+    <section fluid class="contact">
       <v-row class="landingpage">
-        <v-col cols="12">
+        <v-col cols="md-2">
+        </v-col>
+        <v-col cols="md-8">
           <h1 class="">Got questions? Let's talk.</h1>
           <p>
             <img src="https://raw.githubusercontent.com/akaalias/algorand-ballet/main/public/img/alexis-portrait.jpg"
@@ -92,6 +97,8 @@
               Let's talk about your questions!
             </v-btn>
           </p>
+        </v-col>
+        <v-col cols="md-2">
         </v-col>
       </v-row>
     </section>
@@ -147,8 +154,8 @@ export default {
 </script>
 
 <style scoped>
-.landingpage h1, .contact h1 {
-  margin-top: 140px;
+.landingpage h1 {
+  margin-top: 100px;
   font-size: 48pt;
   text-align: center;
 }
@@ -207,12 +214,19 @@ footer:hover {
   background-color: #0F0F0F;
 }
 
-.headline {
-  padding: 24pt;
+h1.headline {
+  font-size: 38pt !important;
+  text-align: center;
+  line-height: 48pt;
+  color: #eee;
+  font-weight: lighter;
+}
+
+h2.headline {
   font-size: 24pt !important;
   text-align: center;
-  line-height: 28pt;
-  color: #eee;
+  line-height: 48pt;
+  font-weight: lighter;
 }
 
 .gallery-img {
@@ -253,4 +267,22 @@ img {
   padding: 50px;
 }
 
+#new-banner {
+  background-color: #d0542b;
+  padding: 5px;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.contact h1 {
+  font-size: 24pt !important;
+}
+
+.contact {
+  background-color: #6b2d18;
+
+}
 </style>
